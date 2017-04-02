@@ -1,0 +1,19 @@
+#pp
+{
+  /*border-color: white;*/
+  /*border-radius: 50%;*/
+  border: 4px solid white !important ;
+}
+#userdata
+{
+	text-align: center;
+}
+#cardImg
+{
+	height: 50% !important;
+}
+#formbtn
+{
+	width: 100%;
+}
+

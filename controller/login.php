@@ -13,7 +13,7 @@
           $result= $dboperation->loginUser( $email, $password );
           if($result)
           {
-            header("Location: http://localhost/yamen/home.php");
+            header("Location: http://localhost/Administration/home.php");
           }else{
             echo "msh mawgod";
           }

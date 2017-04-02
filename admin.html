@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Eye In The Sky! Administrator Page!</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+
+<body class="adminBody">
+
+<header>
+      <div class="row adminHeader" style="padding: 10px">
+        <a href="index.html"><img src="img/EyesInTheSkyLogo.png" class="adminLogo"></a>
+      </div> 
+</header>
+
+<div class="navbar-fixed">
+    <nav class="navbar" style="margin-top: -300px">
+    </nav>
+</div>
+<main style="margin-top: -60px">
+
+  <div class="row">
+      <div class="col s12 m4 l3">
+          <!-- Left Side -->
+
+          <div class="row valign-wrapper" style="background-color:#2081A0; width:320px;height:90px;margin-top:10px;margin-left:15px;">
+              <img src="img/EyesInTheSkyLogo.png" class="circle responsive-img" style="background-color:#929292;width:110px;height:100px;margin-top:85px;margin-left:105px;"/>
+          </div>
+          <div class="row valign-wrapper" style="background-color:white; width:320px;height:220px;margin-top:-17px;margin-left:15px;">
+            <p>
+                  Username
+                  username@domain.com
+                  +201111111111
+            </p>
+
+          </div>
+          <div class="row valign-wrapper" style="background-color:white; width:320px;height:220px;margin-top:-17px;margin-left:15px;">
+            <p>
+                  History
+                  <br/>
+                  Action1     MM.DD.YY
+                  <br/>
+                  Action2     MM.DD.YY
+            </p>
+
+          </div>
+        </div>                 
+
+        <div class="col s12 m8 l9">
+            <h1 class="adminFont" style="margin-left:-560px;margin-top:-40px;">Raspberry Pies Details <i class="material-icons">search</i></h1>
+            <br>
+            <div class="row">
+            <div class="col s12 m8">
+            <table class="striped" style="margin-left:24px;margin-top:-28px;width:900px;">
+              <tbody>
+                <tr>
+                  <td><i class="material-icons accordion">more_vert</i>
+                    <div class="panel">
+                      <i class="material-icons">power_settings_new</i>
+                      <h6>Shut Down</h6>
+                      <i class="material-icons">replay</i>
+                      <h6>Restart</h6>
+                      <i class="material-icons">pause</i>
+                      <h6>Sleep</h6>
+                    </div>
+                  </td>
+                  <td>255.255.255</td>
+                  <td>X-25-122</td>
+                  <td>
+                   <i class="material-icons">location_on</i>
+                   <i class="material-icons">settings</i>
+                   <!-- error -->
+                   <i class="material-icons" style="color:#f0f017;">error</i> 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+  </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function(){
+
+            // hide .navbar first
+            $(".navbar").hide();
+
+            // fade in .navbar
+            $(function () {
+                $(window).scroll(function () {
+                    // set distance user needs to scroll before we fadeIn navbar
+                    if ($(this).scrollTop() > 240) {
+                        $('.navbar').fadeIn();
+                    } else {
+                        $('.navbar').fadeOut();
+                    }
+                });
+
+
+            });
+
+        });
+    }(jQuery));
+</script>
+<!-- accordion -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+    acc[i].onclick = function(){
+        /* Toggle between adding and removing the "active" class,
+        to highlight the button that controls the panel */
+        this.classList.toggle("active");
+
+        /* Toggle between hiding and showing the active panel */
+        var panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
+        } else {
+            panel.style.display = "block";
+        }
+    }
+}
+</script>
+
+</body>
+</html>
