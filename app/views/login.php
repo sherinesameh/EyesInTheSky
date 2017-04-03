@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="../../public/assets/css/materialize.css" media="screen,projection">
-    <title>Login</title>
-    <style>
-        label {
-            color: #039be5;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Mobile Ad-hock cloud.">
+    <meta name="author" content="Sherine Sameh">
+    <title>Eyes In The Sky</title>
+
+    <link rel="stylesheet" href="../../public/assets/css/materialize.css"/>
+    <link rel="stylesheet" href="../../public/assets/css/font.css"/>
 </head>
 
 <body>
@@ -64,9 +65,8 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous">
-    </script>
-    <script type="text/javascript" src="../../public/assets/js/dependencies/materialize.js"></script>
+        <script type="text/javascript" src="../../public/assets/js/dependencies/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="../../public/assets/js/dependencies/materialize.js"></script>
 </body>
 
 </html>

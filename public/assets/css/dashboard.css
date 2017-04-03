@@ -1,0 +1,27 @@
+.nav {
+    background-color: #111111 !important;
+}
+
+body {
+    background-color: #E7E6ED;
+}
+
+.tabs .indicator {
+    background-color: #000000 !important;
+}
+
+.tabs .tab a.active {
+    color: #000000;
+}
+
+.tabs .tab a:hover {
+    color: #000000;
+}
+
+.tabs .tab a {
+    color: #000000;
+}
+#ppp {
+  height:100px;
+  width:100px;
+}

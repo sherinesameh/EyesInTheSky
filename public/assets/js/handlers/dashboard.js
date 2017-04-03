@@ -1,3 +1,4 @@
+
 function getUserInfo() {
   $.post(
     '../controllers/dashboard.php',
@@ -14,6 +15,7 @@ function getUserInfo() {
       }
     });
 }
+
 function getAdminsLog() {
   $.post(
     '../controllers/dashboard.php',
@@ -35,6 +37,7 @@ function getAdminsLog() {
       }
     });
 }
+
 function getRpSpecs()
 {
   $.post(
@@ -57,6 +60,7 @@ function getRpSpecs()
       }
     });
 }
+
 function getRunningProcesses()
 {
   $.post(

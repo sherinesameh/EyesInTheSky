@@ -1,60 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<link rel="stylesheet" href="../../public/assets/css/materialize.css"  media="screen,projection">
-    <style type="text/css">
-        .nav {
-            background-color: #111111 !important;
-        }
 
-        body {
-            background-color: #E7E6ED;
-        }
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Mobile Ad-hock cloud.">
+    <meta name="author" content="Sherine Sameh">
+    <title>Eyes In The Sky</title>
 
-        .tabs .indicator {
-            background-color: #000000 !important;
-        }
+    <link rel="stylesheet" href="../../public/assets/css/materialize.css"/>
+    <link rel="stylesheet" href="../../public/assets/css/font.css"/>
+    <link rel="stylesheet" href="../../public/assets/css/dashboard.css"/>
 
-        .tabs .tab a.active {
-            color: #000000;
-        }
-
-        .tabs .tab a:hover {
-            color: #000000;
-        }
-
-        .tabs .tab a {
-            color: #000000;
-        }
-        #ppp {
-          height:20px;
-          width:20px;
-        }
-    </style>
-
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous">
-    </script>
-  	<script type="text/javascript" src="../../public/assets/js/dependencies/materialize.js"></script>
-    <script type="text/javascript" src="../../public/assets/js/handlers/dashboard.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function()
-        {
-          getUserInfo();
-          getAdminsLog();
-          $('ul.tabs').on('click', 'a', function(e) {
-              $target = e.target.id;
-              if ($target == "t1") {
-                getAdminsLog();
-              } else if ($target == "t2") {
-                getRpSpecs();
-              } else {
-                getRunningProcesses();
-              }
-            });
-        });
-    </script>
+    <script type="text/javascript" src="../../public/assets/js/dependencies/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="../../public/assets/js/dependencies/materialize.js"></script>
+    <script type="text/javascript" src="../../public/assets/js/init.js"></script>
 </head>
 <body>
     <nav class="grey darken-2">
