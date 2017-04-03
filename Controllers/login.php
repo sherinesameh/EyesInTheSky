@@ -8,8 +8,6 @@
           $_SESSION['Email'] = $email;
 
           $password = htmlspecialchars($_POST['password']) ;
-          //$email = 'farida@gmail.com';
-          //$password = '123123';
           $dboperation = new DbOperation;
           $result= $dboperation->loginUser( $email, $password );
           if($result)
