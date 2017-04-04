@@ -8,8 +8,8 @@
     <meta name="author" content="Sherine Sameh">
     <title>Eyes In The Sky</title>
 
-    <link rel="stylesheet" href="../../public/assets/css/materialize.css"/>
-    <link rel="stylesheet" href="../../public/assets/css/font.css"/>
+    <link rel="stylesheet" href="assets/css/materialize.css"/>
+    <link rel="stylesheet" href="assets/css/font.css"/>
 </head>
 
 <body>
@@ -29,7 +29,7 @@
                 <hr style="height:1px;border:none;color:#039be5;background-color:#039be5;" />
                 <hr style="height:5px;border:none;color:#039be5;background-color:#039be5;" />
                 <div class="row">
-                    <form class="col s12" id="myform" action="../controllers/login.php" method="POST">
+                    <form class="col s12" id="myform" action="../app/controllers/login.php" method="POST">
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="email" type="email" class="validate" name="email" required>
@@ -61,12 +61,12 @@
             </div>
         </div>
         <div class="col l4">
-            <img src="../../public/assets/img/EyesInTheSkyLogo.png" style="max-height:650px;">
+            <img src="assets/img/EyesInTheSkyLogo.png" style="max-height:650px;">
         </div>
     </div>
 
-        <script type="text/javascript" src="../../public/assets/js/dependencies/jquery-3.1.1.min.js"></script>
-        <script type="text/javascript" src="../../public/assets/js/dependencies/materialize.js"></script>
+        <script type="text/javascript" src="assets/js/dependencies/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="assets/js/dependencies/materialize.js"></script>
 </body>
 
 </html>

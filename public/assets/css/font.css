@@ -4,8 +4,8 @@
        url('../fonts/roboto/Roboto-Light.eot'),
        url('../fonts/roboto/Roboto-Medium.eot'),
        url('../fonts/roboto/Roboto-Regular.eot'),
-       url('../fonts/roboto/Roboto-Thin.eot');
-  src: url('../fonts/roboto/Roboto-Bold.woff') format('woff'),
+       url('../fonts/roboto/Roboto-Thin.eot'),
+       url('../fonts/roboto/Roboto-Bold.woff') format('woff'),
        url('../fonts/roboto/Roboto-Light.woff') format('woff'),
        url('../fonts/roboto/Roboto-Medium.woff') format('woff'),
        url('../fonts/roboto/Roboto-Regular.woff') format('woff'),

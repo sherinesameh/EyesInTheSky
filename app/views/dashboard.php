@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,18 +8,24 @@
     <meta name="author" content="Sherine Sameh">
     <title>Eyes In The Sky</title>
 
-    <link rel="stylesheet" href="../../public/assets/css/materialize.css"/>
-    <link rel="stylesheet" href="../../public/assets/css/font.css"/>
-    <link rel="stylesheet" href="../../public/assets/css/dashboard.css"/>
+    <link rel="stylesheet" href="assets/css/materialize.css"/>
+    <link rel="stylesheet" href="assets/css/font.css"/>
+    <link rel="stylesheet" href="assets/css/dashboard.css"/>
 
-    <script type="text/javascript" src="../../public/assets/js/dependencies/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="../../public/assets/js/dependencies/materialize.js"></script>
-    <script type="text/javascript" src="../../public/assets/js/init.js"></script>
+
+    <!-- <script>
+      $.getScript('assets/js/handlers/dashboard.js', function() {
+        getUserInfo();
+        getAdminsLog();
+        getRunningProcesses();
+        getRpSpecs();
+      });
+    </script> -->
 </head>
 <body>
     <nav class="grey darken-2">
         <div class="blue">
-            <a href="#!" class="brand-logo"><i class="material-icons"><img src="../../public/assets/img/EyesInTheSkyLogo.png" style="max-height: 60px; padding-left: 40px;"></i></a>
+            <a href="#!" class="brand-logo"><i class="material-icons"><img src="assets/img/EyesInTheSkyLogo.png" style="max-height: 60px; padding-left: 40px;"></i></a>
             <ul class="right hide-on-med-and-down" style="padding-right:  40px;">
                 <li><a href="logout.php"><i class="material-icons left">live_help</i>Help</a></li>
                 <li><a href="logout.php"><i class="material-icons left">settings</i>Settings</a></li>
@@ -104,5 +109,11 @@
             </div>
         </div>
     </div>
+
+    
+    <script type="text/javascript" src="assets/js/dependencies/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/dependencies/materialize.js"></script>
+    <script type="text/javascript" src="assets/js/init.js"></script>
+
 </body>
 </html>

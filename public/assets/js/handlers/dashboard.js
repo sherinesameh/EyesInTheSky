@@ -1,13 +1,13 @@
 
 function getUserInfo() {
   $.post(
-    '../controllers/dashboard.php',
+    '../app/controllers/dashboard.php',
     {request: 'getUserInfo'},
     function(result, status)
     {
       if (status == 'success') {
         var data = JSON.parse(result);
-        $("#pp").html('<img id="ppp" src="../../public/assets/img/'+data[0].image + '">');
+        $("#pp").html('<img id="ppp" src="assets/img/'+data[0].image + '">');
         $('#profile').html(data[0].Fname)
       }
       else {
@@ -18,7 +18,7 @@ function getUserInfo() {
 
 function getAdminsLog() {
   $.post(
-    '../controllers/dashboard.php',
+    '../app/controllers/dashboard.php',
     {request: 'getAdminsLog'},
     function(result, status)
     {
@@ -41,7 +41,7 @@ function getAdminsLog() {
 function getRpSpecs()
 {
   $.post(
-    '../controllers/dashboard.php',
+    '../app/controllers/dashboard.php',
     {request: 'getRpSpecs'},
     function(result, status)
     {
@@ -50,7 +50,7 @@ function getRpSpecs()
         $("#specs").html("");
         for(var i = data.length-1; i >= 0; i--) {
           if (!data[i].Img_id) {
-              data[i].Img_id = "_____";
+              data[i].Img_id = "_______";
           }
           $("#specs").append("<tr> <td>" + data[i].Mac + "</td> <td>" + data[i].Generation + "</td> <td><a target=\"_blank\" href=\"" + data[i].Location + "\">see location </a></td> <td>" + data[i].Temperature + " &deg;C</td> <td>" + data[i].CpuUsage + " %</td> <td>" + data[i].FreeStorage + " MB</td></tr>");
         }
@@ -64,7 +64,7 @@ function getRpSpecs()
 function getRunningProcesses()
 {
   $.post(
-    '../controllers/dashboard.php',
+    '../app/controllers/dashboard.php',
     {request: 'getRunningProcesses'},
     function(result, status)
     {
