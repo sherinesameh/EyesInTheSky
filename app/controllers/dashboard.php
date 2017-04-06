@@ -4,8 +4,8 @@
   session_start();
   $user = new User;
   $model = new Dashboard;
-
-  $request = $_POST['request'];
+  $params = json_decode(file_get_contents("php://input"));
+  $request = $params->request;
   switch ($request) {
     case "getUserInfo":
       $email = $_SESSION['Email'];
@@ -25,6 +25,7 @@
       echo json_encode($result);
       break;
     default:
-      echo "404 Error";
+      echo json_encode('404 Error');
+      break;
   }
 ?>

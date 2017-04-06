@@ -1,16 +1,11 @@
 <?php
   session_start();
   require_once '../models/user.php';
-
   $user = new User;
-  $email = htmlspecialchars($_POST['email']) ;
-  $password = htmlspecialchars($_POST['password']) ;
+  $params = json_decode(file_get_contents("php://input"));
+  $email = $params->email;
+  $password = $params->password;
   $_SESSION['Email'] = $email;
   $result= $user->loginUser( $email, $password );
-  if($result) {
-    header("Location: http://localhost/Administration/public/dashboard");
-  }
-  else {
-    header("Location: http://localhost/Administration/public/");
-  }
+  echo json_encode($result);
 ?>
