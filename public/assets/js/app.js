@@ -9,9 +9,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
     })
     .state('dashboard', {
       url: '/dashboard',
-      controller: 'dashboardCtrl',
       views: {
-          '': { templateUrl: 'public/directives/dashboard.html' },
+          '': {
+            templateUrl: 'public/directives/dashboard.html'
+          },
           'log@dashboard': {
               templateUrl: 'public/partials/_log.html',
               controller:  'logCtrl'
@@ -24,7 +25,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
               templateUrl: 'public/partials/_profile.html',
               controller:  'userCtrl'
           }
-      }
+        }
     });
-  // $locationProvider.html5Mode(true);
-  });
+});

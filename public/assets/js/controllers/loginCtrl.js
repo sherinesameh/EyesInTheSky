@@ -1,7 +1,6 @@
 
 app.controller('loginCtrl', function($scope, $http, $stateParams, $state)
 {
-  $scope.pageClass = 'page-home';
   $scope.submit = function()
   {
     params = {

@@ -13,17 +13,21 @@
 * **Website**:
 1. ~~Database Schema and Implementation~~
 2. Home Page
-3. Registration and Login Page
+3. Registration and ~~Login Page~~
 4. Administrator Page
-  * Admin Details
-  * Actions History
+  * ~~Admin Details~~
+  * ~~Actions Log~~
   * Raspberry pie specs and tasks
+  * DB Admin Page [Display, add and delete accounts(Admin and Gov)]
 5. User Page
   * ~~User Details~~
   * ~~Upload New Job~~
   * ~~Jobs History~~
   * Mailbox to receive results
 6. Government Page
+  * User Details
+  * Actions
+  * Actions Log
 7. Host the 3 websites with different portals on the same droplet
 
 * **Raspberry pi**:
@@ -48,3 +52,9 @@
 1. ~~Logo~~
 2. ~~UI Designs~~
 3. Descriptive Video
+
+* **Edits**:
+1. app/models/dashboard.php getRunningProcesses() :
+query must be edited to get all the actual running processes for each RP not their number
+2. SQL Mockup:
+Edit location format

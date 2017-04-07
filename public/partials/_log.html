@@ -1,5 +1,33 @@
-<div>
-    <div ng-repeat="log in logs">
-      <h2>{{log.name}}</h2>
+<div class="row">
+  <div class="col s12 m12">
+    <div class="card">
+      <div class="card-content">
+          <h5 class="card-title">Admins Log</h5>
+          <div class="nav-wrapper card">
+              <div class="input-field">
+                <input id="search" type="search" required ng-model="search">
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              </div>
+          </div>
+          <table class="striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Action</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="log in logs | filter:search">
+                <td>{{log.name}}</td>
+                <td>{{log.The_Actions}}</td>
+                <td>{{log.Action_time}}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
     </div>
+  </div>
 </div>
+
+<!--  style="list-style: none" ng-show="search" -->

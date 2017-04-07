@@ -8,3 +8,18 @@
 .btn {
   width: 90% !important;
 }
+.profielpic {
+  border-radius: 50%;
+  padding-right: 35%;
+  padding-left: 35%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  margin-bottom: -20%;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+#userData {
+  margin-top: 10%;
+  width: 100%;
+  text-align: center;
+}

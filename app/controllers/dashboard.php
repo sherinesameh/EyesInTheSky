@@ -4,13 +4,17 @@
   session_start();
   $user = new User;
   $model = new Dashboard;
+  $email = $_SESSION['Email'];
   $params = json_decode(file_get_contents("php://input"));
   $request = $params->request;
   switch ($request) {
+    case "checkSession":
+      if(isset($_SESSION['Email']))
+        echo json_encode('success');
+      break;
     case "getUserInfo":
-      $email = $_SESSION['Email'];
       $result= $user->getUserInfo($email);
-  		echo json_encode($result);
+      echo json_encode($result);
       break;
     case "getAdminsLog":
       $result= $model->getAdminsLog();

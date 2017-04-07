@@ -1,44 +1,30 @@
-.page-home {
-  background:#f2f2f2;
-  overflow-y: hidden;
-}
-.page-dashboard {
-  background:#ffffff;
-}
+#masterPage.ng-leave 	{ z-index:9999; }
+#masterPage.ng-enter 	{ z-index:8888; }
 
-.page.ng-leave 	{ z-index:9999; }
-.page.ng-enter 	{ z-index:8888; }
-
-/* page specific animations ------------------------ */
-
-/* home -------------------------- */
-.page-home.ng-leave {
-  -webkit-transform-origin: 0% 0%;
-	-webkit-animation: slideOutLeft 1s both ease-in;
-	-moz-transform-origin: 0% 0%;
-	-moz-animation: slideOutLeft 1s both ease-in;
-	transform-origin: 0% 0%;
-	animation: slideOutLeft 1s both ease-in;
+#masterPage .loginPage.ng-leave
+{
+    -webkit-transform-origin: 0% 0%;
+    -webkit-animation: slideOutLeft 1s both ease-in;
+    -moz-transform-origin: 0% 0%;
+    -moz-animation: slideOutLeft 1s both ease-in;
+    transform-origin: 0% 0%;
+    animation: slideOutpagepageLeft 1s both ease-in;
 }
-.page-home.ng-enter {
+#masterPage .loginPage.ng-enter {
   -webkit-animation:slideInRight 0.5s both ease-in;
 	-moz-animation:slideInRight 0.5s both ease-in;
 	animation:slideInRight 0.5s both ease-in;
 }
-
-/* dashboard ------------------------ */
-.page-dashboard.ng-leave {
+#masterPage .mainPage.ng-leave {
   -webkit-animation:rotateOutNewspaper 0.5s both ease-in;
 	-moz-animation:rotateOutNewspaper 0.5s both ease-in;
 	animation:rotateOutNewspaper 0.5s both ease-in;
 }
-.page-dashboard.ng-enter {
+#masterPage .mainPage.ng-enter {
   -webkit-animation:slideInUp 0.5s both ease-in;
 	-moz-animation:slideInUp 0.5s both ease-in;
 	animation:slideInUp 0.5s both ease-in;
 }
-
-
 /* rotate and fall */
 @-webkit-keyframes rotateFall {
 	0% { -webkit-transform: rotateZ(0deg); }
