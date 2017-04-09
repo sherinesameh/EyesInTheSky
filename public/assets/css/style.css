@@ -1,208 +1,32 @@
-/* Custom Stylesheet */
-/**
- * Use this file to override Materialize files so you can update
- * the core Materialize files in the future
- *
- * Made By MaterializeCSS.com
- */
-
-
-.icon-block {
-  padding: 0 15px;
+body {
+  background-color: #f3f3f3 !important;
 }
-.icon-block .material-icons {
-	font-size: inherit;
+.action {
+  margin:2%;
 }
-
-/*Mine*/
-body{
-	background: white;
-	margin: 0;
-}
-
-.pgWrapper {
-	background: #333;
-}
-
-.section {
-	padding-left: 15%;
-	padding-right: 15%;
-}
-
-.header {
-	background: white;	
-}
-
-a.brandLink {
-	font-size: 20px; 
-}
-
 .logo {
-	width: 100px;
-	padding-top: 10px;
-	padding-left: 20px;
+  width: 5.5%;
+  height: 5.5%;
 }
-
-
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, 
-pre, form, fieldset, input, textarea, p, blockquote, th, td { 
-  padding:0;
-  margin:0;}
-
-fieldset, img {border:0}
-
-ol, ul, li {list-style:none}
-
-:focus {outline:none}
-
-body,
-input,
-textarea,
-select {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
-  color: #4c4c4c;
-  background-color: #fff;
+.login-header {
+  height:25%;
+  width:25%;
 }
-
-p {
-  font-size: 12px;
-  width: 150px;
-  display: inline-block;
-  margin-left: 18px;
+.loginBtn {
+  width: 90% !important;
 }
-h1 {
-  font-size: 32px;
-  font-weight: 300;
-  color: #4c4c4c;
+.profielpic {
+  border-radius: 50%;
+  padding-right: 35%;
+  padding-left: 35%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  margin-bottom: -20%;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+#userData {
+  margin-top: 10%;
+  width: 100%;
   text-align: center;
-  padding-top: 10px;
-  margin-bottom: 10px;
-}
-
-html{
-  background-color: #ffffff;
-}
-
-.testbox {
-  margin: 20px auto;
-  width: 600px; 
-  height: 510px; 
-  -webkit-border-radius: 8px/7px; 
-  -moz-border-radius: 8px/7px; 
-  border-radius: 8px/7px; 
-  background-color: #ededed; 
-  -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
-  -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
-  box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
-  border: solid 1px #cbc9c9;
-}
-
-input[type=radio] {
-  visibility: hidden;
-}
-
-form{
-  margin: 0 30px;
-}
-
-label.radio {
-  cursor: pointer;
-  text-indent: 35px;
-  overflow: visible;
-  display: inline-block;
-  position: relative;
-  margin-bottom: 15px;
-}
-
-label.radio:before {
-  background: #fff;
-  content:'';
-  position: absolute;
-  top:2px;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-}
-
-label.radio:after {
-	opacity: 0;
-	content: '';
-	position: absolute;
-	width: 0.5em;
-	height: 0.25em;
-	background: transparent;
-	top: 7.5px;
-	left: 4.5px;
-	border: 3px solid #ffffff;
-	border-top: none;
-	border-right: none;
-}
-
-input[type=radio]:checked + label:after {
-	opacity: 1;
-}
-
-hr{
-  color: #a9a9a9;
-  opacity: 0.3;
-}
-
-input[type=text],input[type=password],input[type=email],input[type=date]{
-background: transparent; 
-border: none; 
-box-shadow: none;
-}
-
-.gender {
-  margin-left: 30px;
-  margin-bottom: 30px;
-}
-
-.accountType{
-  margin-left: 8px;
-  margin-top: 20px;
-}
-
-.button {
-  font-size: 14px;
-  font-weight: 500;
-  color: white;
-  float: right;
-  text-decoration: none;
-  width: 100px; height: 27px;
-  border-radius: 5px; 
-  background-color: #2081A0; 
-  position: relative;
-  text-align: center;
-  padding-top: 5px;
-}
-
-.uploadButton {
-  font-size: 14px;
-  font-weight: 500;
-  color: white;
-  float: left;
-  text-decoration: none;
-  width: 200px; height: 35px;
-  border-radius: 4px; 
-  background-color: #2081A0;  
-  position: relative;
-  text-align: center;
-  padding-top: 9px;
-}
-
-.button:hover {
-  background-color:#196780;  
-}
-
-.uploadButton:hover {
-  background-color:#196780;  
-}
-#footer
-{   position: fixed;
-    bottom: 0;
-    right: 0;
-    left: 0;
 }

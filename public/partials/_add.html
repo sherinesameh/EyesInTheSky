@@ -1,0 +1,48 @@
+<div class="row">
+  <form name="addingForm" ng-submit="submit()">
+    <div class="input-field col s4">
+      <input type="text" name="Fname" ng-model="Fname" ng-required="true">
+      <label for="Fname"> First Name</label>
+    </div>
+    <div class="input-field col s4">
+      <input type="text" name="Mname" ng-model="Mname" ng-required="true">
+      <label for="Mname"> Middle Name</label>
+    </div>
+    <div class="input-field col s4">
+      <input type="text" name="Lname" ng-model="Lname" ng-required="true">
+      <label for="Lname"> Last Name</label>
+    </div>
+    <div class="input-field col s12">
+      <input type="text" name="path" ng-model="path" ng-required="true">
+      <label for="path">Path</label>
+    </div>
+    <div class="input-field col s12">
+      <input type="date" class="datepicker" ng-model="expireDate">
+    </div>
+    <div class="input-field col s12">
+      <input type="text" name="priority" ng-model="priority" ng-required="true">
+      <label for="priority">Priority</label>
+    </div>
+    <div class="file-field input-field row">
+      <div class="waves-effect waves-light btn col s3">
+        <span>Upload Image</span>
+        <input type="file">
+      </div>
+      <div class="file-path-wrapper col s9">
+        <input class="file-path validate" type="text" ng-required="true">
+      </div>
+    </div>
+
+    <!-- <div class="input-field col s12">
+      <select ng-model="priority">
+      <option value="" disabled selected>Priority</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      </select>
+    </div> -->
+    <div class="action col s3 offset-s9">
+      <input type="submit" value="Add Criminal" class="waves-effect waves-light btn" ng-disabled="addingForm.$invalid"/>
+    </div>
+  </form>
+</div>
