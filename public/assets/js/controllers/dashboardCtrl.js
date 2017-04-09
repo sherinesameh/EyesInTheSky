@@ -1,5 +1,5 @@
   function sendRequest($http, params) {
-    return $http.post('app/controllers/dashboard.php', params)
+    return $http.post('app/controllers/requests.php', params)
     .success(function(data) {
         return data;
     })
@@ -16,7 +16,6 @@
        }
     });
   }
-
   app.controller('userCtrl', function($scope, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
     params = {request: 'getUserInfo'};
@@ -24,7 +23,6 @@
       $scope.user = data[0];
     });
   });
-
   app.controller('logCtrl', function($scope, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
     params = {request: 'getAdminsLog'};
@@ -32,7 +30,6 @@
       $scope.logs = data;
     });
   });
-
   app.controller('rpCtrl', function($scope, $http, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
     specs = {request: 'getRpSpecs'};

@@ -13,6 +13,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
           '': {
             templateUrl: 'public/directives/dashboard.html'
           },
+          'navbar@dashboard': {
+              templateUrl: 'public/partials/_navbar.html'
+          },
           'log@dashboard': {
               templateUrl: 'public/partials/_log.html',
               controller:  'logCtrl'

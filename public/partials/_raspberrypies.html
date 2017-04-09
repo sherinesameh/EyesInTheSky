@@ -39,7 +39,7 @@
                     <span class="tempValue">{{spec.Temperature}}&deg;C</span>
                 </td>
                 <td>
-                  <div id="circle" class="c100 p{{spec.Temperature}} small">
+                  <div id="circle" class="c100 p{{spec.CpuUsage}} small">
                     <span id="value">{{spec.CpuUsage}}%</span>
                     <div class="slice">
                       <div class="bar"></div>
@@ -48,7 +48,7 @@
                   </div>
                 </td>
                 <td>
-                  <div id="circle" class="c100 p{{spec.Temperature}} small">
+                  <div id="circle" class="c100 p{{spec.FreeStorage}} small">
                     <!-- Make the Storage % not a real Num -->
                     <span id="value">{{spec.FreeStorage}}MB</span>
                     <div class="slice">
