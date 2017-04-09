@@ -3,7 +3,7 @@
 <!-- Modal Structure -->
 <div id="registration" class="modal" style="color:#2081A0">
   <div class="modal-content">
-    <form action="register.php" method="POST">
+    <form action="../app/controllers/register.php" method="POST">
     <h1 style="color:#2081A0">Registration</h1>
     <hr>
 

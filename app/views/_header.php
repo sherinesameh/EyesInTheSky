@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" type="text/css"  href="./assets/css/materialize.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/ustyle.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="./assets/css/style.css"> -->
   </head>
 
   <body>

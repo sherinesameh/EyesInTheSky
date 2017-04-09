@@ -1,9 +1,9 @@
 
 <nav>
-    <div class="header">
-      <a href="#" class="header"><img src="./assets/img/EyesInTheSkyLogo.png" class="logo"></a>
+    <div class="header" >
+      <a href="#" class="header" ><img src="./assets/img/EyesInTheSkyLogo.png" class="logo"></a>
       <ul id="nav-mobile" class="right">
-        <li><a href="#" style="color:#2081A0">Log In</a></li>
+        <li><a href="http://localhost/EyesInTheSky/app/views/_login.php" style="color:#2081A0">Log In</a></li>
         <li><a href="#" style="color:#2081A0">About</a></li>
       </ul>
      </div> 

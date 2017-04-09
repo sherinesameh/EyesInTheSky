@@ -7,6 +7,7 @@ class Home extends Controller
 		$this->view('_header');
 		$this->view('_home');
 		$this->view('_registration');
-		$this->view('_footer');
+		$this->view('_footer');	
+		//$this->view('_login');	
 	}
 }

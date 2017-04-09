@@ -31,14 +31,14 @@
           </div>
           
           <div class="row">
-            <form action="newJob">
+            <form action="http://localhost/EyesInTheSky/app/controllers/upload.php" method="post" enctype="multipart/form-data">
             
               <div class="row">
                 <div class="file-field input-field col s10 offset-s1">
                   <!-- <div class="col-s4"> -->
                     <div class="btn" id="formbtn">
                         <span>Docker File</span>
-                        <input type="file">
+                        <input type="file" name="file_array[]">
                     </div>
                   <!-- </div> -->
                   <!-- <div class="row"> -->
@@ -54,7 +54,7 @@
                      <!-- <div class="col-s4"> -->
                         <div class="btn" id="formbtn">
                           <span>Your Files</span>
-                          <input type="file" multiple>
+                          <input name="file_array[]" type="file" multiple = "multiple">
                         </div>
                       <!-- </div> -->
                       <!-- <div class=row> -->

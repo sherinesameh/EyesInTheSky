@@ -24,12 +24,12 @@ echo "3dad ".count($name_array)." <br>";
 
 $check_docker = 0;
 
-	for ($i=0; $i < count($name_array); $i++) {
+	for ($i=0; $i < count($name_array); $i++) { 
 		if (move_uploaded_file($temp_array[$i], "../../test_uploads/".$name_array[$i])) {
 			if (!strcmp($name_array[$i], "Dockerfile")) {
 				$check_docker = $check_docker + 1;
 			}
-
+			
 			echo $name_array[$i]." upload is complete<br>";
 		}else{
 			echo $name_array[$i]." upload failed<br>";
@@ -45,8 +45,9 @@ $check_docker = 0;
 	}else
 	{
 		echo "correct dockerfile <br>";
- 		$dockerfile= "/opt/lampp/htdocs/EyesInTheSky/uploads";
- 		exec("python ../models/rundocker.py $dockerfile");
+
+ 		$path= "/opt/lampp/htdocs/EyesInTheSky/test_uploads";
+ 		exec("python test.py $path");
 
  	}
 
