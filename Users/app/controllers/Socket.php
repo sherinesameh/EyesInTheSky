@@ -12,11 +12,10 @@ class mySocket
 	}
 	function send($path)
 	{
-		sleep(10);
 		$type ="user";
 		$output = $path;
 		socket_write($this->socket, $type, strlen ($type)) or die("Could not write output\n");
-		sleep(10);
+		sleep(1);
 		socket_write($this->socket, $output, strlen ($output)) or die("Could not write output\n");
 	}
 	function receive()

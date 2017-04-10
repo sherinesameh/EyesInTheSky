@@ -1,5 +1,7 @@
 <?php
 require("Socket.php");
+$socket = new mySocket;
+
 if (isset($_FILES['file_array'])) {
 	echo "tmam";
 	$name_array = $_FILES['file_array']['name'];
@@ -20,7 +22,6 @@ if(!is_dir("../../test_uploads/")) {
 mkdir("../../test_uploads/", 0777);
 umask($oldmask);
 }
-echo "3dad ".count($name_array)." <br>";
 
 $check_docker = 0;
 
@@ -45,7 +46,6 @@ $check_docker = 0;
 	} else {
 			echo "correct dockerfile <br>";
 	 		$path= "/opt/lampp/htdocs/EyesInTheSky/test_uploads";
-			$socket = new Socket;
 			$socket->send($path);
 	}
 }
