@@ -1,6 +1,8 @@
 <?php
 require("Socket.php");
+require("../models/user.php");
 $socket = new mySocket;
+$user = new User;
 
 if (isset($_FILES['file_array'])) {
 	echo "tmam";
@@ -10,10 +12,6 @@ if (isset($_FILES['file_array'])) {
 	$size_array = $_FILES['file_array']['size'];
 	$error_array = $_FILES['file_array']['error'];
 
-	// Create directory if it does not exist
-/*if(!is_dir("Proposals/". $_SESSION["FirstName"] ."/")) {
-    mkdir("Proposals/". $_SESSION["FirstName"] ."/");
-}*/
 
 //	Create directory if it does not exist
 if(!is_dir("../../test_uploads/")) {
@@ -45,6 +43,15 @@ $check_docker = 0;
 			echo "there is more than one Dockerfile <br>";
 	} else {
 			echo "correct dockerfile <br>";
+			// $name = $_POST['task_name'];
+			// $id = $_SESSION['id'];
+
+			$name = "webServer";
+			$id  = 1;
+
+
+			$user->addProcess($id,$name,-1,-1,'-1','-1',-1,22894);
+
 	 		$path= "/opt/lampp/htdocs/EyesInTheSky/test_uploads";
 			$socket->send($path);
 	}
