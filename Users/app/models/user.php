@@ -40,6 +40,25 @@
             return ALREADY_EXIST;
         }
     }
+
+
+
+    public function addProcesss($id,$name,$cont_id,$cont_ip,$mac,$img_id,$size,$process_state)
+    {
+        #processs table 
+            $stmt = $this->conn->prepare("INSERT INTO `Process`(`Img_id`, `Process_name`, `Cont_id`, `Cont_IP`, `Mac`, `User_id`, `Size`,  `Process_State`) VALUES (?,?,?,?,?,?,?,?)");
+            $stmt->bind_param("isissiii",$img_id , $name , $cont_id , $cont_ip , $mac , $id , $size , $process_state );
+            $result = $stmt->execute();
+            $stmt->close();
+
+         #log table \
+         
+            $stmt2 = $this->conn->prepare("INSERT INTO `User_Log`(`User_id`, `Img_id`, `Process_name`, `Action`) VALUES (?,?,?,?,20794)");
+            $stmt2->bind_param("iis"$id ,$img_id , $name );
+            $stmt2->execute();
+            $stmt2->close();   
+
+    }
     public function loginUser( $email, $pass)
     {
             $stmt = $this->conn->prepare("SELECT * FROM `User` WHERE Email = ? AND Password = ?");
@@ -76,18 +95,15 @@
         $result = $this->getResult($stmt);
         return $result;
     }
-    // public function updateProfile()
-    // {
-    //
-    // }
+  
     public function getLog($id)
     {
-      // $stmt = $this->conn->prepare("SELECT Img_id Process_name FROM User_Log WHERE id = ?");
-      // $stmt->bind_param("s",$id);
-      // $result = $stmt->execute();
-      // $stmt->execute();
-      // $result = $this->getResult($stmt);
-      // return $result;
+      $stmt = $this->conn->prepare("SELECT User_Log.Process_name , User_Log.Time , Code_index.Action FROM `User_Log` INNER JOIN Code_index ON User_Log.Action = Code_index.Code  WHERE User_Log.User_id = ?");
+      $stmt->bind_param("i",$id);
+      $result = $stmt->execute();
+      $stmt->execute();
+      $result = $this->getResult($stmt);
+      return $result;
     }
   }
 ?>
