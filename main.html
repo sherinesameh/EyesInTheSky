@@ -1,0 +1,24 @@
+<html>
+<head>
+	<title>Goverment DashBoard</title>
+<script type="text/javascript" src="jquery.js"></script>	
+<script type="text/javascript">
+$(document).ready(function(){
+
+  $('#test').click(function(){
+      window.location.replace("go.php");         
+    });
+});
+</script>
+</head>
+<body>
+<form enctype="multipart/form-data" method="post" action="main.php">
+    <label>
+    <h1>Choose a zip file to upload:</h1>
+    <input type="file" name="zip_file" />
+    </label>
+    <input type="submit" name="submit" value="Upload" />
+</form>
+<button id='test'>Train</button>
+</body>
+</html>
