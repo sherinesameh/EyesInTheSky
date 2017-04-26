@@ -1,32 +1,36 @@
 import socket
 import threading
+import utilities
+import sys
+import datetime
+import os
 from sys import exit
-from queue import Queue
+from dbHandler import dbHandler
+import subprocess
+import datetime
 
-NUMBEROFTHREADS = 2
+NUMBEROFTHREADS = 10
 TASKNUMBER = [1, 2]
-queue = Queue()
+
 allConnections = []
 allAddresses = []
+RpConnections = {}
 
 host = ''
-port = 8080
-
+port = 5555
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 def setupConnection():
     try:
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((host, port))
-        s.listen(1)
+        s.listen(NUMBEROFTHREADS)
     except socket.error as errorMsg:
         print(errorMsg)
         setupConnection()
 
 def acceptConnections():
-    for connection in allConnections:
-        connection.close()
-    del allConnections[:]
-    del allAddresses[:]
+    RpConnections.clear()
     while True:
         try:
             connection, address = s.accept()
@@ -34,104 +38,134 @@ def acceptConnections():
         except Exception as e:
             print(e)
             continue
-        allConnections.append(connection)
-        allAddresses.append(address)
+        if str(address[0]) == "127.0.0.1": #user or admin is establishing the connection
+            thread = threading.Thread(target = checkType , kwargs={'s': connection})
+            thread.daemon = True
+            thread.start()
+        else : #raspberry pi is establishing the connection
+            thread = threading.Thread(target = connectRP , kwargs={'s': connection})
+            thread.daemon = True
+            thread.start()
         print("Connections has been established | IP: " + address[0] + " | Port: " + str(address[1]))
 
-def startCmd():
+def connectRP(s):
+    connection = s
+    specs = str(connection.recv(1024))
+    print(specs)
+
+def sendcmd(connection):
     while True:
-        cmd = input('server > ')
-        if cmd == 'list':
-            listConnections()
-        elif 'select' in cmd:
-            target, connection = getTarget(cmd)
-            if connection is not None:
-                sendCommand(target, connection)
-        elif cmd == 'broadcast':
-            sendBroadcast()
-        elif cmd == 'quit':
-            exit(0)
-        else:
-            print('Indefined command!')
+        cmd = raw_input()
+        connection.send(str.encode(cmd))
+        response = str(connection.recv(1024))
+        print(response + "")
 
+def checkType(s):
+    connection = s
+    type = connection.recv(1024)
+    print(type.decode('utf-8'))
+    if type.decode('utf-8') == "user":
+        userCommands(connection)
+    else:
+        adminCommands(connection)
 
-def listConnections():
-    results = ''
-    for i, connection in enumerate(allConnections):
+def adminCommands(c):
+    connection = c;
+    while True:
+        data = connection.recv(1024);
+        if not data:
+            break
+        command = data.decode('utf-8')
+        # if 'close' in command :
+            # hanshof han7ot eh hena
+        # else:
+            # print('Indefined command!')
+
+def sendFile(connection,path):
+    f = open(path,'rb')
+    while True:
+        reading = f.read(1024)
+        if not reading:
+            break
+        connection.send(str.encode(reading))  
+        # print(connection.recv(1024)).decode('utf-8')
+    f.close()
+    print 'Done Sending'
+
+def createDir():
+    directory = '/home/yamen/Desktop/' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    return directory
+
+def userCommands(c):
+    connection = c
+    cmd = connection.recv(1024)
+    path = cmd.decode('utf-8')
+    
+    db = dbHandler()
+    mac = db.getMac()
+    target = db.getSpecs(mac)
+    results = target.split(":")
+    print(results)
+
+    username = results[0]
+    password = results[1]
+    hostname = results[2]
+
+    print(username)
+    print(password)
+    print(hostname)
+
+    directory = path
+    print("el patj is "+directory)
+    # os.mkdir(directory, 0755);
+    os.chdir(directory)
+    if str(os.getcwd()) == directory:
+        cmd = 'docker build .' 
         try:
-            connection.send(str.encode('here?'))
-            check = connection.recv(1024)
-            if check.decode('utf-8') == 'yes':
-                results += str(i) + ' | ' + str(allAddresses[i][0]) + ' | ' + str(allAddresses[i][1]) + '\n'
+            execute = subprocess.Popen(cmd, shell = True, stdout = subprocess.PIPE,
+            stderr = subprocess.PIPE, stdin = subprocess.PIPE)
+            outputBytes = execute.stdout.read() + execute.stderr.read()
+            output = str.encode(outputBytes)
         except Exception as e:
-            del allConnections[i]
-            del allAddresses[i]
-            continue
+            output = e
+        print(output) 
+        connection.send(output)
+        print("done")
+ 
+    # add the user username to the directory name??
+    #Create a new directory for each new job
+    # directory = '~/Desktop/' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    # utilities.sshCommand(hostname, username, password, 'mkdir ' + directory)
 
-    print('Connected Clients:\n' + '#   |  IP Address  |   Port number\n' +results)
+    # #Copy the docker file on RP
+    # utilities.bashCommand('cat ' + path + '/Dockerfile | sshpass -p ' + password + ' ssh ' + username + '@' + hostname + ' "cat >> '+ directory +'/Dockerfile"')
 
-def getTarget(cmd):
-    try:
-        target = int(cmd.split(' ')[1])
-        connection = allConnections[target]
-        print("you are now connected to " + str(allAddresses[target][0]))
-        print(str(allAddresses[target][0]) + '> ', end='')
-        return target, connection
-    except Exception as e:
-        print(e)
-        return None, None
+    # # Must display result on web instead of printing??
+    # #Build and run the docker file
+    # result = buildAndRunDocker(hostname, username, password, directory)
+    # connection.send(result)
 
-def sendCommand(target, connection):
-    while True:
-        cmd = input()
-        if cmd == 'quit':
-            break
-        if cmd == ':wq':
-            connection.close()
-            s.close()
-            del allConnections[target]
-            del allAddresses[target]
-            break
-        if len(str.encode(cmd)) > 0:
-            connection.send(str.encode(cmd))
-            response = str(connection.recv(1024).decode('utf-8'))
-            print(response, end='')
 
-def sendBroadcast():
-    while True:
-        cmd = input('Broadcast message > ')
-        if cmd == 'quit':
-            break
-        for i, connection in enumerate(allConnections):
-            if len(str.encode(cmd)) > 0:
-                connection.send(str.encode(cmd))
-                response = str(connection.recv(1024).decode('utf-8'))
-                print(response)
+def buildAndRunDocker(hostname, username, password, directory):
+    changeDir   = 'cd ' + directory +' ; '
+    buildDocker = utilities.sshCommand(hostname, username, password, changeDir+'docker build .')
+    p  = str(buildDocker)
+    words = buildDocker.split('Successfully built')
+    imgID = words[1].strip()
+    print("my id is "+imgID)
+    
 
-def createThreads():
-    for _ in range(NUMBEROFTHREADS):
-        thread = threading.Thread(target = task)
-        thread.daemon = True
-        thread.start()
+    imgID = utilities.sshCommand(hostname, username, password, 'docker image ls -q').split('\n')[1]
 
-def createTasks():
-    for i in TASKNUMBER:
-        queue.put(i)
-    queue.join()
 
-def task():
-    while True:
-        i = queue.get()
-        if i == 1:
-            setupConnection()
-            acceptConnections()
-        elif i == 2:
-            startCmd()
-        queue.task_done()
+    print(imgID)
+
+    runDocker = utilities.sshCommand(hostname, username, password, 'docker run ' + imgID)
+    return runDocker
 
 def main():
-    createThreads()
-    createTasks()
+    setupConnection()
+    acceptConnections()
 
 if __name__ == '__main__':
     main()
