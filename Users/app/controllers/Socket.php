@@ -2,7 +2,7 @@
 class mySocket
 {
 	private $host = "localhost";
-  private $port = 8080;
+  private $port = 5555;
   private $socket;
 
 	function __construct()
@@ -21,7 +21,28 @@ class mySocket
 	function receive()
 	{
 
+
+        $input = socket_read($this->socket, 1024) or die("Could not write output\n");
+
+		echo "ana hena :" .$input;
+
+		echo "string2";
+
+		// if(socket_recv ( $this->socket , $buf , 2045 , MSG_WAITALL ) === FALSE)
+		// {
+		//     $errorcode = socket_last_error();
+		//     $errormsg = socket_strerror($errorcode);
+		     
+		//     die("Could not receive data: [$errorcode] $errormsg \n");
+		// }
+		 
+		// //print the received message
+		// echo $buf;
+
 	}
+
+
+
 	function close()
 	{
       socket_close($this->socket) ;

@@ -15,15 +15,15 @@ switch ($request) {
       $result = $user->getProfile($email);
       echo json_encode($result);
       break;
-    // case "updateProfile":
-    //     $result = $user->updateProfile();
-    //     echo json_encode($result);
-    //     break;
     case "getLog":
-        $id = $_SESSION(['id']);
+        $id = $_SESSION['id'];
         $result = $user->getLog($id);
         echo json_encode($result);
         break;
+// case "updateProfile":
+//     $result = $user->updateProfile();
+//     echo json_encode($result);
+//     break;
     default:
       break;
   }
