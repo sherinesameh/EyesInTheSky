@@ -52,6 +52,13 @@ def connectRP(s):
     connection = s
     specs = str(connection.recv(1024))
     print(specs)
+    #el specs mafrod menha el ip wl mac
+    #mac = specs(0)
+    #ip = specs(1) 
+    #RpConnections[mac] = connection
+    # b3d kda hanshof hanro7 feen 
+
+
 
 def sendcmd(connection):
     while True:
@@ -81,20 +88,20 @@ def adminCommands(c):
         # else:
             # print('Indefined command!')
 
+
 def sendFile(connection,path):
-    f = open(path,'rb')
-    while True:
-        reading = f.read(1024)
-        if not reading:
-            break
-        connection.send(str.encode(reading))  
-        # print(connection.recv(1024)).decode('utf-8')
-    f.close()
+    filename = 'Dockerfile'
+    filename = os.path.join(path,filename)
+    filesize = os.path.getsize(filename)
+    filesize = bin(filesize)[2:].zfill(32) # encode filesize as 32 bit binary
+    connection.send(filesize)
+
+    file_to_send = open(path+filename, 'rb')
+    l = file_to_send.read()
+    connection.sendall(l)
+    file_to_send.close()
     print 'Done Sending'
 
-def createDir():
-    directory = '/home/yamen/Desktop/' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    return directory
 
 def userCommands(c):
     connection = c
@@ -111,12 +118,13 @@ def userCommands(c):
     password = results[1]
     hostname = results[2]
 
-    print(username)
-    print(password)
-    print(hostname)
+
+    # print(username)
+    # print(password)
+    # print(hostname)
 
     directory = path
-    print("el patj is "+directory)
+    print("el path is "+directory)
     # os.mkdir(directory, 0755);
     os.chdir(directory)
     if str(os.getcwd()) == directory:
@@ -128,9 +136,16 @@ def userCommands(c):
             output = str.encode(outputBytes)
         except Exception as e:
             output = e
-        print(output) 
+        print("el output : " + output) 
         connection.send(output)
         print("done")
+
+
+
+
+
+
+
  
     # add the user username to the directory name??
     #Create a new directory for each new job
