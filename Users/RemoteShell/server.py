@@ -50,13 +50,15 @@ def acceptConnections():
 
 def connectRP(s):
     connection = s
-    specs = str(connection.recv(1024))
-    print(specs)
+    result = str(connection.recv(80))
+    print(result)
+    specs = result.split("\n")
     #el specs mafrod menha el ip wl mac
-    #mac = specs(0)
-    #ip = specs(1) 
-    #RpConnections[mac] = connection
-    # b3d kda hanshof hanro7 feen 
+    mac = specs[1]
+    ip = specs[0]
+    print("my mac "+mac) 
+    RpConnections[mac] = connection
+    #b3d kda hanshof hanro7 feen 
 
 
 
@@ -90,13 +92,15 @@ def adminCommands(c):
 
 
 def sendFile(connection,path):
+    connection.send("upload")
     filename = 'Dockerfile'
-    filename = os.path.join(path,filename)
-    filesize = os.path.getsize(filename)
+    filename2 = os.path.join(path,filename)
+    filesize = os.path.getsize(filename2)
+    print("file size is "+str(filesize))
     filesize = bin(filesize)[2:].zfill(32) # encode filesize as 32 bit binary
     connection.send(filesize)
 
-    file_to_send = open(path+filename, 'rb')
+    file_to_send = open(path+'/'+ filename, 'rb')
     l = file_to_send.read()
     connection.sendall(l)
     file_to_send.close()
@@ -109,14 +113,16 @@ def userCommands(c):
     path = cmd.decode('utf-8')
     
     db = dbHandler()
-    mac = db.getMac()
-    target = db.getSpecs(mac)
-    results = target.split(":")
-    print(results)
+    # mac = db.getMac()
+    mac = 'b8:27:eb:f5:d6:1c'
+    # target = db.getSpecs(mac)
+    Rp_connection = RpConnections[mac]
+    # results = target.split(":")
+    # print(results)
 
-    username = results[0]
-    password = results[1]
-    hostname = results[2]
+    # username = results[0]
+    # password = results[1]
+    # hostname = results[2]
 
 
     # print(username)
@@ -124,21 +130,31 @@ def userCommands(c):
     # print(hostname)
 
     directory = path
-    print("el path is "+directory)
-    # os.mkdir(directory, 0755);
-    os.chdir(directory)
-    if str(os.getcwd()) == directory:
-        cmd = 'docker build .' 
-        try:
-            execute = subprocess.Popen(cmd, shell = True, stdout = subprocess.PIPE,
-            stderr = subprocess.PIPE, stdin = subprocess.PIPE)
-            outputBytes = execute.stdout.read() + execute.stderr.read()
-            output = str.encode(outputBytes)
-        except Exception as e:
-            output = e
-        print("el output : " + output) 
-        connection.send(output)
-        print("done")
+
+    # print("el path is "+directory)
+    # # os.mkdir(directory, 0755);
+    # os.chdir(directory)
+    # if str(os.getcwd()) == directory:
+    #     cmd = 'docker build .' 
+    #     try:
+    #         execute = subprocess.Popen(cmd, shell = True, stdout = subprocess.PIPE,
+    #         stderr = subprocess.PIPE, stdin = subprocess.PIPE)
+    #         outputBytes = execute.stdout.read() + execute.stderr.read()
+    #         output = str.encode(outputBytes)
+    #     except Exception as e:
+    #         output = e
+    #     print("el output : " + output) 
+    #     connection.send(output)
+    #     print("done")
+    sendFile(Rp_connection , directory)
+    response = Rp_connection.recv(11)
+    print("el 7a2e2y  "+response)
+    if response == 'filecreated':
+        print("el response "+response)
+        Rp_connection.send('rundocker')
+        result = str(Rp_connection.recv(1024)).decode('utf-8')
+        connection.send(result)
+
 
 
 
