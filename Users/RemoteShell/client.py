@@ -1,44 +1,70 @@
 import socket
+import sys
 import os
 import subprocess
-import sys
+import datetime
 import specs
 
-host = '192.168.8.101'
-port = 8080
+# host = '46.101.180.16'
+host = '192.168.8.103'
+port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 def establishConnection():
-    print('hre')
     try:
         s.connect((host, port))
     except socket.error as errorMsg:
         print(errorMsg)
 
+def createDir():
+    directory = '/home/pi/Desktop/' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    return directory
+
+def receiveFile(directory):
+    try:
+        filesize = s.recv(32)
+        filesize = int(filesize, 2)
+        print('file size '+str(filesize)) 
+
+        os.mkdir(directory, 0755);
+        os.chdir(directory)
+        
+        if str(os.getcwd()) == directory:
+            f = open('Dockerfile','wb')
+            chunksize = 4096
+            
+            while filesize > 0:
+                if filesize < chunksize:
+                    chunksize = filesize
+                data = s.recv(chunksize)
+                f.write(data)
+                filesize -= chunksize
+            f.close()
+            print 'File received successfully'
+    except IOError as e:
+        print e
+
+def sendSpecs():
+    s.send(specs.StaticSpecs())
+
 def executeCommand():
-    sentMsg = specs.StaticSpecs()
-    s.send(sentMsg)
-    # while True:
-    #     data = s.recv(1024)
-    #     if data[:2].decode('utf-8') == 'cd':
-    #         os.chdir(data[3:].decode('utf-8'))
-    #     elif data.decode('utf-8') == 'here?':
-    #         s.send(str.encode('yes'))
-    #     elif data.decode('utf-8') == 'quit':
-    #         s.send(str.encode('quit'))
-    #         break
-    #     elif data.decode('utf-8') == ':wq':
-    #         s.close()
-    #         sys.exit(0)
-    #         break
-    #     elif len(data) > 0:
-    #         cmd = subprocess.Popen(data[:].decode('utf-8'), shell = True, stdout = subprocess.PIPE,
-    #         stderr = subprocess.PIPE, stdin = subprocess.PIPE)
-    #         outputBytes = cmd.stdout.read() + cmd.stderr.read()
-    #         output = str(outputBytes, 'utf-8')
-    #         s.send(str.encode(output + str(os.getcwd()) + '> '))
-    #         print(output)
-    s.close()
+	sendSpecs()
+        if s.recv(6) == 'upload' :	
+	   directory = createDir()        
+           receiveFile(directory)
+           s.send('filecreated')
+           if s.recv(9) == 'rundocker':
+              cmd = 'docker build -t curl_docker . ; docker run curl_docker' 
+              try:
+                  execute = subprocess.Popen(cmd, shell = True, stdout = subprocess.PIPE,
+                  stderr = subprocess.PIPE, stdin = subprocess.PIPE)
+                  outputBytes = execute.stdout.read() + execute.stderr.read()
+                  output = str.encode(outputBytes)
+              except Exception as e:
+                  output = e
+              print(output)
+              s.send(str.encode(output))
+        s.close()
 
 def main():
     establishConnection()
