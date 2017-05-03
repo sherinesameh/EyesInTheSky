@@ -9,6 +9,7 @@
       $db = new DbConnection();
       $this->conn = $db->connect();
     }
+
     private function getResult( $Statement )
     {
         $RESULT = array();
@@ -24,6 +25,7 @@
         }
         return $RESULT;
     }
+
     public function createUser($name, $username, $email, $pass, $date)
     {
         if (!$this->isUserExists($email)) {
@@ -40,25 +42,21 @@
             return ALREADY_EXIST;
         }
     }
-
-
-
     public function addProcesss($id,$name,$cont_id,$cont_ip,$mac,$img_id,$size,$process_state)
     {
-        #processs table 
+        #processs table
             $stmt = $this->conn->prepare("INSERT INTO `Process`(`Img_id`, `Process_name`, `Cont_id`, `Cont_IP`, `Mac`, `User_id`, `Size`,  `Process_State`) VALUES (?,?,?,?,?,?,?,?)");
             $stmt->bind_param("isissiii",$img_id , $name , $cont_id , $cont_ip , $mac , $id , $size , $process_state );
             $result = $stmt->execute();
             $stmt->close();
-
-         #log table \
-         
+         #log table
             $stmt2 = $this->conn->prepare("INSERT INTO `User_Log`(`User_id`, `Img_id`, `Process_name`, `Action`) VALUES (?,?,?,?,20794)");
-            $stmt2->bind_param("iis"$id ,$img_id , $name );
+            $stmt2->bind_param("iis" ,$id ,$img_id , $name );
             $stmt2->execute();
-            $stmt2->close();   
+            $stmt2->close();
 
     }
+
     public function loginUser( $email, $pass)
     {
             $stmt = $this->conn->prepare("SELECT * FROM `User` WHERE Email = ? AND Password = ?");
@@ -77,6 +75,7 @@
                 return LOGGED_IN_ERROR;
             }
     }
+
     private function isUserExists($email)
     {
         $stmt = $this->conn->prepare("SELECT User_id FROM User WHERE Email=?");
@@ -87,6 +86,7 @@
         $stmt->close();
         return $num_rows > 0;
     }
+
     public function getProfile($email)
     {
         $stmt = $this->conn->prepare("SELECT * FROM `User` WHERE Email = ?");
@@ -95,7 +95,7 @@
         $result = $this->getResult($stmt);
         return $result;
     }
-  
+
     public function getLog($id)
     {
       $stmt = $this->conn->prepare("SELECT User_Log.Process_name , User_Log.Time , Code_index.Action FROM `User_Log` INNER JOIN Code_index ON User_Log.Action = Code_index.Code  WHERE User_Log.User_id = ?");

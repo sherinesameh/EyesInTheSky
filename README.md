@@ -1,11 +1,10 @@
 ![alt text][logo]
-
 [logo]: https://github.com/SherineSameh/EyesInTheSky/blob/master/Users/public/assets/img/EyesInTheSkyLogo.png "Logo"
 
 # EyesInTheSky
 
 > Mobile Ad-hock Cloud [Mobile infrastructure-less Cloud].  
-> Website: PHP MVC - Angular JS - Material Design.  
+> Website: MVC Model - No Framework - Angular JS - Material Design.  
 > Back-End: PHP and Python
 
 ## To-Do List:
@@ -17,17 +16,22 @@
 4. Administrator Page
   * ~~Admin Details~~
   * ~~Actions Log~~
-  * Raspberry pie specs and tasks
+  * ~~Raspberry pie specs~~ and tasks
   * DB Admin Page [Display, add and delete accounts(Admin and Gov)]
 5. User Page
   * ~~User Details~~
   * ~~Upload New Job~~
   * ~~Jobs History~~
   * Mailbox to receive results
+  * Notification
 6. Government Page
-  * User Details
-  * Actions
-  * Actions Log
+  * ~~User Details~~
+  * Add Criminal
+  * ~~Search~~
+  * Delete Criminal
+  * Train  
+  * Billing Details
+  * ~~Actions Log~~
 7. Host the 3 websites with different portals on the same droplet
 
 * **Raspberry pi**:
@@ -44,7 +48,7 @@
 11. [Pending] Create Internet access points from raspberry pies
 
 * **Image Processing**:
-1. Face recognition
+1. ~~Face recognition~~
 2. [Pending] Arabic plate recognition
 3. [Pending] Action Detection
 

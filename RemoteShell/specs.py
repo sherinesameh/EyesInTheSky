@@ -55,13 +55,14 @@ def getDiskSpace():
 
 def StaticSpecs():
     PublicIP = getPublicIP()
+    PrivateIP = getPrivateIP()
     MAC = getMac()
     RAM_stats = getRAMinfo()
     RAM_total = round(int(RAM_stats[0]) / 1000,1)
     DISK_stats = getDiskSpace()
     DISK_total = DISK_stats[0]
     OS = getOsImage()
-    return (PublicIP + '\n' + MAC + '\n' + OS +'\n' + str(RAM_total) + '\n' + str(DISK_total))
+    return (PrivateIP + '\n' + MAC + '\n' + OS +'\n' + str(RAM_total) + '\n' + str(DISK_total))
 
 
 def CurrentSpecs():
@@ -77,13 +78,3 @@ def CurrentSpecs():
     DISK_perc = DISK_stats[3]
     PrivateIP = getPrivateIP()
     return (CPU_temp + '\n' + CPU_usage + '\n' + str(RAM_used) + '\n' + str(DISK_perc) + '\n' + PrivateIP)
-
-print(CurrentSpecs())
-
-
-# def main():
-#     StaticSpecs()
-#     CurrentSpecs()
-#
-# if __name__ == '__main__':
-#     main()

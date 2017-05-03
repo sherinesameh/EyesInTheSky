@@ -38,14 +38,25 @@ def acceptConnections():
         except Exception as e:
             print(e)
             continue
-        if str(address[0]) == "127.0.0.1": #user or admin is establishing the connection
+        type = str(connection.recv(5))
+        if type == '40307':
             thread = threading.Thread(target = checkType , kwargs={'s': connection})
             thread.daemon = True
             thread.start()
-        else : #raspberry pi is establishing the connection
+        elif type == '90901':
+            thread = threading.Thread(target = checkType , kwargs={'s': connection})
+            thread.daemon = True
+            thread.start()
+        elif type == '90201':
             thread = threading.Thread(target = connectRP , kwargs={'s': connection})
             thread.daemon = True
             thread.start()
+        elif type == '80702':
+            thread = threading.Thread(target = govCommands , kwargs={'s': connection})
+            thread.daemon = True
+            thread.start()
+        else :
+            continue
         print("Connections has been established | IP: " + address[0] + " | Port: " + str(address[1]))
 
 def connectRP(s):
@@ -53,14 +64,10 @@ def connectRP(s):
     result = str(connection.recv(80))
     print(result)
     specs = result.split("\n")
-    #el specs mafrod menha el ip wl mac
-    mac = specs[1]
     ip = specs[0]
-    print("my mac "+mac) 
+    mac = specs[1]
+    print("RP Mac "+mac)
     RpConnections[mac] = connection
-    #b3d kda hanshof hanro7 feen 
-
-
 
 def sendcmd(connection):
     while True:
@@ -90,10 +97,8 @@ def adminCommands(c):
         # else:
             # print('Indefined command!')
 
-
-def sendFile(connection,path):
+def sendFile(connection,path , filename):
     connection.send("upload")
-    filename = 'Dockerfile'
     filename2 = os.path.join(path,filename)
     filesize = os.path.getsize(filename2)
     print("file size is "+str(filesize))
@@ -107,92 +112,55 @@ def sendFile(connection,path):
     print 'Done Sending'
 
 
-def userCommands(c):
-    connection = c
-    cmd = connection.recv(1024)
-    path = cmd.decode('utf-8')
-    
+def govCommands(s):
+    connection = s
+    #train the set producing the 2 files
+    os.system('python ~/Desktop/RemoteShell/retrain.py')
+    # cmd = connection.recv(1024)
+    print('hello')
+
     db = dbHandler()
     # mac = db.getMac()
-    mac = 'b8:27:eb:f5:d6:1c'
+    mac = 'b8:27:eb:d8:71:d5'
     # target = db.getSpecs(mac)
     Rp_connection = RpConnections[mac]
     # results = target.split(":")
     # print(results)
 
-    # username = results[0]
-    # password = results[1]
-    # hostname = results[2]
+    directory = "/opt/lampp/htdocs/sherif/TF_FILES"
 
 
-    # print(username)
-    # print(password)
-    # print(hostname)
+    sendFile(Rp_connection , directory , 'output_labels.txt' )
+    print("jdowjdow")
+    response = Rp_connection.recv(4)
+
+    if response == 'done':
+        sendFile(Rp_connection , directory , 'output_graph.pb')
+        response = Rp_connection.recv(4)
+        if response == 'done':
+            result = str(Rp_connection.recv(1024)).decode('utf-8')
+            print("result "+ result)
+
+
+def userCommands(c):
+    connection = c
+    cmd = connection.recv(1024)
+    path = cmd.decode('utf-8')
+
+    db = dbHandler()
+    # mac = db.getMac()
+    mac = 'b8:27:eb:f5:d6:1c'
+    Rp_connection = RpConnections[mac]
 
     directory = path
 
-    # print("el path is "+directory)
-    # # os.mkdir(directory, 0755);
-    # os.chdir(directory)
-    # if str(os.getcwd()) == directory:
-    #     cmd = 'docker build .' 
-    #     try:
-    #         execute = subprocess.Popen(cmd, shell = True, stdout = subprocess.PIPE,
-    #         stderr = subprocess.PIPE, stdin = subprocess.PIPE)
-    #         outputBytes = execute.stdout.read() + execute.stderr.read()
-    #         output = str.encode(outputBytes)
-    #     except Exception as e:
-    #         output = e
-    #     print("el output : " + output) 
-    #     connection.send(output)
-    #     print("done")
-    sendFile(Rp_connection , directory)
+    sendFile(Rp_connection , directory ,'Dockerfile')
     response = Rp_connection.recv(11)
-    print("el 7a2e2y  "+response)
     if response == 'filecreated':
-        print("el response "+response)
+        print(response)
         Rp_connection.send('rundocker')
         result = str(Rp_connection.recv(1024)).decode('utf-8')
         connection.send(result)
-
-
-
-
-
-
-
-
- 
-    # add the user username to the directory name??
-    #Create a new directory for each new job
-    # directory = '~/Desktop/' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    # utilities.sshCommand(hostname, username, password, 'mkdir ' + directory)
-
-    # #Copy the docker file on RP
-    # utilities.bashCommand('cat ' + path + '/Dockerfile | sshpass -p ' + password + ' ssh ' + username + '@' + hostname + ' "cat >> '+ directory +'/Dockerfile"')
-
-    # # Must display result on web instead of printing??
-    # #Build and run the docker file
-    # result = buildAndRunDocker(hostname, username, password, directory)
-    # connection.send(result)
-
-
-def buildAndRunDocker(hostname, username, password, directory):
-    changeDir   = 'cd ' + directory +' ; '
-    buildDocker = utilities.sshCommand(hostname, username, password, changeDir+'docker build .')
-    p  = str(buildDocker)
-    words = buildDocker.split('Successfully built')
-    imgID = words[1].strip()
-    print("my id is "+imgID)
-    
-
-    imgID = utilities.sshCommand(hostname, username, password, 'docker image ls -q').split('\n')[1]
-
-
-    print(imgID)
-
-    runDocker = utilities.sshCommand(hostname, username, password, 'docker run ' + imgID)
-    return runDocker
 
 def main():
     setupConnection()
