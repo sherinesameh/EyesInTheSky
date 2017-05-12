@@ -1,0 +1,25 @@
+
+app.controller('loginCtrl', function($scope, $http, $stateParams, $state)
+{
+  $scope.submit = function()
+  {
+    params = {
+      email: $scope.username,
+      password: $scope.password
+    };
+    return $http.post('app/controllers/login.php',params)
+    .success(function(data) {
+      if(data)
+      {
+        $scope.error = '';
+        $state.transitionTo('home');
+      } else {
+        $scope.error = "Incorrect username or password!";
+      }
+    })
+    .error(function(error) {
+        return error;
+    });
+    // }
+  }
+});
