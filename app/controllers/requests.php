@@ -24,18 +24,19 @@ switch ($request) {
     case "search":
         $result = $actions->getAllCriminals();
         echo json_encode($result);
+        break;
     case "addCriminal":
-        // $Fname = $params->Fname;
-        // $Mname = $params->Mname;
-        // $Lname = $params->Lname;
-        // $priority = $params->priority;
-        // $date  = $params->expireDate;
-        // $path  = $params->path;
-        // $image = $params->image;
-        // $id = $_SESSION['id'];
-        // $username = $_SESSION['username'];
-        // $result= $actions->addCriminal($Fname, $Mname, $Lname, $priority, $date, $path, $image, $id, $username);
-        // echo json_encode($result);
+        $Fname = $params->Fname;
+        $Mname = $params->Mname;
+        $Lname = $params->Lname;
+        $priority = $params->priority;
+        $date  = $params->expireDate;
+        $path  = $params->path;
+        $image = $params->image;
+        $id = $_SESSION['id'];
+        $username = $_SESSION['username'];
+        $result= $actions->addCriminal($Fname, $Mname, $Lname, $priority, $date, $path, $image, $id, $username);
+        echo json_encode($result);
         break;
     case "deleteCriminal":
       // $criminalID = $params->criminalID;

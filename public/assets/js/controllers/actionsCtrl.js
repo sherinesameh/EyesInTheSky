@@ -41,21 +41,26 @@
       $scope.search = data;
     });
   });
+
+  function addCriminal($http, params) {
+    return $http.post('app/controllers/main.php', params)
+    .success(function(data) {
+      return data;
+    })
+    .error(function(error) {
+      return error;
+    });
+  }
   app.controller('addCtrl', function($scope, $http, $stateParams, $state) {
-    checkSession($http, $stateParams, $state);
-    // params = {
-    //   request: 'addCriminal',
-    //   Fname: $scope.Fname,
-    //   Mname: $scope.Mname,
-    //   Lname: $scope.Lname,
-    //   path: $scope.path,
-    //   image: $scope.image,
-    //   expireDate: $scope.expireDate,
-    //   priority: $scope.priority
-    // };
-    // sendRequest($http, params).success(function(data) {
-    //   $scope.add = data;
-    // });
+    $scope.addSubmit = function() {
+      checkSession($http, $stateParams, $state);
+      params = {
+        zip_file: $scope.image
+      };
+      addCriminal($http, params).success(function(data) {
+        // $scope.add = data;
+      });
+    }
   });
   app.controller('deleteCtrl', function($scope, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);

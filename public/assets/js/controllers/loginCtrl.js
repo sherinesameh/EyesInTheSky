@@ -20,6 +20,5 @@ app.controller('loginCtrl', function($scope, $http, $stateParams, $state)
     .error(function(error) {
         return error;
     });
-    // }
   }
 });
