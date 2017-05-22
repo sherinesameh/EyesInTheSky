@@ -25,12 +25,11 @@
   });
   app.controller('logCtrl', function($scope, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
-    // params = {request: 'getLog'};
-    // sendRequest($http, params).success(function(data) {
-    //   alert(data);
-    //   $scope.logs = data;
-    // });
+    params = {request: 'getLog'};
+    sendRequest($http, params).success(function(data) {
+      $scope.logs = data;
+    });
   });
   app.controller('jobCtrl', function($scope, $http, $stateParams, $state) {
-    checkSession($http, $stateParams, $state);
+    // checkSession($http, $stateParams, $state);
   });

@@ -17,10 +17,10 @@
               </tr>
             </thead>
             <tbody>
-              <!-- <tr ng-repeat="log in logs">
-                <td>{{log.Img_id}}</td>
-                <td>{{log.Process_name}}</td>
-              </tr> -->
+              <tr ng-repeat="log in logs | filter:search">
+                <td>{{log.Action}} : {{log.Process_name}}</td>
+                <td>{{log.Time | date}}</td>
+              </tr>
             </tbody>
           </table>
       </div>

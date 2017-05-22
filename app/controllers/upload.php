@@ -30,9 +30,10 @@ $check_docker = 0;
 			}
 
 			// echo $name_array[$i]." upload is complete<br>";
-		} else{
-			echo $name_array[$i]." upload failed<br>";
-		}
+		} 
+			// else{
+			// echo $name_array[$i]." upload failed<br>";
+		// }
 		chmod("../../test_uploads/".$name_array[$i], 0777);
 	}
 	// echo "$check_docker = ".$check_docker."<br>";

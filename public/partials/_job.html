@@ -25,27 +25,37 @@
         </span>
         <div>&nbsp;</div>
         <div class="row">
-          <form action="" method="post" enctype="multipart/form-data">
+          <form action="http://localhost/EyesInTheSky/Users/app/controllers/upload.php" method="post" enctype="multipart/form-data">
+
             <div class="row">
               <div class="file-field input-field col s10 offset-s1">
+                <!-- <div class="col-s4"> -->
                   <div class="btn" id="formbtn">
                       <span>Docker File</span>
                       <input type="file" name="file_array[]">
                   </div>
+                <!-- </div> -->
+                <!-- <div class="row"> -->
                   <div class="file-path-wrapper">
                       <input class="file-path validate" type="text">
                   </div>
+                <!-- </div> -->
               </div>
             </div>
+
             <div class="row">
                 <div class="file-field input-field col s10 offset-s1">
-                       <div class="btn" id="formbtn">
+                   <!-- <div class="col-s4"> -->
+                      <div class="btn" id="formbtn">
                         <span>Your Files</span>
                         <input name="file_array[]" type="file" multiple = "multiple">
                       </div>
-                      <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text">
-                      </div>
+                    <!-- </div> -->
+                    <!-- <div class=row> -->
+                        <div class="file-path-wrapper">
+                          <input class="file-path validate" type="text">
+                        </div>
+                    <!-- </div> -->
                 </div>
             </div>
             <button class="btn waves-effect waves-light col s4 offset-s7" type="submit" name="action">
@@ -53,6 +63,7 @@
             </button>
           </form>
         </div>
+
       </div>
 
     </div>

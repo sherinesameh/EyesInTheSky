@@ -9,6 +9,8 @@ class mySocket
 	{
 		$this->socket = socket_create(AF_INET, SOCK_STREAM,0) or die("Could not create socket\n");
     socket_connect($this->socket , $this->host,$this->port ) ;
+    $type ="40307";
+		socket_write($this->socket, $type, strlen ($type)) or die("Could not write output\n");
 	}
 	function send($path)
 	{
@@ -24,9 +26,7 @@ class mySocket
 
         $input = socket_read($this->socket, 1024) or die("Could not write output\n");
 
-		echo "ana hena :" .$input;
-
-		echo "string2";
+		echo $input;
 
 		// if(socket_recv ( $this->socket , $buf , 2045 , MSG_WAITALL ) === FALSE)
 		// {
