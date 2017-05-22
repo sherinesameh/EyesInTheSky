@@ -1,5 +1,5 @@
 <?php
-class mySocket
+class Socket
 {
 	private $host = "localhost";
   private $port = 8080;

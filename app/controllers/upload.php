@@ -1,7 +1,7 @@
 <?php
-require("Socket.php");
+require("socket.php");
 require("../models/user.php");
-$socket = new mySocket;
+$socket = new Socket;
 $user = new User;
 
 if (isset($_FILES['file_array'])) {
@@ -11,9 +11,9 @@ if (isset($_FILES['file_array'])) {
 	$size_array = $_FILES['file_array']['size'];
 	$error_array = $_FILES['file_array']['error'];
 
-if(!is_dir("../../uploadedFiles/")) {
+if(!is_dir("/var/www/html/EyesInTheSky/uploadedFiles")) {
 	$oldmask = umask(0);
-mkdir("../../uploadedFiles/", 0777);
+mkdir("/var/www/html/EyesInTheSky/uploadedFiles", 0777);
 umask($oldmask);
 }
 
@@ -25,7 +25,7 @@ for ($i=0; $i < count($name_array); $i++) {
 			$check_docker = $check_docker + 1;
 		}
 	}
-	chmod("../../uploadedFiles/".$name_array[$i], 0777);
+	chmod("/var/www/html/EyesInTheSky/uploadedFiles".$name_array[$i], 0777);
 }
 if ($check_docker == 0) {
 		echo "no Dockerfile exist <br>";
@@ -34,7 +34,7 @@ if ($check_docker == 0) {
 } else {
 		$name = "webServer";
 		$id  = 1;
-		$path= "/opt/lampp/htdocs/EyesInTheSky/uploadedFiles";
+		$path= "/var/www/html/EyesInTheSky/uploadedFiles";
 		$socket->send($path);
 		$socket->receive();
 }
