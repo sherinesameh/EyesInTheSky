@@ -1,7 +1,7 @@
 <?php
 class Socket
 {
-	private $host = "localhost";
+	private $host = "46.101.180.169";
   private $port = 8080;
   private $socket;
 
@@ -14,7 +14,7 @@ class Socket
 	}
 	function send($path)
 	{
-		$type ="user";
+		$type ='40307';
 		$output = $path;
 		socket_write($this->socket, $type, strlen ($type)) or die("Could not write output\n");
 		sleep(1);
