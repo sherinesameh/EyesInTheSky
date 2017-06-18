@@ -60,11 +60,12 @@ def acceptConnections():
         print("Connections has been established | IP: " + address[0] + " | Port: " + str(address[1]))
 
 def connectRP(s):
+    print("ana gowa ")
     connection = s
     result = str(connection.recv(80))
     print(result)
     specs = result.split("\n")
-    ip = specs[0]
+    # ip = specs[0]
     mac = specs[1]
     print("RP Mac "+mac)
     RpConnections[mac] = connection
@@ -98,50 +99,60 @@ def adminCommands(c):
             # print('Indefined command!')
 
 def sendFile(connection,path , filename):
-    connection.send("upload")
     filename2 = os.path.join(path,filename)
     filesize = os.path.getsize(filename2)
     print("file size is "+str(filesize))
-    filesize = bin(filesize)[2:].zfill(32) # encode filesize as 32 bit binary
-    connection.send(filesize)
+    filesize2 = bin(filesize)[2:].zfill(32) # encode filesize as 32 bit binary
+    connection.send(filesize2)
 
     file_to_send = open(path+'/'+ filename, 'rb')
-    l = file_to_send.read()
-    connection.sendall(l)
-    file_to_send.close()
+
+    chunksize = 40960
+    
+    while filesize > 0:
+        if filesize < chunksize:
+            chunksize = filesize
+        data = file_to_send.read(chunksize)
+        connection.send(data)
+        filesize -= chunksize
+        print(str(filesize))
+    file_to_send.close()    
     print 'Done Sending'
 
 
 def govCommands(s):
+    print('hi')
     connection = s
     #train the set producing the 2 files
-    os.system('python ~/Desktop/RemoteShell/retrain.py')
+    os.system('python ~/Desktop/RemoteShell/Trainer.py')
     # cmd = connection.recv(1024)
     print('hello')
 
     db = dbHandler()
-    # mac = db.getMac()
-    mac = 'b8:27:eb:d8:71:d5'
+    mac = db.getMac()
+    # mac = 'b8:27:eb:f5:d6:1c'
     # target = db.getSpecs(mac)
+    mac = 'b8:27:eb:a0:83:49'
+
     Rp_connection = RpConnections[mac]
     # results = target.split(":")
     # print(results)
 
     directory = "/opt/lampp/htdocs/sherif/TF_FILES"
 
-
-    sendFile(Rp_connection , directory , 'output_labels.txt' )
+    Rp_connection.send("upload") 
+    sendFile(Rp_connection , directory , 'Graph.npy' )
     print("jdowjdow")
     response = Rp_connection.recv(4)
 
     if response == 'done':
-        sendFile(Rp_connection , directory , 'output_graph.pb')
+        sendFile(Rp_connection , directory , 'Labels.npy')
         response = Rp_connection.recv(4)
         if response == 'done':
             result = str(Rp_connection.recv(1024)).decode('utf-8')
             print("result "+ result)
 
-
+            
 def userCommands(c):
     connection = c
     cmd = connection.recv(1024)
@@ -149,10 +160,14 @@ def userCommands(c):
 
     db = dbHandler()
     # mac = db.getMac()
-    mac = 'b8:27:eb:f5:d6:1c'
+    mac = 'b8:27:eb:d8:71:d5'
     Rp_connection = RpConnections[mac]
 
-    directory = path
+    directory  = path 
+    print("the mac "+mac)
+    print("the path "+directory)
+
+    Rp_connection.send('docker')
 
     sendFile(Rp_connection , directory ,'Dockerfile')
     response = Rp_connection.recv(11)

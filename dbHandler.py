@@ -9,7 +9,7 @@ class dbHandler:
    max_hours = 168
    efficient = 3500
    query = 'SELECT Rp_Specs.Mac ,Rp_Specs.HasCamera, Current_Specs.FreeStorage ,Current_Specs.CpuUsage ,Current_Specs.Temperature ,Rp_Log.Jobs_Num , TIMESTAMPDIFF(HOUR,Rp_Log.Start_time,NOW()) AS time FROM Rp_Log INNER JOIN Rp_Specs ON Rp_Log.Mac = Rp_Specs.Mac INNER JOIN Current_Specs ON Rp_Specs.Mac = Current_Specs.Mac ORDER BY rand()'
-  
+   query2 =  'UPDATE Rp_Log SET  Jobs_Num = Jobs_Num + 1 WHERE 1' 
 
    def __init__(self):
       self.db = pymysql.connect(host='localhost',user='root',password='eits2017',db='EITS')
@@ -37,6 +37,27 @@ class dbHandler:
         return temp
      except Exception as e:
       print(e)
+
+
+   def incrementPi(self,mac):
+     query = 'UPDATE `Rp_Log` SET `Jobs_Num`=Jobs_Num + 1 WHERE Mac = \'' + mac + '\''
+     
+     try:
+        self.cursor.execute(query)
+        self.db.commit()
+     except Exception as e:
+      print(e)  
+
+   def decrementPi(self,mac):
+     query = 'UPDATE `Rp_Log` SET `Jobs_Num`=Jobs_Num - 1 WHERE Mac = \'' + mac + '\''
+   
+   # def addProcess():
+   #     query =  'INSERT INTO `Process`(`Img_id`, `Process_name`, `Cont_id`, `Cont_IP`, `Mac`, `User_id`, `Size`,  `Process_State`) VALUES ('+,'myTask',cont,ip,,1,500,22894) 
+   #   try:
+   #      self.cursor.execute(query)
+   #      self.db.commit()
+   #   except Exception as e:
+   #    print(e)   
 
 
    def get_points(self,Camera,FreeStorage,CPU,Temperature,Jobs_Num,time):
