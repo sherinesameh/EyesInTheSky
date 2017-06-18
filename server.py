@@ -1,181 +1,108 @@
+import datetime
+from   dbHandler import dbHandler
+import os
 import socket
+import subprocess
+import sys
 import threading
 import utilities
-import sys
-import datetime
-import os
-from sys import exit
-from dbHandler import dbHandler
-import subprocess
-import datetime
 
+HOST = ''
+PORT = 8080
+SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 NUMBEROFTHREADS = 10
-TASKNUMBER = [1, 2]
-
-allConnections = []
-allAddresses = []
-RpConnections = {}
-
-host = ''
-port = 5555
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+CONNECTIONS = {}
+DB = dbHandler()
 
 def setupConnection():
     try:
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        s.bind((host, port))
-        s.listen(NUMBEROFTHREADS)
+        SOCKET.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        SOCKET.bind((HOST, PORT))
+        SOCKET.listen(NUMBEROFTHREADS)
     except socket.error as errorMsg:
         print(errorMsg)
         setupConnection()
 
 def acceptConnections():
-    RpConnections.clear()
+    CONNECTIONS.clear()
+    TYPES = {
+        '40307': userCommands,
+        '90901': adminCommands,
+        '80702': govCommands,
+        '90201': connectRP
+    }
     while True:
         try:
-            connection, address = s.accept()
+            connection, address = SOCKET.accept()
             connection.setblocking(1)
         except Exception as e:
             print(e)
             continue
         type = str(connection.recv(5))
-        if type == '40307':
-            thread = threading.Thread(target = checkType , kwargs={'s': connection})
-            thread.daemon = True
-            thread.start()
-        elif type == '90901':
-            thread = threading.Thread(target = checkType , kwargs={'s': connection})
-            thread.daemon = True
-            thread.start()
-        elif type == '90201':
-            thread = threading.Thread(target = connectRP , kwargs={'s': connection})
-            thread.daemon = True
-            thread.start()
-        elif type == '80702':
-            thread = threading.Thread(target = govCommands , kwargs={'s': connection})
-            thread.daemon = True
-            thread.start()
-        else :
-            continue
+        thread = threading.Thread(target = TYPES[type] , kwargs={'connection': connection})
+        thread.daemon = True
+        thread.start()
         print("Connections has been established | IP: " + address[0] + " | Port: " + str(address[1]))
 
-def connectRP(s):
-    print("ana gowa ")
-    connection = s
-    result = str(connection.recv(80))
-    print(result)
-    specs = result.split("\n")
-    # ip = specs[0]
+def connectRP(connection):
+    handshakePck = str(connection.recv(80))
+    specs = handshakePck.split('\n')
     mac = specs[1]
-    print("RP Mac "+mac)
-    RpConnections[mac] = connection
+    CONNECTIONS[mac] = specs[0]
 
-def sendcmd(connection):
+def adminCommands(connection):
     while True:
-        cmd = raw_input()
-        connection.send(str.encode(cmd))
-        response = str(connection.recv(1024))
-        print(response + "")
-
-def checkType(s):
-    connection = s
-    type = connection.recv(1024)
-    print(type.decode('utf-8'))
-    if type.decode('utf-8') == "user":
-        userCommands(connection)
-    else:
-        adminCommands(connection)
-
-def adminCommands(c):
-    connection = c;
-    while True:
-        data = connection.recv(1024);
-        if not data:
+        cmd = str(connection.recv(1024)).decode('utf-8')
+        if not cmd:
             break
-        command = data.decode('utf-8')
-        # if 'close' in command :
-            # hanshof han7ot eh hena
-        # else:
-            # print('Indefined command!')
 
-def sendFile(connection,path , filename):
-    filename2 = os.path.join(path,filename)
-    filesize = os.path.getsize(filename2)
-    print("file size is "+str(filesize))
-    filesize2 = bin(filesize)[2:].zfill(32) # encode filesize as 32 bit binary
-    connection.send(filesize2)
+def userCommands(connection):
+    mac = DB.getBestPi()
+    path = str(connection.recv(1024)).decode('utf-8')
+    connectionRP = CONNECTIONS[mac]
+    connectionRP.send('docker')
+    utilities.sendFile(connectionRP, path, 'Dockerfile')
+    response = str(connectionRP.recv(11)).decode('utf-8')
+    if response == 'filecreated':
+        connectionRP.send('rundocker')
+        connection.send(str(connectionRP.recv(1024)).decode('utf-8'))
 
-    file_to_send = open(path+'/'+ filename, 'rb')
+# def userCommands(connection):
+    # bestPi = dbHandler()
+    # mac = bestPi.getBestPi()
+    # hostname = CONNECTIONS[mac]
+    # specs = str(bestPi.getSpecs(mac)).split(':')
+    # username = specs[0]
+    # password = specs[1]
+    # localPath = str(connection.recv(1024)).decode('utf-8')
+    # remotePath = utilities.createPiDir()
+    # sftp = utilities.put(hostname, username, password, localPath, remotePath)
+    # if sftp:
+    #     connection.send(utilities.buildAndRunDocker(hostname, username, password, remotePath))
 
-    chunksize = 40960
-    
-    while filesize > 0:
-        if filesize < chunksize:
-            chunksize = filesize
-        data = file_to_send.read(chunksize)
-        connection.send(data)
-        filesize -= chunksize
-        print(str(filesize))
-    file_to_send.close()    
-    print 'Done Sending'
-
-
-def govCommands(s):
-    print('hi')
-    connection = s
+def govCommands(connection):
     #train the set producing the 2 files
     os.system('python ~/Desktop/RemoteShell/Trainer.py')
     # cmd = connection.recv(1024)
-    print('hello')
-
-    db = dbHandler()
-    mac = db.getMac()
+    mac = DB.getBestPi()
     # mac = 'b8:27:eb:f5:d6:1c'
-    # target = db.getSpecs(mac)
+    # target = DB.getSpecs(mac)
     mac = 'b8:27:eb:a0:83:49'
-
-    Rp_connection = RpConnections[mac]
+    connectionRP = CONNECTIONS[mac]
     # results = target.split(":")
     # print(results)
-
     directory = "/opt/lampp/htdocs/sherif/TF_FILES"
 
-    Rp_connection.send("upload") 
-    sendFile(Rp_connection , directory , 'Graph.npy' )
-    print("jdowjdow")
-    response = Rp_connection.recv(4)
+    connectionRP.send("upload")
+    utilities.sendFile(connectionRP , directory , 'Graph.npy' )
+    response = connectionRP.recv(4)
 
     if response == 'done':
-        sendFile(Rp_connection , directory , 'Labels.npy')
-        response = Rp_connection.recv(4)
+        utilities.sendFile(connectionRP , directory , 'Labels.npy')
+        response = connectionRP.recv(4)
         if response == 'done':
-            result = str(Rp_connection.recv(1024)).decode('utf-8')
+            result = str(connectionRP.recv(1024)).decode('utf-8')
             print("result "+ result)
-
-            
-def userCommands(c):
-    connection = c
-    cmd = connection.recv(1024)
-    path = cmd.decode('utf-8')
-
-    db = dbHandler()
-    # mac = db.getMac()
-    mac = 'b8:27:eb:d8:71:d5'
-    Rp_connection = RpConnections[mac]
-
-    directory  = path 
-    print("the mac "+mac)
-    print("the path "+directory)
-
-    Rp_connection.send('docker')
-
-    sendFile(Rp_connection , directory ,'Dockerfile')
-    response = Rp_connection.recv(11)
-    if response == 'filecreated':
-        print(response)
-        Rp_connection.send('rundocker')
-        result = str(Rp_connection.recv(1024)).decode('utf-8')
-        connection.send(result)
 
 def main():
     setupConnection()

@@ -77,4 +77,4 @@ def CurrentSpecs():
     DISK_used = DISK_stats[2]
     DISK_perc = DISK_stats[3]
     PrivateIP = getPrivateIP()
-    return (CPU_temp + '\n' + CPU_usage + '\n' + str(RAM_used) + '\n' + str(DISK_perc) + '\n' + PrivateIP)
+    return (CPU_temp + '\n' + CPU_usage + '\n' + str(RAM_used) + '\n' + str(DISK_perc))
