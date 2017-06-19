@@ -128,14 +128,13 @@ class dbHandler:
        print(e)
 
 
+   
    def updateSpecs(self,Mac, CPU_temp, CPU_used, RAM_used, DISK_perc):
-       query = 'UPDATE Current_Specs SET Temperature = \''+CPU_temp+'\', CpuUsage = \''+CPU_usage+'\' , RamUsage = \''+RAM_used+'\', FreeStorage = \''+DISK_perc+'\' WHERE Mac = \''+Mac+'\'
-
-        try:
-          self.cursor.execute(query)
-          self.db.commit()
-        except:
-           self.db.rollback()    
-     
+      query = 'UPDATE Current_Specs SET Temperature = CPU_temp , CpuUsage = CPU_usage, RamUsage =RAM_used, FreeStorage = DISK_perc WHERE Mac = \''+Mac+'\''
+      try:
+         self.cursor.execute(query)
+         self.db.commit()
+      except Exception as e:
+         self.db.rollback()
 
 
