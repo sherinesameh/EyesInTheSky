@@ -13,7 +13,7 @@
             <thead>
               <tr>
                 <th>Mac</th>
-                <th>Generation</th>
+                <th>Jobs Num</th>
                 <th>Location</th>
                 <th>Temperature</th>
                 <th>CPU Usage</th>
@@ -23,7 +23,7 @@
             <tbody>
               <tr ng-repeat="spec in specs | filter:search">
                 <td>{{spec.Mac}}</td>
-                <td>{{spec.Generation}}</td>
+                <td>{{spec.Jobs_Num}}</td>
                 <td>
                   <a class='locations' href='#dashboard' data-beloworigin="true" data-activates='map'>
                     <i class="material-icons medium">room</i>
