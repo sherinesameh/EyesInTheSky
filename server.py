@@ -50,18 +50,42 @@ def connectRP(connection):
     mac = specs[1]
     CONNECTIONS[mac] = specs[0]
 
+
 def adminCommands(connection):
-    while True:
-        cmd = str(connection.recv(1024)).decode('utf-8')
-        if not cmd:
-            break
+    AdminID = str(connection.recv(5)).decode("utf-8")
+    cmd = str(connection.recv(2048)).decode("utf-8").split(":_:")
+    if cmd[0] == "15151":
+        mac = cmd[1]
+        connectionRP = CONNECTIONS[mac]
+        connection.send('killer')
+        container = cmd[2]
+        processNameSize = len(container)
+        processNameSize = bin(processNameSize)[2:].zfill(32)
+        connection.send(processNameSize)
+        connection.send(container)
+        DB.adminKill(AdminID , mac , container)
+    if cmd[0] == "27351":
+       mac = cmd[1]
+       connectionRP = CONNECTIONS[mac]
+       connection.send('shutdw')
+       DB.shutPi(AdminID, mac )
+    if cmd[0] == "87452":
+       mac = cmd[1]
+       connectionRP = CONNECTIONS[mac]
+       connection.send('restrt')
+       DB.shutPi(AdminID, mac )           
+
+
+
 
 def userCommands(connection):
     mac = DB.getBestPi()
-    path = str(connection.recv(1024)).decode('utf-8')
+    path = str(connection.recv(1024))
+    path = path.decode('utf-8')
+    processName = str(connection.recv(1024)).decode('utf-8')
     connectionRP = CONNECTIONS[mac]
     connectionRP.send('docker')
-    utilities.sendFile(connectionRP, path, 'Dockerfile')
+    utilities.sendFile(connectionRP, path, processName,  'Dockerfile')
     response = str(connectionRP.recv(11)).decode('utf-8')
     if response == 'filecreated':
         connectionRP.send('rundocker')

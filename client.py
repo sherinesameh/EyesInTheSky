@@ -17,12 +17,13 @@ def establishConnection():
     except socket.error as errorMsg:
         print(errorMsg)
 
-def createDir():
-    directory = '/home/pi/Desktop/' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+def createDir(processName):
+    directory = '/home/pi/Desktop/'+processName+'_' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     return directory
 
 def receiveFile(directory):
     try:
+
         filesize = s.recv(32)
         filesize = int(filesize, 2)
         print('file size '+str(filesize)) 
@@ -49,9 +50,14 @@ def sendSpecs():
     s.send(specs.StaticSpecs())
 
 def executeCommand():
-    # sendSpecs()
-    if s.recv(6) == 'upload' :  
-       directory = createDir()        
+  while True:
+    cmd = s.recv(6)
+    print("el command eli galy "+cmd)
+    if cmd == 'upload' :
+       processSize = s.recv(32)
+       processSize = int(processSize, 2)
+       userID , processName = str(s.recv(processSize)).decode('utf-8').split(":_:")
+       directory = createDir(processName)        
        receiveFile(directory)
        s.send('filecreated')
        if s.recv(9) == 'rundocker':
@@ -89,13 +95,31 @@ def executeCommand():
               port = str(out)
 
               db = dbHandler()
-              db.addProcess(containerID , imgID , IPAddress , port, userID )
+              db.addProcess(containerID , imgID , IPAddress , port, userID ,processName , specs.getMac())
 
           except Exception as e:
               output = e
           print(output)
           s.send(str.encode(output))
-    s.close()
+    if cmd == 'killer':
+       filesize = s.recv(32)
+       filesize = int(filesize, 2)
+       msg = s.recv(filesize)
+       containerID = msg
+       PortCMD = 'docker kill ' + containerID
+       killDocker = subprocess.Popen(PortCMD, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
+       out , err = killDocker.communicate()
+    if cmd == 'shutdw':
+       shutCMD = 'sudo shutdown -r now '
+       killDocker = subprocess.Popen(shutCMD, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
+    
+    if cmd == 'restrt':
+       shutCMD = 'sudo reboot '
+       killDocker = subprocess.Popen(shutCMD, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
+    
+    if cmd == 'finish':
+       break;      
+  s.close()
 
 def main():
     establishConnection()

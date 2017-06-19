@@ -77,7 +77,12 @@ def buildAndRunDocker(hostname, username, password, directory):
     return runDocker
 
 
-def sendFile(connection, path ,filename):
+def sendFile(connection, path, processName , filename):
+    processNameSize = len(processName)
+    processNameSize = bin(processNameSize)[2:].zfill(32)
+    connection.send(processNameSize)
+    print("process size is "+str(processNameSize))
+    connection.send(processName)
     filename2 = os.path.join(path,filename)
     filesize = os.path.getsize(filename2)
     print("file size is "+str(filesize))
