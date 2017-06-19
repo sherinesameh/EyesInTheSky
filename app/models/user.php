@@ -27,6 +27,14 @@
           return ALREADY_EXIST;
       }
     }
+    public function getRpProcesses( $mac )
+    {
+      $stmt = $this->conn->prepare("SELECT Process.Process_name , Process.Cont_id , Process.Start_time , User.User_username FROM Process INNER JOIN User ON Process.User_id = User.User_id WHERE Process.Mac = ?");
+      $stmt->bind_param("s", $mac);
+      $stmt->execute();
+      $result = getResult($stmt);
+    }
+
     public function loginUser( $email, $pass )
     {
       $stmt = $this->conn->prepare("SELECT * FROM `Admin` WHERE Email = ? AND Password = ?");
@@ -37,6 +45,7 @@
       $stmt->close();
       return $num_rows > 0;
     }
+
     private function isUserExists($email)
     {
         $stmt = $this->conn->prepare("SELECT User_id FROM Users WHERE Email=?");
@@ -64,6 +73,22 @@
         $stmt->fetch();
       }
       return $RESULT;
+    }
+
+        private function getResult( $Statement )
+    {
+        $RESULT = array();
+        $Statement->store_result();
+        for ( $i = 0; $i < $Statement->num_rows; $i++ ) {
+            $Metadata = $Statement->result_metadata();
+            $PARAMS = array();
+            while ( $Field = $Metadata->fetch_field() ) {
+                $PARAMS[] = &$RESULT[ $i ][ $Field->name ];
+            }
+            call_user_func_array( array( $Statement, 'bind_result' ), $PARAMS );
+            $Statement->fetch();
+        }
+        return $RESULT;
     }
   }
 ?>

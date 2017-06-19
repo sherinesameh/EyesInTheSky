@@ -16,6 +16,11 @@
       $result= $user->getUserInfo($email);
       echo json_encode($result);
       break;
+    case "getUserInfo":
+      $mac = $_POST['mac'];
+      $result= $user->getRpProcesses($mac);
+      echo json_encode($result);
+      break;
     case "getAdminsLog":
       $result= $model->getAdminsLog();
       echo json_encode($result);
