@@ -4,6 +4,10 @@ import os
 import subprocess
 import datetime
 import specs
+from dbHandler import dbHandler
+from threading import Thread
+from time      import sleep
+
 
 # host = '46.101.180.16'
 host = '192.168.8.103'
@@ -16,6 +20,14 @@ def establishConnection():
         s.send('90201')
     except socket.error as errorMsg:
         print(errorMsg)
+
+def updateSpecs():
+    s.send(specs.StaticSpecs())
+    while(True):
+        currentSpecs = specs.CurrentSpecs().split('\n')
+        mac = specs.getMac()
+        DB.updateSpecs(mac,currentSpecs[0], currentSpecs[1], currentSpecs[2], currentSpecs[3])
+        sleep(30)
 
 def createDir(processName):
     directory = '/home/pi/Desktop/'+processName+'_' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -123,7 +135,12 @@ def executeCommand():
 
 def main():
     establishConnection()
-    executeCommand()
+    thread1 = Thread(target = executeCommand)
+    thread2 = Thread(target = updateSpecs)
+    thread1.start()
+    thread2.start()
+    thread1.join()
+    thread2.join()
 
 if __name__ == '__main__':
     main()
