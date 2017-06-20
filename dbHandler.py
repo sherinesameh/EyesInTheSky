@@ -13,18 +13,18 @@ class dbHandler:
       self.cursor =  self.db.cursor(pymysql.cursors.DictCursor)
 
    def get_points(self,Camera,FreeStorage,CPU,Temperature,Jobs_Num,time):
-    max_storage = 8192
-    max_hours = 168
-    efficient = 3500
+      max_storage = 8192
+      max_hours = 168
+      efficient = 3500
 
-     total = 0
-     total += 600 * (3 - Jobs_Num)
-     total += 1000 * (1- Camera)
-     total += 12 * (100 -CPU)
-     total += 5 * (((self.max_storage - FreeStorage) / self.max_storage )* 100 )
-     total += 10 * (80 - Temperature)
-     total += 2 * (self.max_hours - time)
-     return total
+      total = 0
+      total += 600 * (3 - Jobs_Num)
+      total += 1000 * (1- Camera)
+      total += 12 * (100 -CPU)
+      total += 5 * (((self.max_storage - FreeStorage) / self.max_storage )* 100 )
+      total += 10 * (80 - Temperature)
+      total += 2 * (self.max_hours - time)
+      return total
 
    def getBestPi(self):
      rp = {}
