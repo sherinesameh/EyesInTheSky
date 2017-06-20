@@ -9,8 +9,7 @@ from dbHandler import dbHandler
 from threading import Thread
 from time      import sleep
 
-# HOST = '46.101.180.16'
-HOST   = '192.168.8.103'
+HOST = '46.101.180.169'
 PORT   = 8080
 SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 DB     = dbHandler('pi')
