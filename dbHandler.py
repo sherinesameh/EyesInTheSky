@@ -8,8 +8,8 @@ class dbHandler:
    def __init__(self, user):
       if user == 'admin':
           self.db = pymysql.connect(host='localhost',user='root',password='sherine',db='EITS')
-      elif user == 'pi'
-          self.db = pymysql.connect(host='46.101.180.16',user='pi',password='eits2017',db='EITS')
+      elif user == 'pi':
+          self.db = pymysql.connect(host='46.101.180.169',user='pi',password='eits2017',db='EITS')
       self.cursor =  self.db.cursor(pymysql.cursors.DictCursor)
 
    def get_points(self,Camera,FreeStorage,CPU,Temperature,Jobs_Num,time):
