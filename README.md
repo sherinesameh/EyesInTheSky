@@ -1,10 +1,10 @@
 ![alt text][logo]
 
-[logo]: https://github.com/SherineSameh/EyesInTheSky/blob/master/Users/public/assets/img/EyesInTheSkyLogo.png "Logo"
+[logo]: https://github.com/SherineSameh/EyesInTheSky/blob/Users/public/assets/img/icon.png "Logo"
 
 # EyesInTheSky
 
-> Mobile Ad-hock Cloud [Mobile infrastructure-less Cloud].  
+> Mobile Ad-hoc Cloud [Mobile infrastructure-less Cloud].  
 > Website: MVC Model - No Framework - Angular JS - Material Design.  
 > Back-End: PHP and Python
 
@@ -33,7 +33,7 @@
   * Train  
   * Billing Details
   * ~~Actions Log~~
-7. Host the 3 websites with different portals on the same droplet
+7. ~~Host the 3 websites with different portals on the same droplet~~
 
 * **Raspberry pi**:
 1. ~~Upload Dockers Files on the Website~~
@@ -57,9 +57,3 @@
 1. ~~Logo~~
 2. ~~UI Designs~~
 3. Descriptive Video
-
-* **Edits**:
-1. app/models/dashboard.php getRunningProcesses() :
-query must be edited to get all the actual running processes for each RP not their number
-2. SQL Mockup:
-Edit location format
