@@ -12,7 +12,7 @@ PORT = 8080
 SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 NUMBEROFTHREADS = 10
 CONNECTIONS = {}
-DB = dbHandler()
+DB = dbHandler('admin')
 
 def setupConnection():
     try:
@@ -46,7 +46,8 @@ def acceptConnections():
 
 def connectRP(connection):
     handshakePck = str(connection.recv(80))
-    specs = handshakePck.split('\n')
+    specs = handshakePck.split(':_:')
+    print(specs)
     mac = specs[1]
     CONNECTIONS[mac] = specs[0]
 
@@ -73,7 +74,7 @@ def adminCommands(connection):
        mac = cmd[1]
        connectionRP = CONNECTIONS[mac]
        connection.send('restrt')
-       DB.shutPi(AdminID, mac )           
+       DB.shutPi(AdminID, mac )
 
 
 
@@ -92,10 +93,9 @@ def userCommands(connection):
         connection.send(str(connectionRP.recv(1024)).decode('utf-8'))
 
 # def userCommands(connection):
-    # bestPi = dbHandler()
-    # mac = bestPi.getBestPi()
+    # mac = DB.getBestPi()
     # hostname = CONNECTIONS[mac]
-    # specs = str(bestPi.getSpecs(mac)).split(':')
+    # specs = str(DB.getSpecs(mac)).split(':')
     # username = specs[0]
     # password = specs[1]
     # localPath = str(connection.recv(1024)).decode('utf-8')
@@ -109,8 +109,6 @@ def govCommands(connection):
     os.system('python ~/Desktop/RemoteShell/Trainer.py')
     # cmd = connection.recv(1024)
     mac = DB.getBestPi()
-    # mac = 'b8:27:eb:f5:d6:1c'
-    # target = DB.getSpecs(mac)
     mac = 'b8:27:eb:a0:83:49'
     connectionRP = CONNECTIONS[mac]
     # results = target.split(":")

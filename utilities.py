@@ -6,8 +6,8 @@ import subprocess
 import pysftp
 import datetime
 
-def createPiDir():
-    directory = '/home/pi/Desktop/' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+def createPiDir(processName):
+    directory = '/home/pi/Desktop/'+processName+'_' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     return directory
 
 def changeDir(newDir):
@@ -101,3 +101,28 @@ def sendFile(connection, path, processName , filename):
         print(str(filesize))
     file_to_send.close()
     print 'Done Sending'
+
+def receiveFile(directory):
+    try:
+
+        filesize = SOCKET.recv(32)
+        filesize = int(filesize, 2)
+        print('file size '+str(filesize))
+
+        os.mkdir(directory, 0755);
+        os.chdir(directory)
+
+        if str(os.getcwd()) == directory:
+            f = open('Dockerfile','wb')
+            chunksize = 4096
+
+            while filesize > 0:
+                if filesize < chunksize:
+                    chunksize = filesize
+                data = SOCKET.recv(chunksize)
+                f.write(data)
+                filesize -= chunksize
+            f.close()
+            print 'File received successfully'
+    except IOError as e:
+        print e
