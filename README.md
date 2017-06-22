@@ -17,7 +17,7 @@
 4. Administrator Page
   * ~~Admin Details~~
   * ~~Actions Log~~
-  * ~~Raspberry pie specs~~ and tasks
+  * ~~Raspberry pie specs~~ , tasks and location
   * DB Admin Page [Display, add and delete accounts(Admin and Gov)]
 5. User Page
   * ~~User Details~~
@@ -36,13 +36,13 @@
 7. ~~Host the 3 websites with different portals on the same droplet~~
 
 * **Raspberry pi**:
-1. ~~Upload Dockers Files on the Website~~
 2. ~~Reverse shell Multi-clients~~
+1. ~~Upload Dockers Files on the Website~~
 3. ~~Send broadcast message to all raspberry pies~~
-4. ~~Autorun client script on startup~~
+4. Autorun client script on startup
 5. ~~Run docker remotely on a specific raspberry pi~~
 6. ~~Get specs remotely from a specific raspberry pi~~
-7. ~~3G module driver~~
+7. 3G module driver
 8. ~~Manage Raspberry pies remotely~~
 9. [Pending] Migration between Raspberry pi [load balancer concept]
 10. [Pending] Distributed system between raspberry pies

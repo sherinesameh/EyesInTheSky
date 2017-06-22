@@ -12,7 +12,7 @@ PORT = 8080
 SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 NUMBEROFTHREADS = 10
 CONNECTIONS = {}
-DB = dbHandler('admin')
+DB = dbHandler()
 
 def setupConnection():
     try:

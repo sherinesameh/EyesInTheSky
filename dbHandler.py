@@ -4,13 +4,9 @@ import pymysql
 import operator
 
 class dbHandler:
-
-   def __init__(self, user):
-      if user == 'admin':
-          self.db = pymysql.connect(host='localhost',user='root',password='sherine',db='EITS')
-      elif user == 'pi':
-          self.db = pymysql.connect(host='46.101.180.169',user='pi',password='eits2017',db='EITS')
-      self.cursor =  self.db.cursor(pymysql.cursors.DictCursor)
+   def __init__(self):
+       self.db = pymysql.connect(host='46.101.180.169', port= 3306, user='pi',password='eits2017',db='EITS')
+       self.cursor =  self.db.cursor(pymysql.cursors.DictCursor)
 
    def get_points(self,Camera,FreeStorage,CPU,Temperature,Jobs_Num,time):
       max_storage = 8192
@@ -113,22 +109,24 @@ class dbHandler:
         print(e)
 
    def getSpecs(self,Mac):
-     query2 = "SELECT username , password , private_ip  FROM `Rp_Specs` WHERE Mac = \""+ Mac+" \""
+     query2 = "SELECT Username , Password , PublicIP  FROM `Rp_Specs` WHERE Mac = \""+ Mac+" \""
      try:
        self.cursor.execute(query2)
        results = self.cursor.fetchall()
        for row  in results:
-           result = row["username"]
-           result = result + ":"+row["password"]
-           result = result + ":"+row["private_ip"]
+           result = row["Username"]
+           result = result + ":"+row["Password"]
+           result = result + ":"+row["PublicIP"]
        return result
      except Exception as e:
        print(e)
 
-   def updateSpecs(self, Mac, CPU_temp, CPU_used, RAM_used, DISK_perc):
-      query = 'UPDATE Current_Specs SET Temperature = CPU_temp , CpuUsage = CPU_used, RamUsage =RAM_used, FreeStorage = DISK_perc WHERE Mac = \''+Mac+'\''
+   def updateCurrentSpecs(self, Mac, PrivateIP, CPU_temp, CPU_usage, DISK_usage, RAM_usage):
+      query = 'UPDATE Current_Specs SET PrivateIP = \''+ PrivateIP +'\', CpuUsage = %s, RamUsage = %s, FreeStorage = %s, Temperature = %s WHERE Mac = \''+Mac+'\''
       try:
-         self.cursor.execute(query)
+         self.cursor.execute(query, [CPU_usage, RAM_usage, DISK_usage, CPU_temp])
          self.db.commit()
+         print('updated')
       except Exception as e:
          self.db.rollback()
+         print(e)

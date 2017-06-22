@@ -12,7 +12,7 @@ from time      import sleep
 HOST = '46.101.180.169'
 PORT   = 8080
 SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-DB     = dbHandler('pi')
+DB     = dbHandler()
 
 def establishConnection():
     try:
@@ -24,10 +24,15 @@ def establishConnection():
 def updateSpecs():
     SOCKET.send(specs.StaticSpecs())
     while(True):
-        mac = specs.getMac()
+        Mac = specs.getMac()
         currentSpecs = specs.CurrentSpecs().split(':_:')
         print(currentSpecs)
-        DB.updateSpecs(mac, currentSpecs[0], currentSpecs[1], currentSpecs[2], currentSpecs[3])
+        PrivateIP = currentSpecs[0].replace(' ','')
+        CPU_temp = float(currentSpecs[1])
+        CPU_usage = float(currentSpecs[2])
+        DISK_usage = float(currentSpecs[3])
+        RAM_usage = float(currentSpecs[4])
+        DB.updateSpecs(Mac, PrivateIP, CPU_temp, CPU_usage, DISK_usage, RAM_usage)
         sleep(30)
 
 def executeCommands():
