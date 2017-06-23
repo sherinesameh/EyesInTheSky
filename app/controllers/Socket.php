@@ -13,14 +13,26 @@ class mySocket
 		socket_write($this->socket, $type, strlen ($type)) or die("Could not write output\n");
 	}
 	
-	function send($path)
+	
+	function send($type,$location)
 	{
-		$type ="user";
-		$output = $path;
+		if (!strcmp($type, "general")) {
+			$type = 1;
+		}else{
+			$type = 2;
+		}
 		socket_write($this->socket, $type, strlen ($type)) or die("Could not write output\n");
 		sleep(1);
-		socket_write($this->socket, $output, strlen ($output)) or die("Could not write output\n");
+		if ($type == 2) {
+			$locations = $location[0];
+			for ($i=0; $i < sizeof($location); $i++) { 
+				$locations = $locations .':_:'. $location[$i];
+			}
+		socket_write($this->socket, $locations, strlen ($locations)) or die("Could not write output\n");
+
+		}
 	}
+
 	function receive()
 	{
 
