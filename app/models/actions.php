@@ -26,8 +26,7 @@
     }
     public function addCriminal($Fname, $Mname, $Lname, $priority, $date, $path, $image, $id, $username)
     {
-       $query = "INSERT INTO `Criminals`(`Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image` ) VALUES ( '".$Mname ."','". $Fname ."','". $Lname ."','". $path ."',". $priority .",". $date .",'". $image."')";
-       echo $query;
+       $query = "INSERT INTO `Criminals`(`Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image` ) VALUES ( '".$Mname ."','". $Fname ."','". $Lname ."','". $path ."',". $priority .",SELECT DATE_ADD(NOW(), INTERVAL  ". $date." DAY),'". $image."')";
        $this->conn->query($query);
        $Crim_id = $this->conn->insert_id;
        $stmt = $this->conn->prepare("INSERT INTO `Gov_Log`(`Gov_id`, `Gov_username`, `Action`, `Crim_id`) VALUES (?,?,98312,?)");
@@ -54,6 +53,15 @@
           return ERROR;
         }
     }
+
+    public function getLocations()
+    {
+      $stmt = $this->conn->prepare("SELECT DISTINCT(Location) FROM Rp_Specs as Location ORDER BY Location ASC");
+      $stmt->execute();
+      $result = $this->getResult($stmt);
+      return $result;
+    }
+
     public function getAllCriminals()
     {
       $stmt = $this->conn->prepare("SELECT * FROM `Criminals`");

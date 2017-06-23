@@ -2,7 +2,7 @@
 class mySocket
 {
 	private $host = "localhost";
-  private $port = 5555;
+  private $port = 8080;
   private $socket;
 
 	function __construct()
