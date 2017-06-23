@@ -1,0 +1,28 @@
+<div class="row">
+  <form action ="http://localhost/Government/app/controllers/main.php" method="post" enctype="multipart/form-data">
+    
+
+    <div class="file-field input-field row">
+      <div class="waves-effect waves-light btn col s3">
+        <span>Upload Image</span>
+        <input name="zip_file" type="file" multiple = "multiple">
+      </div>
+      <div class="file-path-wrapper col s9">
+        <input class="file-path validate" type="text" ng-required="true">
+      </div>
+    </div>
+
+    <!-- <div class="input-field col s12">
+      <select ng-model="priority">
+      <option value="" disabled selected>Priority</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      </select>
+    </div> -->
+    <div class="action col s3 offset-s9">
+      <input type="submit" value="Add Criminal" class="waves-effect waves-light btn" ng-disabled="addingForm.$invalid"/>
+    </div>
+ </form>
+
+</div>

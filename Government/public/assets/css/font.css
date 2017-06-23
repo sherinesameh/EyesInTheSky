@@ -1,0 +1,46 @@
+@font-face {
+  font-family: 'roboto';
+  src: url('../fonts/roboto/Roboto-Bold.eot'),
+       url('../fonts/roboto/Roboto-Light.eot'),
+       url('../fonts/roboto/Roboto-Medium.eot'),
+       url('../fonts/roboto/Roboto-Regular.eot'),
+       url('../fonts/roboto/Roboto-Thin.eot'),
+       url('../fonts/roboto/Roboto-Bold.woff') format('woff'),
+       url('../fonts/roboto/Roboto-Light.woff') format('woff'),
+       url('../fonts/roboto/Roboto-Medium.woff') format('woff'),
+       url('../fonts/roboto/Roboto-Regular.woff') format('woff'),
+       url('../fonts/roboto/Roboto-Thin.woff') format('woff'),
+       url('../fonts/roboto/Roboto-Bold.woff2') format('woff2'),
+       url('../fonts/roboto/Roboto-Light.woff2') format('woff2'),
+       url('../fonts/roboto/Roboto-Medium.woff2') format('woff2'),
+       url('../fonts/roboto/Roboto-Regular.woff2') format('woff2'),
+       url('../fonts/roboto/Roboto-Thin.woff2') format('woff2'),
+       url('../fonts/roboto/Roboto-Bold.ttf') format('truetype'),
+       url('../fonts/roboto/Roboto-Light.ttf') format('truetype'),
+       url('../fonts/roboto/Roboto-Medium.ttf') format('truetype'),
+       url('../fonts/roboto/Roboto-Regular.ttf') format('truetype'),
+       url('../fonts/roboto/Roboto-Thin.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('../fonts/material-icons.woff2') format('woff2');
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}

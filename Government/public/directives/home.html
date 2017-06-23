@@ -1,0 +1,30 @@
+<div class="row">
+    <div ui-view="navbar"></div>
+    <br />
+    <div class="col s4">
+      <div ui-view="user"></div>
+      <div ui-view="billing"></div>
+    </div>
+    <div class="col s8">
+      <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+          <div class="collapsible-header"><i class="material-icons">search</i>Search</div>
+          <div class="collapsible-body" ui-view="search"></div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">add</i>Add</div>
+          <div class="collapsible-body" ui-view="add"></div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">delete</i>Delete</div>
+          <div class="collapsible-body" ui-view="delete"></div>
+        </li>
+      </ul>
+      <div ui-view="log"></div>
+    </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+</script>
