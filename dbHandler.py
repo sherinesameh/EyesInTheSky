@@ -63,8 +63,30 @@ class dbHandler:
         self.db.commit()
      except Exception as e:
         print(e)
+   
 
-   def addProcess(containerID , imgID , IPAddress , port, userID ,processName , mac):
+   def getCameraPis(self):
+     query = "SELECT `Mac` FROM `Rp_Specs` WHERE HasCamera = 1";
+     self.cursor.execute(query)
+     macs = []
+     results = self.cursor.fetchall()
+     for x in results:
+         macs.append(x)
+     return macs        
+
+   def getLocatedPis(self,Locations):
+     macs = []
+     for x in Locations:
+       query = "SELECT `Mac` FROM `Rp_Specs` WHERE HasCamera = 1";
+       self.cursor.execute(query)
+       results = self.cursor.fetchall()
+       for y in results:
+           macs.append(y)
+     
+     return macs
+
+
+   def addProcess(self,containerID , imgID , IPAddress , port, userID ,processName , mac):
      query =  "INSERT INTO `Process`(`Img_id`, `Process_name`, `Cont_id`, `Cont_IP`, `Mac`, `User_id`,   `Process_State`) VALUES (\'"+imgID+"\',\'"+processName+"\',\'" +containerID +"\',\'"+ IPAddress + "\',\'" + mac+ "\',\'" + userID + "\', 22894)"
      try:
         self.cursor.execute(query)
@@ -72,7 +94,7 @@ class dbHandler:
      except Exception as e:
         print(e)
 
-   def adminKill(Admin_id , mac , Cont_id):
+   def adminKill(self,Admin_id , mac , Cont_id):
      query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`, `Mac` , `Cont_id`) VALUES ("+Admin_id+","+27693+",\'"+mac+"\',\'"+Cont_id+"\')"
      try:
         self.cursor.execute(query)
@@ -80,7 +102,7 @@ class dbHandler:
      except Exception as e:
         print(e)
 
-   def shutPi(AdminID, mac ) :
+   def shutPi(self,AdminID, mac ) :
      query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`, `Mac` , `Cont_id`) VALUES ("+Admin_id+","+12030+",\'"+mac+"\',\'None\')"
      try:
         self.cursor.execute(query)
@@ -94,7 +116,7 @@ class dbHandler:
      except Exception as e:
         print(e)
 
-   def restartPi(AdminID, mac ) :
+   def restartPi(self,AdminID, mac ) :
      query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`, `Mac` , `Cont_id`) VALUES ("+Admin_id+","+23456+",\'"+mac+"\',\'None\')"
      try:
         self.cursor.execute(query)
