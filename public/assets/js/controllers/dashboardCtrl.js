@@ -36,7 +36,10 @@
     specs = {request: 'getRpSpecs'};
     sendRequest($http, specs).success(function(data) {
       $scope.specs = data;
+      $scope.RunningProcesses = false;
       $scope.getProcesses = function(Mac){
+
+        $scope.RunningProcesses = !$scope.RunningProcesses;
         params = {
           mac : Mac,
           request: 'getRpProcesses'
@@ -50,10 +53,19 @@
             console.log(error);
         });
       };
-      $scope.showLocation = function(lat,lng,name){
-        $scope.currentLocation = name;
-        $scope.currentLat = lat;
-        $scope.currentLng = lng;
+      $scope.showDetails = function(Mac, LocationLat, LocationLng, LocationName, PublicIP, Username, Password, HasCamera, Generation, os, Ram, storage){
+        $scope.currentMac = Mac;
+        $scope.LocationLat = LocationLat;
+        $scope.LocationLng = LocationLng;
+        $scope.LocationName = LocationName;
+        $scope.PublicIP = PublicIP;
+        $scope.Username = Username;
+        $scope.Password = Password;
+        $scope.HasCamera = HasCamera;
+        $scope.Generation = Generation;
+        $scope.os = os;
+        $scope.Ram = Ram;
+        $scope.Storage = storage;
       }
     });
   });

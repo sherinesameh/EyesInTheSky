@@ -30,7 +30,7 @@
     function getRpSpecs()
   	{
       $RESULT = array();
-      $stmt = $this->conn->prepare("SELECT Current_Specs.Mac, Rp_Log.Jobs_Num, Rp_Specs.LocationLat,Rp_Specs.LocationLng, Rp_Specs.LocationName, Rp_Specs.PublicIP, Rp_Specs.Username, Rp_Specs.Password, Rp_Specs.HasCamera,Current_Specs.RamUsage, Current_Specs.Temperature,Current_Specs.CpuUsage, Current_Specs.FreeStorage FROM Rp_Specs INNER JOIN Current_Specs on Rp_Specs.Mac = Current_Specs.Mac INNER JOIN Rp_Log on Rp_Log.Mac = Rp_Specs.Mac ");
+      $stmt = $this->conn->prepare("SELECT Current_Specs.Mac, Rp_Log.Jobs_Num, Rp_Specs.LocationLat,Rp_Specs.LocationLng, Rp_Specs.LocationName, Rp_Specs.PublicIP, Rp_Specs.Username, Rp_Specs.Password, Rp_Specs.Generation, Rp_Specs.OS, Rp_Specs.Ram, Rp_Specs.Storage, Rp_Specs.HasCamera,Current_Specs.RamUsage, Current_Specs.Temperature,Current_Specs.CpuUsage, Current_Specs.FreeStorage FROM Rp_Specs INNER JOIN Current_Specs on Rp_Specs.Mac = Current_Specs.Mac INNER JOIN Rp_Log on Rp_Log.Mac = Rp_Specs.Mac ");
       $stmt->execute();
   		$stmt->store_result();
   		for ( $i = 0; $i < $stmt->num_rows; $i++ )
