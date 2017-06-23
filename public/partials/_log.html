@@ -5,8 +5,8 @@
           <h5 class="card-title">Admins Log</h5>
           <div class="nav-wrapper card">
               <div class="input-field">
-                <input id="search" type="search" required ng-model="search">
-                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                <input id="logSearch" type="search" required ng-model="logSearch">
+                <label class="label-icon" for="logSearch"><i class="material-icons">search</i></label>
               </div>
           </div>
           <table class="striped">
@@ -18,9 +18,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="log in logs | filter:search">
+              <tr ng-repeat="log in logs| filter:logSearch">
                 <td>{{log.name}}</td>
-                <td>{{log.The_Actions}}</td>
+                <td>{{log.Action}}</td>
                 <td>{{log.Action_time}}</td>
               </tr>
             </tbody>

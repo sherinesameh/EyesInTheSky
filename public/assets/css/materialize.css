@@ -2237,7 +2237,7 @@ thead {
 td, th {
   padding: 15px 5px;
   display: table-cell;
-  text-align: left;
+  text-align: center;
   vertical-align: middle;
   border-radius: 2px; }
 
@@ -2256,7 +2256,7 @@ td, th {
       margin: 0;
       vertical-align: top; }
     table.responsive-table th {
-      text-align: left; }
+      text-align: center; }
     table.responsive-table thead {
       display: block;
       float: left; }
@@ -3971,29 +3971,50 @@ button.btn-floating {
   border-top: 1px solid #ddd;
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
-  margin: 0.5rem 0 1rem 0; }
+  margin: 0.5rem 0 1rem 0;
+  border-radius: 10%;
+ }
 
 .collapsible-header {
   display: block;
+  border-radius: 10%;
   cursor: pointer;
-  min-height: 3rem;
-  line-height: 3rem;
-  padding: 0 1rem;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd; }
+  min-height: 5rem;
+  line-height: 5rem;
+  background-color: transparent;
+  border: none;
+  border-color: transparent;
+  border-width: 0 !important;
+  box-shadow: none;
+
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 1rem;
+  /*padding: 0 1rem;*/
+  /*background-color: #fff;*/
+  /*border-bottom: 1px solid #ddd;*/
+}
   .collapsible-header i {
-    width: 2rem;
-    font-size: 1.6rem;
-    line-height: 3rem;
+    /*width: 2rem;*/
+    color: #307bbb;
+    font-size: 4rem;
+    line-height: 4rem;
+
     display: block;
-    float: left;
-    text-align: center;
-    margin-right: 1rem; }
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    /*text-align: center;*/
+    /*float: left;*/
+    /*margin-right: 1rem;*/
+  }
 
 .collapsible-body {
   display: none;
-  border-bottom: 1px solid #ddd;
-  box-sizing: border-box;
+  /*border-bottom: 1px solid #ddd;*/
+  /*box-sizing: border-box;*/
   padding: 2rem; }
 
 .side-nav .collapsible,

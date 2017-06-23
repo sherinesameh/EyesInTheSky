@@ -15,31 +15,41 @@
                 <th>Mac</th>
                 <th>Jobs Num</th>
                 <th>Location</th>
-                <th>Temperature</th>
                 <th>CPU Usage</th>
-                <th>Free Storage</th>
+                <th>Disk Usage</th>
+                <th>RAM Usage</th>
+                <th>Temperature</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="spec in specs | filter:search">
-                <td>{{spec.Mac}}</td>
-                <td>{{spec.Jobs_Num}}</td>
                 <td>
-                  <a class='locations' href='#dashboard' data-beloworigin="true" data-activates='map'>
-                    <i class="material-icons medium">room</i>
-                  </a>
-                  <ul id='map' class='dropdown-content'>
+                  <ul class="collapsible" data-collapsible="accordion">
                     <li>
-                      {{spec.Location}}
+                      <div class="collapsible-header">{{spec.Mac}}</div>
+                      <div class="collapsible-body">
+                        <span style="text-align:left">
+                          PublicIP: {{spec.PublicIP}} <hr />
+                          Username: {{spec.Username}} <hr />
+                          Password: {{spec.Password}} <hr />
+                          Camera  : {{spec.HasCamer}}
+                        </span>
+                      </div>
                     </li>
                   </ul>
                 </td>
                 <td>
-                    <img class="temp" src="public/assets/img/temperature.png"/>
-                    <span class="tempValue">{{spec.Temperature}}&deg;C</span>
+                  <button data-target="RunningProcesses" class="btn processBtn waves-effect waves-light btn-flat" ng-click ="getProcesses(spec.Mac)">
+                    {{spec.Jobs_Num}}
+                  </button>
                 </td>
                 <td>
-                  <div id="circle" class="c100 p{{spec.CpuUsage}} small">
+                  <button data-target="showLocation" class="btn processBtn waves-effect waves-light btn-flat" ng-click="showLocation(spec.LocationLat, spec.LocationLng, spec.LocationName)">
+                    <i class="material-icons large">room</i>{{spec.LocationName}}
+                  </button>
+                </td>
+                <td>
+                  <div id="circle" class="c100 p{{spec.CpuUsage | number:0}} small">
                     <span id="value">{{spec.CpuUsage}}%</span>
                     <div class="slice">
                       <div class="bar"></div>
@@ -48,13 +58,29 @@
                   </div>
                 </td>
                 <td>
-                  <div id="circle" class="c100 p{{spec.FreeStorage}} small">
-                    <!-- Make the Storage % not a real Num -->
-                    <span id="value">{{spec.FreeStorage}}MB</span>
+                  <div id="circle" class="c100 p{{spec.FreeStorage | number:0}} small">
+                    <span id="value">{{spec.FreeStorage}}%</span>
                     <div class="slice">
                       <div class="bar"></div>
                       <div class="fill"></div>
                     </div>
+                  </div>
+                </td>
+                <td>
+                  <div id="circle" class="c100 p{{spec.FreeStorage | number:0}} small">
+                    <span id="value">{{spec.RamUsage}}%</span>
+                    <div class="slice">
+                      <div class="bar"></div>
+                      <div class="fill"></div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="row">
+                    <img class="temp" src="public/assets/img/temperature.png"/>
+                  </div>
+                  <div class="row">
+                    <span class="tempValue">{{spec.Temperature}}&deg;C</span>
                   </div>
                 </td>
               </tr>
@@ -64,3 +90,73 @@
     </div>
   </div>
 </div>
+
+<div id="RunningProcesses" class="modal">
+  <div class="modal-footer">
+    <a href="#dashboard" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click="KillProcess(process.Process_name)"><i class="material-icons black-text">close</i>
+    </a>
+  </div>
+   <div class="modal-content">
+     <h6>MAC Address: {{currentMac}}</h6><hr />
+     <table class="striped">
+       <thead>
+         <tr>
+           <th>Process Name</th>
+           <th>Container ID</th>
+           <th>Start Time</th>
+           <th>User Username</th>
+           <th></th>
+         </tr>
+       </thead>
+       <tbody>
+         <tr ng-repeat="process in processes">
+           <td>{{process.Process_name}}</td>
+           <td>{{process.Cont_id}}</td>
+           <td>{{process.Start_time}}</td>
+           <td>{{process.User_username}}</td>
+           <td>
+               <a class="btn-floating waves-effect waves-light btn-flat" ng-click="KillProcess(process.Process_name)">
+                 <i class="material-icons red-text">close</i>
+               </a>
+           </td>
+         </tr>
+       </tbody>
+     </table>
+   </div>
+</div>
+
+<div id="showLocation" class="modal">
+  <div class="modal-footer">
+    <a href="#dashboard" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click="KillProcess(process.Process_name)"><i class="material-icons black-text">close</i>
+    </a>
+  </div>
+   <div class="modal-content">
+     <h6>Location Name: {{currentLocation}}</h6>
+     <hr />
+     <div id="map"></div>
+   </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $('.collapsible').collapsible();
+    $('.modal').modal();
+
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 20
+      });
+      var infoWindow = new google.maps.InfoWindow({map: map});
+      var pos = { lat:31.209872299999994, lng: 29.9521207 };
+      var marker = new google.maps.Marker({
+         position: pos,
+         map: map
+       });
+      map.setCenter(pos);
+      }
+  });
+</script>
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3Y0-Eg1rT2vbWoIckip2MwxHb7EV6btI&callback=initMap">
+</script>

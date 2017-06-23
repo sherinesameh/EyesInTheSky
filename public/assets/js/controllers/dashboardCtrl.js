@@ -30,14 +30,30 @@
       $scope.logs = data;
     });
   });
-  app.controller('rpCtrl', function($scope, $http, $http, $stateParams, $state) {
+
+  app.controller('rpCtrl', function($scope, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
     specs = {request: 'getRpSpecs'};
-    processes = {request: 'getRunningProcesses'};
     sendRequest($http, specs).success(function(data) {
       $scope.specs = data;
-    });
-    sendRequest($http, processes).success(function(data) {
-      $scope.processes = data;
+      $scope.getProcesses = function(Mac){
+        params = {
+          mac : Mac,
+          request: 'getRpProcesses'
+        }
+        $http.post('app/controllers/requests.php',params)
+        .success(function(data) {
+            $scope.currentMac = params.mac;
+            $scope.processes = data;
+        })
+        .error(function(error) {
+            console.log(error);
+        });
+      };
+      $scope.showLocation = function(lat,lng,name){
+        $scope.currentLocation = name;
+        $scope.currentLat = lat;
+        $scope.currentLng = lng;
+      }
     });
   });
