@@ -1,6 +1,8 @@
 <?php
   require_once '../models/dashboard.php';
   require_once '../models/user.php';
+  require("Socket.php");
+
   session_start();
   $user = new User;
   $model = new Dashboard;
@@ -16,9 +18,9 @@
       $result= $user->getUserInfo($email);
       echo json_encode($result);
       break;
-    case "getRpProcesses":
-      $mac = $params->mac;
-      $result= $model->getRpProcesses($mac);
+    case "getUserInfo":
+      $mac = $_POST['mac'];
+      $result= $user->getRpProcesses($mac);
       echo json_encode($result);
       break;
     case "getAdminsLog":
@@ -33,6 +35,22 @@
       $result= $model->getRunningProcesses();
       echo json_encode($result);
       break;
+    case 'killProcess':
+        $mac = $params->mac;
+        $contID = $params->contID;
+        $socket = new mySocket;
+        $socket->kill($mac,$contID);
+        break;
+    case 'shutPi':
+        $mac = $params->mac;
+        $socket = new mySocket;
+        $socket->shutDown($mac);
+        break;
+    case 'restartPi':
+        $mac = $params->mac;
+        $socket = new mySocket;
+        $socket->restart($mac);
+        break;      
     default:
       echo json_encode('404 Error');
       break;
