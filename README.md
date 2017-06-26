@@ -13,7 +13,7 @@
 1. ~~Database Schema and Implementation~~
 2. [Pending] Home Page
 3. ~~Login Page~~
-4. ~~ **Administrator Portal** ~~
+4. **~~Administrator Portal~~**
   * ~~Admin Details~~
   * ~~Actions Log~~
   * ~~Raspberry pie specs, tasks and location~~
@@ -59,7 +59,7 @@
 2. ~~UI Designs~~
 3. [Pending] Descriptive Video
 
-* **Issues**:
+* **Issues and Uncompleted Tasks**:
 1. Government/app/models: @uploadCriminal - Change path and design naming convention for the uploaded directories **(line 17)**
 2. Government/app/controllers: @addCriminal - Change the image path into the directory of the uploaded zip file **(line 13)**
 3. Government/app/controllers: @Socket - Please check if the type at **(line 17)** is correct
