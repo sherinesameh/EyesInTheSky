@@ -105,26 +105,42 @@ def userCommands(connection):
     #     connection.send(utilities.buildAndRunDocker(hostname, username, password, remotePath))
 
 def govCommands(connection):
+
+    type = str(connection.recv(1)).strip()
     #train the set producing the 2 files
     os.system('python ~/Desktop/RemoteShell/Trainer.py')
-    # cmd = connection.recv(1024)
-    mac = DB.getBestPi()
-    mac = 'b8:27:eb:a0:83:49'
-    connectionRP = CONNECTIONS[mac]
-    # results = target.split(":")
-    # print(results)
+    print("type is "+type)
+    if type == "1":
+    #general --> send to all pi-s with camera 
+        macs = getCameraPis()
+        for x in macs:
+            connectionRP = CONNECTIONS[x]
+            sendToCamera(connectionRP)
+
+    if type == "2":
+    #specific to pi-s in specific locations    
+        locations = str(connection.recv(1024)).strip().split(":_:")
+        print(locations)
+        macs = getLocatedPis(locations)
+        for x in macs:
+            connectionRP = CONNECTIONS[x]
+            sendToCamera(connectionRP)
+
+    
+def sendToCamera(connection):
     directory = "/opt/lampp/htdocs/sherif/TF_FILES"
 
-    connectionRP.send("upload")
-    utilities.sendFile(connectionRP , directory , 'Graph.npy' )
-    response = connectionRP.recv(4)
+    connection.send("upload")
+    utilities.sendFile(connection , directory , 'Graph.npy' )
+    response = connection.recv(4)
 
     if response == 'done':
-        utilities.sendFile(connectionRP , directory , 'Labels.npy')
-        response = connectionRP.recv(4)
+        utilities.sendFile(connection , directory , 'Labels.npy')
+        response = connection.recv(4)
         if response == 'done':
-            result = str(connectionRP.recv(1024)).decode('utf-8')
+            result = str(connection.recv(1024)).decode('utf-8')
             print("result "+ result)
+
 
 def main():
     setupConnection()
