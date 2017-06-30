@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 24, 2017 at 03:40 PM
+-- Generation Time: Jun 30, 2017 at 03:03 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -90,6 +90,7 @@ INSERT INTO `Code_index` (`Action`, `Code`) VALUES
 ('Running', 22894),
 ('Restart Pi', 23456),
 ('kill Process', 27693),
+('In progress', 32141),
 ('Not Important', 33333),
 ('User', 40307),
 ('Important', 55555),
@@ -234,15 +235,16 @@ CREATE TABLE `Process` (
   `User_id` int(20) NOT NULL,
   `Start_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Process_State` int(5) NOT NULL,
-  `port` int(5) NOT NULL
+  `port` int(5) NOT NULL,
+  `result` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Process`
 --
 
-INSERT INTO `Process` (`Img_id`, `Process_name`, `Cont_id`, `Cont_IP`, `Mac`, `User_id`, `Start_time`, `Process_State`, `port`) VALUES
-('dwq2dq1dw', 'Task1', '242wdwqd21', '192.15.32.2', 'b8:27:eb:f5:d6:1c', 1, '2017-06-24 14:50:16', 22894, 5555);
+INSERT INTO `Process` (`Img_id`, `Process_name`, `Cont_id`, `Cont_IP`, `Mac`, `User_id`, `Start_time`, `Process_State`, `port`, `result`) VALUES
+('dwq2dq1dw', 'Task1', '242wdwqd21', '192.15.32.2', 'b8:27:eb:f5:d6:1c', 1, '2017-06-24 14:50:16', 22894, 5555, '');
 
 -- --------------------------------------------------------
 
@@ -328,11 +330,20 @@ INSERT INTO `User` (`User_id`, `User_username`, `Fname`, `Lname`, `Email`, `Pass
 
 CREATE TABLE `User_Log` (
   `User_id` int(10) NOT NULL,
-  `Img_id` varchar(20) NOT NULL,
-  `Process_name` varchar(40) NOT NULL,
+  `Img_id` varchar(20) DEFAULT '',
+  `Process_name` varchar(40) NOT NULL DEFAULT '',
   `Action` int(5) NOT NULL,
   `Time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `User_Log`
+--
+
+INSERT INTO `User_Log` (`User_id`, `Img_id`, `Process_name`, `Action`, `Time`) VALUES
+(1, 'dwq2dq1dw', 'Task 1', 32141, '2017-06-29 23:12:26'),
+(1, '', 'Task2', 32141, '2017-06-29 23:12:59'),
+(1, 'gege', 'Task 1', 22894, '2017-06-29 23:16:32');
 
 --
 -- Indexes for dumped tables
@@ -430,9 +441,7 @@ ALTER TABLE `User`
 -- Indexes for table `User_Log`
 --
 ALTER TABLE `User_Log`
-  ADD KEY `User_Log_ibfk_1` (`User_id`),
-  ADD KEY `User_Log_ibfk_2` (`Img_id`),
-  ADD KEY `User_Log_ibfk_3` (`Process_name`),
+  ADD PRIMARY KEY (`User_id`,`Time`),
   ADD KEY `User_Log_ibfk_4` (`Action`);
 
 --
@@ -507,8 +516,6 @@ ALTER TABLE `Rp_Log`
 --
 ALTER TABLE `User_Log`
   ADD CONSTRAINT `User_Log_ibfk_1` FOREIGN KEY (`User_id`) REFERENCES `User` (`User_id`),
-  ADD CONSTRAINT `User_Log_ibfk_2` FOREIGN KEY (`Img_id`) REFERENCES `Process` (`Img_id`),
-  ADD CONSTRAINT `User_Log_ibfk_3` FOREIGN KEY (`Process_name`) REFERENCES `Process` (`Process_name`),
   ADD CONSTRAINT `User_Log_ibfk_4` FOREIGN KEY (`Action`) REFERENCES `Code_index` (`Code`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
