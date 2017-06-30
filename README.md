@@ -1,5 +1,4 @@
 ![alt text][logo]
-
 [logo]: https://github.com/SherineSameh/EyesInTheSky/blob/Users/public/assets/img/EyesInTheSkyLogo.png "Logo"
 
 # EyesInTheSky
@@ -29,8 +28,8 @@
   * ~~User Details~~
   * ~~Add Criminal~~
   * ~~Search~~
-  * Delete Criminal
-  * Train
+  * ~~Delete Criminal~~
+  * ~~Train~~
   * Receiving Result
   * Billing Details
   * ~~Actions Log~~
@@ -60,8 +59,11 @@
 3. [Pending] Descriptive Video
 
 * **Issues and Uncompleted Tasks**:
-1. Government/app/models: @uploadCriminal - Change path and design naming convention for the uploaded directories **(line 17)**
-2. Government/app/controllers: @addCriminal - Change the image path into the directory of the uploaded zip file **(line 13)**
-3. Government/app/controllers: @Socket - Please check if the type at **(line 17)** is correct
-4. Administration/public/partials: @_rasberrypies - Fix Google Map Display **from (line 143)**
-5. Fix Raspberry pies 3G Connection
+1. **Government/app/models/uploadCriminal.php:** Change path and design naming convention for the uploaded directories *(line 17)*
+2. **Government/app/controllers/addCriminal.php:** Change the image path into the directory of the uploaded zip file *(line 12)*
+3. **Government/app/controllers/Socket.php:** Please check if the type at *(line 17)* is correct
+4. **Government/public/partials/_add.html:** Add restrictions on expire date *(line 56)*
+5. **Government/public/partials/_search.html & _delete.html:** Save the full path of the images in database
+6. Fix Raspberry pies **3G Connection**
+7. **Administration/public/partials/_rasberrypies.html:** Fix Google Map Display *from (line 143)*
+8. **Administration/public/partials/_rasberrypies.html:** Allow data binding from server to web
