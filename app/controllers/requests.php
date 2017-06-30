@@ -39,6 +39,7 @@
     case 'killProcess':
         $mac = $params->mac;
         $contID = $params->contID;
+        $model->killProcess($mac,$contID);
         // $socket->kill($mac,$contID);
         break;
     case 'shutPi':
