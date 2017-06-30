@@ -64,11 +64,30 @@
   });
   app.controller('deleteCtrl', function($scope, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
-    // params = {
-    //   request: 'deleteCriminal',
-    //   criminalID: $scope.criminalID
-    // };
-    // sendRequest($http, params).success(function(data) {
-    //   $scope.delete = data;
-    // });
+    params = {request: 'search'};
+    sendRequest($http, params).success(function(data) {
+      $scope.criminals = data;
+    });
+    $scope.removeCriminal = function(criminalID) {
+        params = {};
+        var criminals = eval( $scope.criminals );
+        var index = -1;
+        for( var i = 0; i < criminals.length; i++ ) {
+          if( criminals[i].Crim_id === criminalID ) {
+            index = i;
+            params = {
+              request: 'deleteCriminal',
+              criminalID: $scope.criminals[i].Crim_id,
+              filename: $scope.criminals[i].Dir_path
+            };
+            sendRequest($http, params)
+            .success(function(data) {
+              $scope.criminals.splice( index, 1 );
+            })
+            .error(function(error) {
+                console.log("error");
+            });
+          }
+        }
+    };
   });

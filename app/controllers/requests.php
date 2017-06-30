@@ -31,18 +31,18 @@ switch ($request) {
     case 'getLocations':
           $result = $actions->getLocations();
           echo json_encode($result);
-          break;    
+          break;
     case "addCriminal":
         #el file hayegy ezay hena ??
         $criminal = new upload_crminal($_FILES["zip_file"]);
         $fileName = $criminal->upload();
-        #el image hena 
+        #el image hena
         $tmp_file = $_FILES['image']['tmp_name'];
         $image = $_FILES['image']['name'];
         move_uploaded_file($tmp_file, '../../Images/'. $image);
         #el locations
         $type = $params->type;
-        if (!strcmp($type, "specific")) {          
+        if (!strcmp($type, "specific")) {
         $locations = $params->location;
         }else{
           $locations = null;
@@ -60,7 +60,6 @@ switch ($request) {
           $socket = new mySocket;
           $socket->send($type,$locations);
         }
-
         echo json_encode($result);
         break;
     case "deleteCriminal":

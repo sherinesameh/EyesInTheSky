@@ -1,0 +1,41 @@
+<div class="row">
+          <div class="nav-wrapper card">
+              <div class="input-field">
+                <input id="search" type="search" required ng-model="searchForCriminal">
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              </div>
+          </div>
+          <table class="striped" style="list-style: none">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Path</th>
+                <th>Priority</th>
+                <th>Expiry Date</th>
+                <th>Photo</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="criminal in criminals | filter:searchForCriminal">
+                <td>{{criminal.Fname}} {{criminal.Mname}} {{criminal.Lname}}</td>
+                <td>{{criminal.Dir_path}}</td>
+                <td>{{criminal.priority}}</td>
+                <td>{{criminal.expiry_date | date}}</td>
+                <td>
+                  <img class="responsive-img circle" ng-src="{{criminal.image}}"/>
+                </td>
+                <td>
+                  <a class="btn-floating waves-effect waves btn-flat" ng-click="removeCriminal(criminal.Crim_id)">
+                    <i class="material-icons red-text">close</i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--   -->
