@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 30, 2017 at 10:34 PM
+-- Generation Time: Jul 01, 2017 at 01:15 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -82,7 +82,6 @@ CREATE TABLE `Code_index` (
 
 INSERT INTO `Code_index` (`Action`, `Code`) VALUES
 ('general', 10794),
-('Not totally important', 11111),
 ('Shutdown Pi', 12030),
 ('Not Found', 20202),
 ('Added Task', 20794),
@@ -93,15 +92,15 @@ INSERT INTO `Code_index` (`Action`, `Code`) VALUES
 ('In progress', 32141),
 ('Not Important', 33333),
 ('User', 40307),
-('Important', 55555),
+('Low', 55555),
 ('Delete Criminal', 56489),
 ('Found', 76767),
-('Highly Important', 77777),
+('normal', 77777),
 ('Government', 80702),
 ('RaspberryPi', 90201),
 ('Admin', 90901),
 ('Add criminal', 98312),
-('Extremly Important', 99999);
+('High', 99999);
 
 -- --------------------------------------------------------
 
@@ -116,7 +115,7 @@ CREATE TABLE `Criminals` (
   `Lname` varchar(70) NOT NULL,
   `Dir_path` text,
   `priority` int(5) NOT NULL,
-  `expiry_date` date NOT NULL,
+  `expiry_date` text NOT NULL,
   `image` text NOT NULL,
   `Status` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -128,7 +127,9 @@ CREATE TABLE `Criminals` (
 INSERT INTO `Criminals` (`Crim_id`, `Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image`, `Status`) VALUES
 (7, 'khaled', 'yara', 'ibrahim', 'test', 1194, '0000-00-00', 'test.png', 0),
 (8, 'seka', 'hossam', 'ahmed', 'test', 55555, '0000-00-00', 'x.png', 20202),
-(9, 'seka', 'hossam', 'ahmed', 'test', 55555, '2017-06-23', 'x.png', 20202);
+(9, 'seka', 'hossam', 'ahmed', 'test', 55555, '2017-06-23', 'x.png', 20202),
+(10, 'gamal', 'mostafa', 'elsokary', 'test/uploads', 99999, '17,july', 'dodo', 0),
+(11, 'gamal', 'mostafa', 'elsokary', '', 99999, '27 July, 2017', '1498863953.png', 0);
 
 -- --------------------------------------------------------
 
@@ -199,27 +200,7 @@ CREATE TABLE `Gov_Log` (
 --
 
 INSERT INTO `Gov_Log` (`Gov_id`, `Gov_username`, `Action`, `Start_time`, `Crim_id`) VALUES
-(1, 'farida', 98312, '2017-03-23 14:14:58', 5),
-(1, 'farida', 98312, '2017-03-23 14:26:33', 6),
-(1, 'farida', 56489, '2017-03-23 14:30:14', 5),
-(1, 'farida', 56489, '2017-03-23 14:31:31', 5),
-(1, 'farida', 56489, '2017-03-23 14:37:29', 5),
-(2, 'yamen94', 56489, '2017-06-29 03:00:13', 1),
-(2, 'yamen94', 56489, '2017-06-29 03:00:28', 2),
-(2, 'yamen94', 98312, '2017-06-29 03:45:45', 0),
-(2, 'yamen94', 98312, '2017-06-29 04:08:46', 0),
-(2, 'yamen94', 98312, '2017-06-29 04:10:34', 0),
-(2, 'yamen94', 98312, '2017-06-29 04:10:42', 0),
-(2, 'yamen94', 98312, '2017-06-29 04:10:50', 0),
-(2, 'yamen94', 98312, '2017-06-29 04:10:56', 0),
-(2, 'yamen94', 98312, '2017-06-29 04:20:34', 0),
-(2, 'yamen94', 98312, '2017-06-29 04:28:05', 0),
-(2, 'yamen94', 98312, '2017-06-29 04:29:05', 0),
-(2, 'yamen94', 98312, '2017-06-29 04:31:56', 0),
-(2, 'yamen94', 98312, '2017-06-29 04:39:10', 0),
-(2, 'yamen94', 98312, '2017-06-29 05:02:22', 0),
-(2, 'yamen94', 56489, '2017-06-30 14:39:48', 5),
-(2, 'yamen94', 56489, '2017-06-30 14:41:08', 6);
+(2, 'yamen94', 98312, '2017-07-01 01:05:53', 11);
 
 -- --------------------------------------------------------
 
@@ -303,8 +284,8 @@ CREATE TABLE `Rp_Specs` (
 --
 
 INSERT INTO `Rp_Specs` (`Mac`, `Ram`, `Storage`, `HasCamera`, `Generation`, `OS`, `Username`, `Password`, `PublicIP`, `LocationLat`, `LocationLng`, `LocationName`) VALUES
-('255.255.255.9', 1024, 16384, 0, '3', '', 'pi', 'not real', '192.168.8.100', 0, 0, ''),
-('b8:27:eb:8d:24:80', 3000, 18000, 0, '1', '', 'pi', '123123', '192.1', 0, 0, ''),
+('255.255.255.9', 1024, 16384, 0, '3', '', 'pi', 'not real', '192.168.8.100', 0, 0, 'boukla'),
+('b8:27:eb:8d:24:80', 3000, 18000, 0, '1', '', 'pi', '123123', '192.1', 0, 0, 'mandara'),
 ('b8:27:eb:f5:d6:1c', 2048, 16384, 0, '3', '', 'pi', 'pi123123', '192.168.8.100', 31.2099, 29.952, 'Semouha');
 
 -- --------------------------------------------------------
@@ -470,7 +451,7 @@ ALTER TABLE `Admin`
 -- AUTO_INCREMENT for table `Criminals`
 --
 ALTER TABLE `Criminals`
-  MODIFY `Crim_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `Crim_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `Government`
 --
