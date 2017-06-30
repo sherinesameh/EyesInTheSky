@@ -12,6 +12,7 @@
     params = {request: 'checkSession'};
     sendRequest($http, params).success(function(data) {
        if(data !='"success"') {
+         alert(data);
          $state.transitionTo('home');
        }
     });
@@ -38,7 +39,6 @@
       $scope.specs = data;
       $scope.RunningProcesses = false;
       $scope.getProcesses = function(Mac){
-
         $scope.RunningProcesses = !$scope.RunningProcesses;
         params = {
           mac : Mac,
@@ -52,6 +52,29 @@
         .error(function(error) {
             console.log(error);
         });
+      };
+      $scope.KillProcess = function(Cont_id,currentMac) {
+          params = {};
+          var processes = eval($scope.processes);
+          var index = -1;
+          for( var i = 0; i < processes.length; i++ )
+          {
+            if( processes[i].Cont_id === Cont_id ) {
+              index = i;
+              params = {
+                request: 'KillProcess',
+                mac: currentMac,
+                contID: Cont_id
+              };
+              sendRequest($http, params)
+              .success(function(data) {
+                $scope.processes.splice( index, 1 );
+              })
+              .error(function(error) {
+                  console.log("error");
+              });
+            }
+          }
       };
       $scope.showDetails = function(Mac, LocationLat, LocationLng, LocationName, PublicIP, Username, Password, HasCamera, Generation, os, Ram, storage){
         $scope.currentMac = Mac;

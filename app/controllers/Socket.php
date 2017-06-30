@@ -28,7 +28,7 @@ class Socket
 		$cmd = "27351".":_:".$mac;
 		socket_write($this->socket, $id, strlen ($id)) or die("Could not write output\n");
 		sleep(1);
-		socket_write($this->socket, $cmd , strlen($cmd))or die("Couldn't send kill mac ")
+		socket_write($this->socket, $cmd , strlen($cmd))or die("Couldn't send kill mac ");
 	}
 
 	function restart($mac)
@@ -38,7 +38,7 @@ class Socket
 		$cmd = "87452".":_:".$mac;
 		socket_write($this->socket, $id, strlen ($id)) or die("Could not write output\n");
 		sleep(1);
-		socket_write($this->socket, $cmd , strlen($cmd))or die("Couldn't send kill mac ")
+		socket_write($this->socket, $cmd , strlen($cmd))or die("Couldn't send kill mac ");
 	}
 
 	function receive()

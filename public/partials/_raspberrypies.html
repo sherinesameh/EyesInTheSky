@@ -81,7 +81,7 @@
 
 <div id="RunningProcesses" class="modal">
   <div class="modal-footer">
-    <a href="#dashboard" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click="KillProcess(process.Process_name)"><i class="material-icons black-text">close</i>
+    <a href="#dashboard" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click=""><i class="material-icons black-text">close</i>
     </a>
   </div>
    <div class="modal-content">
@@ -103,7 +103,7 @@
            <td>{{process.Start_time}}</td>
            <td>{{process.User_username}}</td>
            <td>
-               <a class="btn-floating waves-effect waves-light btn-flat" ng-click="KillProcess(process.Process_name)">
+               <a class="btn-floating waves-effect waves-light btn-flat" ng-click="KillProcess(process.Cont_id, currentMac)">
                  <i class="material-icons red-text">close</i>
                </a>
            </td>
@@ -115,7 +115,7 @@
 
 <div id="showDetails" class="modal">
   <div class="modal-footer">
-    <a href="#dashboard" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click="KillProcess(process.Process_name)"><i class="material-icons black-text">close</i>
+    <a href="#dashboard" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click=""><i class="material-icons black-text">close</i>
     </a>
   </div>
    <div class="modal-content">
