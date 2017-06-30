@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.5.2
+-- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 30, 2017 at 03:03 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 7.1.1
+-- Generation Time: Jun 30, 2017 at 03:21 PM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 5.6.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -59,10 +59,10 @@ INSERT INTO `Admin` (`Admin_id`, `Admin_username`, `Fname`, `Lname`, `Email`, `P
 
 CREATE TABLE `Admin_Log` (
   `Admin_id` int(10) NOT NULL,
-  `The_Actions` varchar(40) DEFAULT NULL,
+  `Action` varchar(40) DEFAULT NULL,
   `Mac` varchar(50) NOT NULL,
   `Action_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Cont_id` varchar(20) NOT NULL
+  `Cont_id` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -90,7 +90,6 @@ INSERT INTO `Code_index` (`Action`, `Code`) VALUES
 ('Running', 22894),
 ('Restart Pi', 23456),
 ('kill Process', 27693),
-('In progress', 32141),
 ('Not Important', 33333),
 ('User', 40307),
 ('Important', 55555),
@@ -126,10 +125,6 @@ CREATE TABLE `Criminals` (
 --
 
 INSERT INTO `Criminals` (`Crim_id`, `Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image`, `Status`) VALUES
-(1, 'mohamed', 'mayar', 'salah', 'tests', 3232, '0000-00-00', '', 0),
-(2, 'sherif', 'mohamed', 'hosny', 'test', 5, '0000-00-00', 'test.png', 0),
-(5, 'ahmed', 'hany', 'wagih', '10794', 10794, '0000-00-00', 'test.png', 0),
-(6, 'mohamed', 'sherine', 'sameh', 'test', 3, '0000-00-00', 'test.png', 0),
 (7, 'khaled', 'yara', 'ibrahim', 'test', 1194, '0000-00-00', 'test.png', 0),
 (8, 'seka', 'hossam', 'ahmed', 'test', 55555, '0000-00-00', 'x.png', 20202),
 (9, 'seka', 'hossam', 'ahmed', 'test', 55555, '2017-06-23', 'x.png', 20202);
@@ -155,7 +150,8 @@ CREATE TABLE `Current_Specs` (
 --
 
 INSERT INTO `Current_Specs` (`Mac`, `PrivateIP`, `FreeStorage`, `CpuUsage`, `RamUsage`, `Temperature`, `State`) VALUES
-('255.255.255.7', '192,34,23.1', 15, 64, 40, 48, 22894),
+('255.255.255.9', '', 3540, 60, 0, 51, 22894),
+('b8:27:eb:8d:24:80', '', 8000, 0, 0, 10, 22894),
 ('b8:27:eb:f5:d6:1c', '192.168.1.33 172.17.0.1 ', 36.6, 1.1, 14, 37, 22894);
 
 -- --------------------------------------------------------
@@ -206,7 +202,23 @@ INSERT INTO `Gov_Log` (`Gov_id`, `Gov_username`, `Action`, `Start_time`, `Crim_i
 (1, 'farida', 98312, '2017-03-23 14:26:33', 6),
 (1, 'farida', 56489, '2017-03-23 14:30:14', 5),
 (1, 'farida', 56489, '2017-03-23 14:31:31', 5),
-(1, 'farida', 56489, '2017-03-23 14:37:29', 5);
+(1, 'farida', 56489, '2017-03-23 14:37:29', 5),
+(2, 'yamen94', 56489, '2017-06-29 03:00:13', 1),
+(2, 'yamen94', 56489, '2017-06-29 03:00:28', 2),
+(2, 'yamen94', 98312, '2017-06-29 03:45:45', 0),
+(2, 'yamen94', 98312, '2017-06-29 04:08:46', 0),
+(2, 'yamen94', 98312, '2017-06-29 04:10:34', 0),
+(2, 'yamen94', 98312, '2017-06-29 04:10:42', 0),
+(2, 'yamen94', 98312, '2017-06-29 04:10:50', 0),
+(2, 'yamen94', 98312, '2017-06-29 04:10:56', 0),
+(2, 'yamen94', 98312, '2017-06-29 04:20:34', 0),
+(2, 'yamen94', 98312, '2017-06-29 04:28:05', 0),
+(2, 'yamen94', 98312, '2017-06-29 04:29:05', 0),
+(2, 'yamen94', 98312, '2017-06-29 04:31:56', 0),
+(2, 'yamen94', 98312, '2017-06-29 04:39:10', 0),
+(2, 'yamen94', 98312, '2017-06-29 05:02:22', 0),
+(2, 'yamen94', 56489, '2017-06-30 14:39:48', 5),
+(2, 'yamen94', 56489, '2017-06-30 14:41:08', 6);
 
 -- --------------------------------------------------------
 
@@ -227,24 +239,15 @@ CREATE TABLE `IPs` (
 --
 
 CREATE TABLE `Process` (
-  `Img_id` varchar(20) NOT NULL,
+  `Img_id` int(20) NOT NULL,
   `Process_name` varchar(40) NOT NULL,
-  `Cont_id` varchar(20) NOT NULL,
+  `Cont_id` int(20) NOT NULL,
   `Cont_IP` varchar(20) NOT NULL,
   `Mac` varchar(50) NOT NULL,
   `User_id` int(20) NOT NULL,
   `Start_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Process_State` int(5) NOT NULL,
-  `port` int(5) NOT NULL,
-  `result` text NOT NULL
+  `Process_State` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `Process`
---
-
-INSERT INTO `Process` (`Img_id`, `Process_name`, `Cont_id`, `Cont_IP`, `Mac`, `User_id`, `Start_time`, `Process_State`, `port`, `result`) VALUES
-('dwq2dq1dw', 'Task1', '242wdwqd21', '192.15.32.2', 'b8:27:eb:f5:d6:1c', 1, '2017-06-24 14:50:16', 22894, 5555, '');
 
 -- --------------------------------------------------------
 
@@ -263,8 +266,24 @@ CREATE TABLE `Rp_Log` (
 --
 
 INSERT INTO `Rp_Log` (`Mac`, `Jobs_Num`, `Start_time`) VALUES
-('255.255.255.7', 0, '2017-05-07 06:18:00'),
-('b8:27:eb:f5:d6:1c', 3, '2017-05-07 06:24:27');
+('255.255.255.1', 3, '2017-05-07 06:18:00'),
+('255.255.255.10', 3, '2017-05-07 06:18:00'),
+('255.255.255.11', 3, '2017-05-07 06:18:00'),
+('255.255.255.12', 4, '2017-05-07 06:18:00'),
+('255.255.255.13', 3, '2017-05-07 06:18:00'),
+('255.255.255.14', 4, '2017-05-07 06:18:00'),
+('255.255.255.15', 3, '2017-05-07 06:18:00'),
+('255.255.255.16', 2, '2017-05-07 06:18:00'),
+('255.255.255.17', 3, '2017-05-07 06:18:00'),
+('255.255.255.18', 5, '2017-05-07 06:18:00'),
+('255.255.255.2', 3, '2017-05-07 06:18:00'),
+('255.255.255.3', 4, '2017-05-07 06:18:00'),
+('255.255.255.4', 2, '2017-05-07 06:18:00'),
+('255.255.255.6', 4, '2017-05-07 06:18:00'),
+('255.255.255.7', 5, '2017-05-07 06:18:00'),
+('255.255.255.8', 4, '2017-05-07 06:18:00'),
+('255.255.255.9', 2, '2017-05-07 06:18:00'),
+('b8:27:eb:f5:d6:1c', 0, '2017-05-07 06:24:27');
 
 -- --------------------------------------------------------
 
@@ -278,6 +297,7 @@ CREATE TABLE `Rp_Specs` (
   `Storage` int(20) NOT NULL,
   `HasCamera` tinyint(1) NOT NULL,
   `Generation` varchar(10) NOT NULL,
+  `OS` varchar(20) NOT NULL,
   `Username` varchar(30) NOT NULL,
   `Password` varchar(30) NOT NULL,
   `PublicIP` varchar(30) NOT NULL,
@@ -290,9 +310,10 @@ CREATE TABLE `Rp_Specs` (
 -- Dumping data for table `Rp_Specs`
 --
 
-INSERT INTO `Rp_Specs` (`Mac`, `Ram`, `Storage`, `HasCamera`, `Generation`, `Username`, `Password`, `PublicIP`, `LocationLat`, `LocationLng`, `LocationName`) VALUES
-('255.255.255.7', 1024, 16384, 0, '3', 'pi', 'not real', '192.168.8.100', 0, 0, 'Glim'),
-('b8:27:eb:f5:d6:1c', 2048, 16384, 0, '3', 'pi', 'pi123123', '192.168.8.100', 0, 0, 'Smouha');
+INSERT INTO `Rp_Specs` (`Mac`, `Ram`, `Storage`, `HasCamera`, `Generation`, `OS`, `Username`, `Password`, `PublicIP`, `LocationLat`, `LocationLng`, `LocationName`) VALUES
+('255.255.255.9', 1024, 16384, 0, '3', '', 'pi', 'not real', '192.168.8.100', 0, 0, ''),
+('b8:27:eb:8d:24:80', 3000, 18000, 0, '1', '', 'pi', '123123', '192.1', 0, 0, ''),
+('b8:27:eb:f5:d6:1c', 2048, 16384, 0, '3', '', 'pi', 'pi123123', '192.168.8.100', 31.2099, 29.952, 'Semouha');
 
 -- --------------------------------------------------------
 
@@ -330,20 +351,11 @@ INSERT INTO `User` (`User_id`, `User_username`, `Fname`, `Lname`, `Email`, `Pass
 
 CREATE TABLE `User_Log` (
   `User_id` int(10) NOT NULL,
-  `Img_id` varchar(20) DEFAULT '',
-  `Process_name` varchar(40) NOT NULL DEFAULT '',
+  `Img_id` int(20) NOT NULL,
+  `Process_name` varchar(40) NOT NULL,
   `Action` int(5) NOT NULL,
   `Time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `User_Log`
---
-
-INSERT INTO `User_Log` (`User_id`, `Img_id`, `Process_name`, `Action`, `Time`) VALUES
-(1, 'dwq2dq1dw', 'Task 1', 32141, '2017-06-29 23:12:26'),
-(1, '', 'Task2', 32141, '2017-06-29 23:12:59'),
-(1, 'gege', 'Task 1', 22894, '2017-06-29 23:16:32');
 
 --
 -- Indexes for dumped tables
@@ -382,8 +394,7 @@ ALTER TABLE `Criminals`
 --
 ALTER TABLE `Current_Specs`
   ADD PRIMARY KEY (`Mac`),
-  ADD UNIQUE KEY `Mac` (`Mac`),
-  ADD KEY `State` (`State`);
+  ADD UNIQUE KEY `Mac` (`Mac`);
 
 --
 -- Indexes for table `Government`
@@ -441,7 +452,9 @@ ALTER TABLE `User`
 -- Indexes for table `User_Log`
 --
 ALTER TABLE `User_Log`
-  ADD PRIMARY KEY (`User_id`,`Time`),
+  ADD PRIMARY KEY (`User_id`,`Img_id`),
+  ADD KEY `Img_id` (`Img_id`),
+  ADD KEY `Process_name` (`Process_name`),
   ADD KEY `User_Log_ibfk_4` (`Action`);
 
 --
@@ -483,8 +496,7 @@ ALTER TABLE `Admin_Log`
 -- Constraints for table `Current_Specs`
 --
 ALTER TABLE `Current_Specs`
-  ADD CONSTRAINT `Current_Specs_ibfk_1` FOREIGN KEY (`Mac`) REFERENCES `Rp_Specs` (`Mac`),
-  ADD CONSTRAINT `Current_Specs_ibfk_2` FOREIGN KEY (`State`) REFERENCES `Code_index` (`Code`);
+  ADD CONSTRAINT `Current_Specs_ibfk_1` FOREIGN KEY (`Mac`) REFERENCES `Rp_Specs` (`Mac`);
 
 --
 -- Constraints for table `Gov_Log`
@@ -516,6 +528,8 @@ ALTER TABLE `Rp_Log`
 --
 ALTER TABLE `User_Log`
   ADD CONSTRAINT `User_Log_ibfk_1` FOREIGN KEY (`User_id`) REFERENCES `User` (`User_id`),
+  ADD CONSTRAINT `User_Log_ibfk_2` FOREIGN KEY (`Img_id`) REFERENCES `Process` (`Img_id`),
+  ADD CONSTRAINT `User_Log_ibfk_3` FOREIGN KEY (`Process_name`) REFERENCES `Process` (`Process_name`),
   ADD CONSTRAINT `User_Log_ibfk_4` FOREIGN KEY (`Action`) REFERENCES `Code_index` (`Code`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
