@@ -4,60 +4,86 @@ import os
 import subprocess
 import datetime
 import specs
-import utilities
 from dbHandler import dbHandler
-from threading import Thread
-from time      import sleep
 
-HOST = '46.101.180.169'
-PORT   = 8080
-SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-DB     = dbHandler()
+# host = '46.101.180.16'
+host = '192.168.8.103'
+port = 5555
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+db = dbHandler()
 
 def establishConnection():
     try:
-        SOCKET.connect((HOST, PORT))
-        SOCKET.send('90201')
+        s.connect((host, port))
+        s.send('90201')
     except socket.error as errorMsg:
         print(errorMsg)
 
 def updateSpecs():
-    SOCKET.send(specs.StaticSpecs())
-    while(True):
-        Mac = specs.getMac()
-        currentSpecs = specs.CurrentSpecs().split(':_:')
-        print(currentSpecs)
-        PrivateIP = currentSpecs[0].replace(' ','')
-        CPU_temp = float(currentSpecs[1])
-        CPU_usage = float(currentSpecs[2])
-        DISK_usage = float(currentSpecs[3])
-        RAM_usage = float(currentSpecs[4])
-        DB.updateSpecs(Mac, PrivateIP, CPU_temp, CPU_usage, DISK_usage, RAM_usage)
-        sleep(30)
+  while(True):
+    currentSpecs = specs.CurrentSpecs().split('\n')
+    mac = specs.getMac()
+    db.updateSpecs(mac, currentSpecs[0], currentSpecs[1], currentSpecs[2], currentSpecs[3])
+    time.sleep(30)
+    
+def createDir(processName):
+    directory = '/home/pi/Desktop/'+processName+'_' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    return directory
 
-def executeCommands():
+def receiveFile(directory):
+    try:
+
+        filesize = s.recv(32)
+        filesize = int(filesize, 2)
+        print('file size '+str(filesize)) 
+
+        os.mkdir(directory, 0755);
+        os.chdir(directory)
+        
+        if str(os.getcwd()) == directory:
+            f = open('Dockerfile','wb')
+            chunksize = 4096
+            
+            while filesize > 0:
+                if filesize < chunksize:
+                    chunksize = filesize
+                data = s.recv(chunksize)
+                f.write(data)
+                filesize -= chunksize
+            f.close()
+            print 'File received successfully'
+    except IOError as e:
+        print e
+
+def sendSpecs():
+    s.send(specs.StaticSpecs())
+
+def executeCommand():
   while True:
-    cmd = SOCKET.recv(6)
+    cmd = s.recv(6)
+    print("el command eli galy "+cmd)
     if cmd == 'upload' :
-       processSize = SOCKET.recv(32)
+       processSize = s.recv(32)
        processSize = int(processSize, 2)
-       userID , processName = str(SOCKET.recv(processSize)).decode('utf-8').split(":_:")
-       directory = utilities.createPiDir(processName)
-       utilities.receiveFile(directory)
-       SOCKET.send('filecreated')
-       if SOCKET.recv(9) == 'rundocker':
+       userID , processName = str(s.recv(processSize)).decode('utf-8').split(":_:")
+       directory = createDir(processName)        
+       receiveFile(directory)
+       s.send('filecreated')
+       if s.recv(9) == 'rundocker':
           try:
-              build = 'docker build .'
+              build = 'docker build .' 
               buildDocker = subprocess.Popen(build, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
-
+              
               words = buildDocker.split('Successfully built')
               imgID = words[1].strip()
 
               run = 'docker run ' + imgID
               runDocker = subprocess.Popen(run, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
+              
 
               outputBytes = runDocker.stdout.read() + runDocker.stderr.read()
               output = str.encode(outputBytes)
+
 
               inspect = 'docker ps -a --filter ancestor=' + imgID
               inspectDocker = subprocess.Popen(inspect, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
@@ -77,43 +103,41 @@ def executeCommands():
               out , err = portDocker.communicate()
               port = str(out)
 
-              DB.addProcess(containerID , imgID , IPAddress , port, userID ,processName , specs.getMac())
+              db = dbHandler()
+              db.addProcess(containerID , imgID , IPAddress , port, userID ,processName , specs.getMac())
 
           except Exception as e:
               output = e
           print(output)
-          SOCKET.send(str.encode(output))
+          s.send(str.encode(output))
     if cmd == 'killer':
-       filesize = SOCKET.recv(32)
+       filesize = s.recv(32)
        filesize = int(filesize, 2)
-       msg = SOCKET.recv(filesize)
+       msg = s.recv(filesize)
        containerID = msg
        PortCMD = 'docker kill ' + containerID
        killDocker = subprocess.Popen(PortCMD, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
        out , err = killDocker.communicate()
     if cmd == 'shutdw':
-       shutCMD = 'sudo shutdown -r now'
+       shutCMD = 'sudo shutdown -r now '
        killDocker = subprocess.Popen(shutCMD, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
-
+    
     if cmd == 'restrt':
-       shutCMD = 'sudo reboot'
+       shutCMD = 'sudo reboot '
        killDocker = subprocess.Popen(shutCMD, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
-
+    
     if cmd == 'finish':
-       break;
-    SOCKET.close()
+       break;      
+  s.close()
 
 def main():
     establishConnection()
-
-    excuteCmdThread   = Thread(target = executeCommands)
-    excuteCmdThread.start()
-
-    updateSpecsThread = Thread(target = updateSpecs)
-    updateSpecsThread.start()
-
-    excuteCmdThread.join()
-    updateSpecsThread.join()
+    thread1 = threading.Thread(target = executeCommand)
+    thread2 = threading.Thread(target = updateSpecs)
+    thread1.daemon = True
+    thread2.daemon = True
+    thread1.start()
+    thread2.start()
 
 if __name__ == '__main__':
     main()

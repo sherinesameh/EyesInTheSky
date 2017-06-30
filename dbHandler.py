@@ -96,8 +96,18 @@ class dbHandler:
         self.cursor.execute(query)
         self.db.commit()
         self.incrementPi(mac)
+        self.updateUserLog(userID,imgID,processName)
      except Exception as e:
         print(e)
+
+   def updateUserLog(userID,imgID,processName):
+     query =  "UPDATE `User_Log` SET `Img_id`= \""+imgID+"\" , Action = 22894 WHERE User_id = "+str(userID)+" AND Process_name = \""+processName+"\" ORDER BY Time DESC LIMIT 1"
+     try:
+        self.cursor.execute(query)
+        self.db.commit()
+     except Exception as e:
+        print(e)
+      
 
    def adminKill(self,Admin_id , mac , Cont_id):
      query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`, `Mac` , `Cont_id`) VALUES ("+Admin_id+","+27693+",\'"+mac+"\',\'"+Cont_id+"\')"

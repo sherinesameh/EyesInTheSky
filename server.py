@@ -46,11 +46,10 @@ def acceptConnections():
 
 def connectRP(connection):
     handshakePck = str(connection.recv(80))
-    specs = handshakePck.split(':_:')
-    print(specs)
+    print("el handshak "+handshakePck)
+    specs = handshakePck.split('\n')
     mac = specs[1]
     CONNECTIONS[mac] = specs[0]
-
 
 def adminCommands(connection):
     AdminID = str(connection.recv(5)).decode("utf-8")
@@ -74,10 +73,7 @@ def adminCommands(connection):
        mac = cmd[1]
        connectionRP = CONNECTIONS[mac]
        connection.send('restrt')
-       DB.shutPi(AdminID, mac )
-
-
-
+       DB.shutPi(AdminID, mac )           
 
 def userCommands(connection):
     mac = DB.getBestPi()
@@ -93,9 +89,10 @@ def userCommands(connection):
         connection.send(str(connectionRP.recv(1024)).decode('utf-8'))
 
 # def userCommands(connection):
-    # mac = DB.getBestPi()
+    # bestPi = dbHandler()
+    # mac = bestPi.getBestPi()
     # hostname = CONNECTIONS[mac]
-    # specs = str(DB.getSpecs(mac)).split(':')
+    # specs = str(bestPi.getSpecs(mac)).split(':')
     # username = specs[0]
     # password = specs[1]
     # localPath = str(connection.recv(1024)).decode('utf-8')
@@ -140,7 +137,6 @@ def sendToCamera(connection):
         if response == 'done':
             result = str(connection.recv(1024)).decode('utf-8')
             print("result "+ result)
-
 
 def main():
     setupConnection()
