@@ -56,7 +56,7 @@
 
     public function getLocations()
     {
-      $stmt = $this->conn->prepare("SELECT DISTINCT(Location) FROM Rp_Specs as Location ORDER BY Location ASC");
+      $stmt = $this->conn->prepare("SELECT DISTINCT(LocationName) FROM Rp_Specs as Location ORDER BY Location ASC");
       $stmt->execute();
       $result = $this->getResult($stmt);
       return $result;
