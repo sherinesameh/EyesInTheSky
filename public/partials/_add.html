@@ -1,28 +1,71 @@
 <div class="row">
-  <form action ="http://localhost/Government/app/controllers/main.php" method="post" enctype="multipart/form-data">
-    
-
-    <div class="file-field input-field row">
-      <div class="waves-effect waves-light btn col s3">
-        <span>Upload Image</span>
-        <input name="zip_file" type="file" multiple = "multiple">
+	<form ng-submit="addCriminal()" name="form" role="form">
+    <div class="row">
+      <div class="col s7">
+        <div class="input-field">
+           <input ng-model="form.fname" id="fname" type="text" ng-required="true">
+           <label for="fname">First Name</label>
+        </div>
+        <div class="input-field">
+           <input ng-model="form.mname" id="mname" type="text" ng-required="true">
+           <label for="mname">Middle Name</label>
+        </div>
+        <div class="input-field">
+           <input ng-model="form.lname" id="lname" type="text" ng-required="true">
+           <label for="lname">last Name</label>
+        </div>
       </div>
-      <div class="file-path-wrapper col s9">
-        <input class="file-path validate" type="text" ng-required="true">
+      <div class="col s5">
+        <div class="file-field input-field">
+          <div class="btn col s12">
+          <span>Upload Photo</span>
+            <input ng-model="form.image" type="file" accept="image/*" onchange="angular.element(this).scope().imagePreview(this); angular.element(this).scope().getFileDetails(this,0)">
+          </div>
+        </div>
+        <img class="col s12" ng-src="{{image_source}}" style="padding-top:2%; object-fit:cover;">
       </div>
     </div>
-
-    <!-- <div class="input-field col s12">
-      <select ng-model="priority">
-      <option value="" disabled selected>Priority</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
+    <div class="file-field input-field">
+      <div class="btn">
+      <span>Upload Zip</span>
+        <input ng-model="form.file" type="file" accept="application/zip" onchange="angular.element(this).scope().getFileDetails(this,1)">
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text">
+      </div>
+    </div>
+    <div class="input-field col s12">
+      <select ng-model="priority.prioritySelect">
+        <option value="" disabled selected>Choose Priority</option>
+        <option value="99999">High</option>
+        <option value="77777">Normal</option>
+        <option value="55555">Low</option>
       </select>
-    </div> -->
-    <div class="action col s3 offset-s9">
-      <input type="submit" value="Add Criminal" class="waves-effect waves-light btn" ng-disabled="addingForm.$invalid"/>
+      <label>Priority</label>
     </div>
- </form>
+    <div class="input-field col s12">
+      <select multiple ng-model="locations.locationsSelect">
+        <option value="" disabled selected>Choose Location(s)</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+      </select>
+      <label>Locations</label>
+    </div>
+    <div class="input-field col s12">
+      <input type="date" class="datepicker" ng-model="form.expireDate" ng-required="true">
+      <label>Expire Date</label>
+    </div>
 
+	  <input class="waves-effect waves-light btn col s5 offset-s7" type="submit" id="submit" value="Submit" />
+ </form>
 </div>
+<script>
+  $(document).ready(function() {
+    $('select').material_select();
+    $('.datepicker').pickadate({
+      selectMonths: true, 
+      selectYears: 15
+    });
+  });
+</script>

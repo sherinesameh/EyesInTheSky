@@ -41,26 +41,57 @@
       $scope.search = data;
     });
   });
-
-  function addCriminal($http, params) {
-    return $http.post('app/controllers/main.php', params)
-    .success(function(data) {
-      return data;
-    })
-    .error(function(error) {
-      return error;
-    });
-  }
   app.controller('addCtrl', function($scope, $http, $stateParams, $state) {
-    $scope.addSubmit = function() {
-      checkSession($http, $stateParams, $state);
-      params = {
-        zip_file: $scope.image
-      };
-      addCriminal($http, params).success(function(data) {
-        // $scope.add = data;
-      });
-    }
+    $scope.form = [];
+	  $scope.files = [];
+    $scope.priority = {
+      prioritySelect: null
+    };
+    $scope.locations = {
+      locationsSelect: []
+    };
+    $scope.addCriminal = function() {
+      $scope.form.image = $scope.files[0];
+      $scope.form.file = $scope.files[1];
+      $http({
+    		  method  : 'POST',
+    		  url     : 'app/controllers/addCriminal.php',
+    		  processData: false,
+    		  transformRequest: function (data) {
+    		      var formData = new FormData();
+              formData.append("fname", $scope.form.fname);
+              formData.append("mname", $scope.form.mname);
+              formData.append("lname", $scope.form.lname);
+              formData.append("image", $scope.form.image);
+              formData.append("file", $scope.form.file);
+              formData.append("expireDate", $scope.form.expireDate);
+              formData.append("priority", $scope.priority.prioritySelect);
+              formData.append("locations", $scope.locations.locationsSelect);
+    		      return formData;
+      	  },
+      	  data : $scope.form,
+      	  headers: {
+      	         'Content-Type': undefined
+      	  }
+         })
+         .success(function(data){
+              alert(data);
+         });
+    };
+    $scope.getFileDetails = function (e,index) {
+       $scope.$apply(function () {
+           $scope.files[index] = e.files[0];
+           console.log($scope.files[index]);
+       });
+   };
+	  $scope.imagePreview= function(element) {
+	    var reader = new FileReader();
+	    reader.onload = function(event) {
+	      $scope.image_source = event.target.result
+	    }
+      reader.readAsDataURL(element.files[0]);
+		};
+
   });
   app.controller('deleteCtrl', function($scope, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
@@ -72,7 +103,8 @@
         params = {};
         var criminals = eval( $scope.criminals );
         var index = -1;
-        for( var i = 0; i < criminals.length; i++ ) {
+        for( var i = 0; i < criminals.length; i++ )
+        {
           if( criminals[i].Crim_id === criminalID ) {
             index = i;
             params = {
