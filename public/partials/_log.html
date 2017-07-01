@@ -2,7 +2,7 @@
   <div class="col s12 m12">
     <div class="card">
       <div class="card-content">
-          <h5 class="card-title">Admins Log</h5>
+          <h5 class="card-title">Tasks State and Results</h5>
           <div class="nav-wrapper card">
               <div class="input-field">
                 <input id="search" type="search" required ng-model="search">
@@ -14,16 +14,33 @@
               <tr>
                 <th>Action</th>
                 <th>Time</th>
+                <th>State</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="log in logs | filter:search">
                 <td>{{log.Action}} : {{log.Process_name}}</td>
                 <td>{{log.Time | date}}</td>
+                <td>{{log.State}}</td>
+                <td>
+                  <button data-target="showDetails" class="btn-large processBtn waves-effect waves-light btn-flat" ng-click="showDetails(log.Process_name)">
+                    <i class="material-icons">more_vert</i>
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
       </div>
     </div>
   </div>
+</div>
+<div id="showDetails" class="modal">
+  <div class="modal-footer">
+    <a href="#home" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click=""><i class="material-icons black-text">close</i>
+    </a>
+  </div>
+   <div class="modal-content">
+     
+   </div>
 </div>

@@ -16,7 +16,7 @@ switch ($request) {
       echo json_encode($result);
       break;
     case "getLog":
-        $id = $_SESSION['id'];
+        $id = $_SESSION['Id'];
         $result = $user->getLog($id);
         echo json_encode($result);
         break;

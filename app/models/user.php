@@ -50,8 +50,8 @@
             if ($num_rows > 0) {
                 $result = $this->getResult($stmt);
                 $_SESSION['Email'] = $email;
-                $_SESSION['username'] = $result[0]["User_username"];
-                $_SESSION['id'] = $result[0]["User_id"];
+                $_SESSION['Username'] = $result[0]["User_username"];
+                $_SESSION['Id'] = $result[0]["User_id"];
                 return LOGGED_IN_SUCCESSFULY;
             }
             else {
