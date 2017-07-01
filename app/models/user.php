@@ -24,11 +24,11 @@
         }
         return $RESULT;
     }
-    public function createUser($name, $username, $email, $pass, $date)
+    public function createUser($Fname,$Lname, $username, $email, $pass)
     {
         if (!$this->isUserExists($email)) {
-            $stmt = $this->conn->prepare("INSERT INTO User(Name, Username, Email , Password , Authority , Birth_date ,Max_running_containers) values(?, ? , ? , ? , 1 , ? , 9)");
-            $stmt->bind_param("sssss", $name,$username, $email,$pass , $date );
+            $stmt = $this->conn->prepare("INSERT INTO User(`User_username`, `Fname`, `Lname`, `Email`, `Password`) values(?, ? , ? , ?  , ? )");
+            $stmt->bind_param("sssss",$username,$Fname,$Lname, $email,$pass  );
             $result = $stmt->execute();
             $stmt->close();
             if ($result) {
@@ -76,6 +76,15 @@
         $result = $this->getResult($stmt);
         return $result;
     }
+    public function addProcessInprogress($id,$name)
+    {
+        #processs table
+            $stmt = $this->conn->prepare("INSERT INTO `User_Log` (`User_id` ,`Process_name`, `Action`) VALUES (?, ?, '32141')");
+            $stmt->bind_param("is",$id , $name  );
+            $result = $stmt->execute();
+            $stmt->close();
+
+    }
     public function addProcesss($id,$name,$cont_id,$cont_ip,$mac,$img_id,$size,$process_state)
     {
         #processs table
@@ -101,5 +110,16 @@
       $result = $this->getResult($stmt);
       return $result;
     }
+
+     public function getLog($id , $name)
+    {
+      $stmt = $this->conn->prepare("SELECT * FROM `Process` WHERE User_id = ? AND Process_name = ?");
+      $stmt->bind_param("is",$id,$name);
+      $result = $stmt->execute();
+      $stmt->execute();
+      $result = $this->getResult($stmt);
+      return $result;
+    }
+
   }
 ?>
