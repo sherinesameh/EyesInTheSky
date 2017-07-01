@@ -15,6 +15,10 @@
       if(isset($_SESSION['Email']))
         echo json_encode('success');
       break;
+    case 'deleteAdmin':
+       $id = $params->id;
+       $model->deleteAdmin($id);
+        break;  
     case "getUserInfo":
       $result= $user->getUserInfo($email);
       echo json_encode($result);
@@ -28,6 +32,30 @@
       $result= $model->getAdminsLog();
       echo json_encode($result);
       break;
+
+      case "getAdmins":
+      $result= $model->getAdmins();
+      echo json_encode($result);
+      break;
+
+      case "getGovs":
+      $result= $model->getGovs();
+      echo json_encode($result);
+      break;
+
+      case 'updateAdmin':
+        $id = $params->id;
+        $newPassword = $params->pass;
+        $model->updateAdmin($id,$newPassword);
+        break;
+
+
+      case 'updateGov':
+        $id = $params->id;
+        $newPassword = $params->pass;
+        $model->updateGov($id,$newPassword);
+        break;  
+
     case "getRpSpecs":
       $result= $model->getRpSpecs();
       echo json_encode($result);
