@@ -47,7 +47,12 @@
     $scope.priority = {
       prioritySelect: null
     };
-    $scope.locations = {
+    checkSession($http, $stateParams, $state);
+    params = {request: 'getLocations'};
+    sendRequest($http, params).success(function(data) {
+      $scope.locations = data;
+    });
+    $scope.location = {
       locationsSelect: []
     };
     $scope.addCriminal = function() {
@@ -66,7 +71,7 @@
               formData.append("file", $scope.form.file);
               formData.append("expireDate", $scope.form.expireDate);
               formData.append("priority", $scope.priority.prioritySelect);
-              formData.append("locations", $scope.locations.locationsSelect);
+              formData.append("locations", $scope.location.locationsSelect);
     		      return formData;
       	  },
       	  data : $scope.form,

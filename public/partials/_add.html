@@ -44,11 +44,9 @@
       <label>Priority</label>
     </div>
     <div class="input-field col s12">
-      <select multiple ng-model="locations.locationsSelect">
+      <select multiple ng-model="location.locationsSelect">
         <option value="" disabled selected>Choose Location(s)</option>
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
+        <option ng-repeat="location in locations" value="{{location.Location}}"> {{location.Location}}</option>
       </select>
       <label>Locations</label>
     </div>
@@ -64,7 +62,8 @@
   $(document).ready(function() {
     $('select').material_select();
     $('.datepicker').pickadate({
-      selectMonths: true, 
+			minDate: new Date(),
+      selectMonths: true,
       selectYears: 15
     });
   });
