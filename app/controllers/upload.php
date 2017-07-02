@@ -1,15 +1,17 @@
 <?php
 require("socket.php");
 require("../models/user.php");
-$socket = new Socket;
+// $socket = new Socket;
 $user = new User;
 
-if (isset($_FILES['file_array'])) {
-	$name_array = $_FILES['file_array']['name'];
-	$temp_array = $_FILES['file_array']['tmp_name'];
-	$type_array = $_FILES['file_array']['type'];
-	$size_array = $_FILES['file_array']['size'];
-	$error_array = $_FILES['file_array']['error'];
+$processName = $_POST['processName'];
+echo $_FILES['dockerfile']['name'];
+if (isset($_FILES['dockerfile'])) {
+	$name_array = $_FILES['dockerfile']['name'];
+	$temp_array = $_FILES['dockerfile']['tmp_name'];
+	$type_array = $_FILES['dockerfile']['type'];
+	$size_array = $_FILES['dockerfile']['size'];
+	$error_array = $_FILES['dockerfile']['error'];
 
 	if(!is_dir("../../test_uploads/")) {
 		$oldmask = umask(0);

@@ -43,7 +43,7 @@
 	  $scope.files = [];
     $scope.addTask = function() {
       $scope.form.dockerfile = $scope.files[0];
-      $scope.form.extrafiles = $scope.files[1];
+      // $scope.form.extrafiles = $scope.files[1];
       $http({
     		  method  : 'POST',
     		  url     : 'app/controllers/upload.php',
@@ -51,7 +51,6 @@
     		  transformRequest: function (data) {
     		      var formData = new FormData();
               formData.append("dockerfile", $scope.form.dockerfile);
-              formData.append("extrafiles", $scope.form.extrafiles);
               formData.append("processName", $scope.form.processName);
     		      return formData;
       	  },
@@ -64,4 +63,11 @@
               alert(data);
          });
        };
+
+    $scope.getFileDetails = function (e) {
+        $scope.$apply(function () {
+            $scope.files.push(e.files[0]);
+            console.log($scope.files[0]);
+        });
+    };
   });

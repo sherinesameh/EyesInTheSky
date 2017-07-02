@@ -34,14 +34,14 @@
               <div class="file-field input-field col s10 offset-s1">
                   <div class="btn" id="formbtn">
                       <span>Docker File</span>
-                      <input type="file" name="file_array[]" ng-model="form.dockerfile">
+                      <input type="file" name="file_array[]" ng-model= "form.dockerfile"onchange="angular.element(this).scope().getFileDetails(this)">
                   </div>
                   <div class="file-path-wrapper">
                       <input class="file-path validate" type="text">
                   </div>
               </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="file-field input-field col s10 offset-s1">
                   <div class="btn" id="formbtn">
                     <span>Your Files</span>
@@ -51,7 +51,7 @@
                     <input class="file-path validate" type="text">
                   </div>
                 </div>
-            </div>
+            </div> -->
             <button class="btn waves-effect waves-light col s4 offset-s7" type="submit" id="submit" name="action">
                 Submit <i class="material-icons right">send</i>
             </button>
