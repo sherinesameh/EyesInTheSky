@@ -111,7 +111,7 @@
       return $result;
     }
 
-     public function getLog($id , $name)
+     public function getSpecs($id , $name)
     {
       $stmt = $this->conn->prepare("SELECT * FROM `Process` WHERE User_id = ? AND Process_name = ?");
       $stmt->bind_param("is",$id,$name);

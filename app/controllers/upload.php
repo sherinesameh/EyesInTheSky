@@ -35,8 +35,6 @@ if (isset($_FILES['file_array'])) {
 				$path= "/opt/lampp/htdocs/Users/test_uploads";
 				$socket->send($path);
 				$socket->receive();
-
 		}
 	}
-	?>
-	
+?>

@@ -12,17 +12,17 @@
           <table class="striped">
             <thead>
               <tr>
-                <th>Action</th>
-                <th>Time</th>
-                <th>State</th>
+                <th>Process Name</th>
+                <th>Start Time</th>
+                <th>Status</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="log in logs | filter:search">
-                <td>{{log.Action}} : {{log.Process_name}}</td>
+                <td>{{log.Process_name}}</td>
                 <td>{{log.Time | date}}</td>
-                <td>{{log.State}}</td>
+                <td>{{log.Action}}</td>
                 <td>
                   <button data-target="showDetails" class="btn-large processBtn waves-effect waves-light btn-flat" ng-click="showDetails(log.Process_name)">
                     <i class="material-icons">more_vert</i>
@@ -41,6 +41,13 @@
     </a>
   </div>
    <div class="modal-content">
-     
+      <p>
+        {{result.result}}
+      </p>
    </div>
 </div>
+<script>
+  $(document).ready(function(){
+    $('.modal').modal();
+  });
+</script>

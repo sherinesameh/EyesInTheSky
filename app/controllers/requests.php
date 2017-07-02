@@ -20,13 +20,12 @@ switch ($request) {
         $result = $user->getLog($id);
         echo json_encode($result);
         break;
-
     case 'getProcessSpecs':
-          $id = $_SESSION['id'];
-          $processName = $params->processName;
-          $result = $user->getSpecs($id,$processName);
-          break;    
-        
+        $id = $_SESSION['Id'];
+        $processName = $params->processName;
+        $result = $user->getSpecs($id,$processName);
+        echo json_encode($result);
+        break;
 // case "updateProfile":
 //     $result = $user->updateProfile();
 //     echo json_encode($result);

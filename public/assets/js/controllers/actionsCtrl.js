@@ -29,7 +29,39 @@
     sendRequest($http, params).success(function(data) {
       $scope.logs = data;
     });
+
+    $scope.showDetails = function(Process_name){
+      params = {request: 'getProcessSpecs', processName: Process_name};
+      sendRequest($http, params).success(function(data) {
+        $scope.result = data;
+      });
+    }
   });
   app.controller('jobCtrl', function($scope, $http, $stateParams, $state) {
-    // checkSession($http, $stateParams, $state);
+    checkSession($http, $stateParams, $state);
+    $scope.form = [];
+	  $scope.files = [];
+    $scope.addTask = function() {
+      $scope.form.dockerfile = $scope.files[0];
+      $scope.form.extrafiles = $scope.files[1];
+      $http({
+    		  method  : 'POST',
+    		  url     : 'app/controllers/upload.php',
+    		  processData: false,
+    		  transformRequest: function (data) {
+    		      var formData = new FormData();
+              formData.append("dockerfile", $scope.form.dockerfile);
+              formData.append("extrafiles", $scope.form.extrafiles);
+              formData.append("processName", $scope.form.processName);
+    		      return formData;
+      	  },
+      	  data : $scope.form,
+      	  headers: {
+      	         'Content-Type': undefined
+      	  }
+         })
+         .success(function(data){
+              alert(data);
+         });
+       };
   });
