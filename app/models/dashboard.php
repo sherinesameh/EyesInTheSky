@@ -178,7 +178,7 @@
     function getGovs()
     {
       $RESULT = array();
-      $stmt = $this->conn->prepare("SELECT `Gov_id`, `Gov_username`, `Email`, `authority`, `image` FROM `Government` WHERE 1");
+      $stmt = $this->conn->prepare("SELECT `Gov_id`, `Gov_username`, `Email`, `Fname`, `Lname`, `image` FROM `Government` WHERE 1");
       $stmt->execute();
       $stmt->store_result();
       for ($i = 0; $i < $stmt->num_rows; $i++)
