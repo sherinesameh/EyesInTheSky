@@ -22,7 +22,7 @@
     case 'deleteGov':
        $id = $params->id;
        $username = $params->username;
-       $result = $model->deleteGov($id, $username);
+       $result = $model->deleteGov($id,$username);
        echo json_encode($result);
        break;
     case 'getUserInfo':
