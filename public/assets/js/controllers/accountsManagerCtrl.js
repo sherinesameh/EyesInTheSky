@@ -73,10 +73,13 @@ app.controller('accountsManagerCtrl', function($scope, $http,$interval,$statePar
              'Content-Type': undefined
       }
       }).success(function(data){
+          specs = {request: 'getGovs'};
+          sendRequest($http, specs).success(function(data) {
+            $scope.govs = data;
+          });
           $('#addAccount').modal('close');
           $scope.form.error = '';
-          // alert(data);s
-     }).error(function(data){
+     }).error(function(error){
           $scope.form.image = '';
           $scope.form.fname = '';
           $scope.form.lname = '';

@@ -6,7 +6,7 @@
 
   $model = new Dashboard;
   // $socket = new Socket;
-
+  session_start();
   $fname = $_POST['fname'];
   $lname = $_POST['lname'];
   $username = $_POST['username'];

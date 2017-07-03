@@ -24,10 +24,12 @@ app.controller('userCtrl', function($scope, $http, $stateParams, $state) {
     $scope.user = data[0];
   });
 });
-app.controller('logCtrl', function($scope, $http, $stateParams, $state) {
+app.controller('logCtrl', function($scope, $http, $interval, $stateParams, $state) {
   checkSession($http, $stateParams, $state);
+  $interval(function() {
   params = {request: 'getAdminsLog'};
   sendRequest($http, params).success(function(data) {
     $scope.logs = data;
   });
+  }, 1000);
 });

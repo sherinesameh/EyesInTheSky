@@ -33,9 +33,8 @@
                 </td>
                 <td>{{gov.Gov_username}}</td>
                 <td>{{gov.Email}}</td>
-                <td>{{gov.authority}}</td>
                 <td>
-                  <a data-target="editAccount" class="btn-floating waves-effect waves btn-flat" ng-click="editAccount(gov.Gov_id, gov.Gov_username, gov.Email, gov.authority)">
+                  <a data-target="editAccount" class="btn-floating waves-effect waves btn-flat" ng-click="editAccount(gov.Gov_id)">
                     <i class="material-icons blue-text">mode_edit</i>
                   </a>
                 </td>
@@ -113,10 +112,16 @@
     </a>
   </div>
    <div class="modal-content">
-     <div class="input-field col s6">
-          <input id="password" type="password" class="validate">
-          <label for="password">password</label>
+    <form ng-submit="editGov()" name="form" role="form">
+      <p>Update Password:</p>
+      <div class="input-field col s6">
+            <input id="password" type="password" class="validate" ng-model="form.password">
+            <label for="password">password</label>
       </div>
+      <div class="row">
+        <input class="waves-effect waves-light btn" type="submit" id="submit" value="Submit" />
+      </div>
+    </form>
    </div>
 </div>
 <script>

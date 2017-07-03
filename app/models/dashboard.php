@@ -95,7 +95,7 @@
         $result = $stmt->execute();
         $stmt->close();
         $id = $_SESSION['id'];
-        
+
         $Action = "Added government employee ".$username;
         $this->addAdminLog($id,$Action);
 
@@ -142,16 +142,13 @@
             return ERROR;
         }
     }
-
     public function addAdminLog($id , $Action)
     {
         $stmt = $this->conn->prepare ("INSERT INTO `Admin_Log`(`Admin_id`, `Action`) VALUES (?,?)");
         $stmt->bind_param("is", $id,$Action );
         $result = $stmt->execute();
         $stmt->close();
-
     }
-
     function getAdmins()
     {
       $RESULT = array();
