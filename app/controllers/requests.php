@@ -21,7 +21,10 @@
        break;
     case 'deleteGov':
        $id = $params->id;
-       $model->deleteGov($id);
+       echo "el id ".$id;
+       $result = $model->deleteGov($id);
+       echo json_encode($result);
+       break;
     case 'getUserInfo':
       $result= $user->getUserInfo($email);
       echo json_encode($result);
@@ -51,7 +54,8 @@
     case 'updateGov':
         $id = $params->id;
         $newPassword = $params->password;
-        $model->updateGov($id,$newPassword);
+        $result = $model->updateGov($id,$newPassword);
+        echo json_encode($result);
         break;
     case 'getRpSpecs':
       $result= $model->getRpSpecs();
