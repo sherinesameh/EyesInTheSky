@@ -55,23 +55,23 @@ app.controller('accountsManagerCtrl', function($scope, $http,$interval,$statePar
     $scope.addGov= function() {
       $scope.form.image = $scope.files[0];
       $http({
-  	  method  : 'POST',
-  	  url     : 'app/controllers/addGov.php',
-  	  processData: false,
-  	  transformRequest: function (data) {
-  	      var formData = new FormData();
-  	      formData.append('image', $scope.form.image);
-  	      formData.append('fname', $scope.form.fname);
-  	      formData.append('lname', $scope.form.lname);
-  	      formData.append('username', $scope.form.username);
-  	      formData.append('email', $scope.form.email);
-  	      formData.append('password', $scope.form.password);
-  	      return formData;
-  	  },
-  	  data : $scope.form,
-  	  headers: {
-  	         'Content-Type': undefined
-  	  }
+      method  : 'POST',
+      url     : 'app/controllers/addGov.php',
+      processData: false,
+      transformRequest: function (data) {
+          var formData = new FormData();
+          formData.append('image', $scope.form.image);
+          formData.append('fname', $scope.form.fname);
+          formData.append('lname', $scope.form.lname);
+          formData.append('username', $scope.form.username);
+          formData.append('email', $scope.form.email);
+          formData.append('password', $scope.form.password);
+          return formData;
+      },
+      data : $scope.form,
+      headers: {
+             'Content-Type': undefined
+      }
       }).success(function(data){
           $('#addAccount').modal('close');
           $scope.form.error = '';

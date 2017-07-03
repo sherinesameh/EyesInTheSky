@@ -1,9 +1,9 @@
   app.controller('rpCtrl', function($scope, $interval, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
-    specs = {request: 'getRpSpecs'};
     $interval(function() {
       sendRequest($http, specs).success(function(data) {
         $scope.specs = data;
+        specs = {request: 'getRpSpecs'};
       });
     }, 1000);
     $scope.RunningProcesses = false;
