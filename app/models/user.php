@@ -5,6 +5,7 @@
     function __construct()
     {
       require_once '../helpers/dbConnection.php';
+      require_once '../helpers/definitions.php';
       $db = new DbConnection();
       $this->conn = $db->connect();
     }
@@ -27,35 +28,6 @@
           return ALREADY_EXIST;
       }
     }
-
-    public function addAdmin($Fname, $Lname, $username, $password, $email , $phone, $image )
-    {
-        $stmt = $this->conn->prepare ("INSERT INTO `Admin`( `Admin_username`, `Fname`, `Lname`, `Email`, `Password`, `image`, `Phone_num`) VALUES (?,?,?,?,?,?,?)");
-        $stmt->bind_param("sssssss", $username,$Fname, $Lname,$email , $password , $image , $phone);
-        $result = $stmt->execute();
-        $stmt->close();
-        if ($result) {
-            return CREATED_SUCCESSFULY;
-        }
-        else {
-            return ERROR;
-        }
-    }
-
-    public function addGov($Fname, $Lname, $username, $password, $email , $Authority, $image )
-    {
-        $stmt = $this->conn->prepare ("INSERT INTO `Government`( `Gov_username`, `Fname`, `Lname`, `Email`, `Password`, `authority`, `image`) VALUES (?,?,?,?,?,?,?)");
-        $stmt->bind_param("sssssis", $username,$Fname, $Lname,$email , $password,$Authority , $image );
-        $result = $stmt->execute();
-        $stmt->close();
-        if ($result) {
-            return CREATED_SUCCESSFULY;
-        }
-        else {
-            return ERROR;
-        }
-    }
-
     public function loginUser( $email, $pass )
     {
       $stmt = $this->conn->prepare("SELECT * FROM `Admin` WHERE Email = ? AND Password = ?");
@@ -66,7 +38,6 @@
       $stmt->close();
       return $num_rows > 0;
     }
-
     private function isUserExists($email)
     {
         $stmt = $this->conn->prepare("SELECT User_id FROM Users WHERE Email=?");
@@ -95,7 +66,5 @@
       }
       return $RESULT;
     }
-
-    
   }
 ?>

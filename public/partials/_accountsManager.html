@@ -29,18 +29,18 @@
             <tbody>
               <tr ng-repeat="gov in govs| filter:accountsSearch">
                 <td>
-                  <img class="responsive-img circle" ng-src="public/assets/img/uploads/{{gov.image}}"/>
+                  <img class="responsive-img circle" ng-src="/Administration/public/assets/img/uploads/{{gov.image}}"  style="padding-top:2%; object-fit:cover; width:40px;"/>
                 </td>
                 <td>{{gov.Gov_username}}</td>
                 <td>{{gov.Email}}</td>
                 <td>{{gov.authority}}</td>
                 <td>
-                  <a data-target="editAccount" class="btn-floating waves-effect waves btn-flat" ng-click="editAccount(gov.GovId, gov.Gov_username, gov.Email, gov.authority)">
+                  <a data-target="editAccount" class="btn-floating waves-effect waves btn-flat" ng-click="editAccount(gov.Gov_id, gov.Gov_username, gov.Email, gov.authority)">
                     <i class="material-icons blue-text">mode_edit</i>
                   </a>
                 </td>
                 <td>
-                  <a class="btn-floating waves-effect waves btn-flat" ng-click="removeAccount(gov.GovId)">
+                  <a class="btn-floating waves-effect waves btn-flat" ng-click="removeAccount(gov.Gov_id)">
                     <i class="material-icons red-text">delete_forever</i>
                   </a>
                 </td>
@@ -51,41 +51,57 @@
     </div>
   </div>
 </div>
-<div id="addAccount" class="modal">
+<div id="addAccount" class="modal" style="width: 65%; height: 100%; ">
   <div class="modal-footer">
     <a href="#dashboard" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click=""><i class="material-icons black-text">close</i>
     </a>
   </div>
    <div class="modal-content">
      <div class="row">
-       <form ng-submit="addCriminal()" name="form" role="form">
+       <span>Add New Government</span>
+     </div>
+     <div class="row">
+       <form ng-submit="addGov()" name="form" role="form">
          <div class="row">
-           <div class="col s7">
+           <div class="col s6">
+             <div class="input-field">
+               <input ng-model="form.username" id="username" type="text" ng-required="true">
+               <label for="username">Username</label>
+             </div>
              <div class="input-field">
                 <input ng-model="form.fname" id="fname" type="text" ng-required="true">
                 <label for="fname">First Name</label>
              </div>
              <div class="input-field">
                <input ng-model="form.lname" id="lname" type="text" ng-required="true">
-               <label for="lname">last Name</label>
-             </div>
-             <div class="input-field">
-                <input ng-model="form.mname" id="mname" type="text" ng-required="true">
-                <label for="mname">Middle Name</label>
+               <label for="lname">Last Name</label>
              </div>
            </div>
-           <div class="col s5">
+           <div class="col s6">
              <div class="file-field input-field">
                <div class="btn">
                <span>Upload Photo</span>
-                 <input ng-model="form.image" type="file" accept="image/*" onchange="angular.element(this).scope().imagePreview(this); angular.element(this).scope().getFileDetails(this)" value="Upload Photo">
+                 <input ng-model="form.image" type="file" class="form-control input-lg" accept="image/*" onchange="angular.element(this).scope().uploadedFile(this)" style="width:400px" >
                </div>
              </div>
              <img class="col s12" ng-src="{{image_source}}" style="padding-top:2%; object-fit:cover;">
            </div>
          </div>
+        <div class="row">
+         <div class="col s6 input-field">
+           <input ng-model="form.email" id="email" type="text" ng-required="true">
+           <label for="email">Email</label>
+         </div>
 
-         <input class="waves-effect waves-light btn col s5 offset-s7" type="submit" id="submit" value="Submit" />
+         <div class="col s6 input-field">
+           <input ng-model="form.password" id="password" type="password" ng-required="true">
+           <label for="password">password</label>
+         </div>
+       </div>
+         <div class="row">
+           <input class="waves-effect waves-light btn" type="submit" id="submit" value="Submit" />
+         </div>
+         <span class="error red-text">{{ form.error }}</span>
       </form>
      </div>
    </div>
