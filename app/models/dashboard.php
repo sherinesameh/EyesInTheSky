@@ -11,7 +11,7 @@
     function getAdminsLog()
     {
       $RESULT = array();
-      $stmt = $this->conn->prepare("SELECT Admin.Admin_username AS name, Admin_Log.Action, Admin_Log.Mac, Admin_Log.Cont_id, Admin_Log.Action_time FROM Admin_Log INNER JOIN Admin on Admin_Log.Admin_id = Admin.Admin_id ORDER BY Admin_Log.Action_time");
+      $stmt = $this->conn->prepare("SELECT Admin.Admin_username AS name, Admin_Log.Action,Admin_Log.Action_time FROM Admin_Log INNER JOIN Admin on Admin_Log.Admin_id = Admin.Admin_id ORDER BY Admin_Log.Action_time");
       $stmt->execute();
       $stmt->store_result();
       for ($i = 0; $i < $stmt->num_rows; $i++)
@@ -54,7 +54,25 @@
         $stmt->bind_param("ss", $mac,$contID);
         $result = $stmt->execute();
         $stmt->close();
+        $this->decrementPi($mac);
+        session_start();
+        $id = $_SESSION['id'];
+        $Action = "Killed Process at Raspberry pi ".$mac." with container ID ".$contID;
+        $this->addAdminLog($id,$Action);
 
+        if ($result) {
+            return CREATED_SUCCESSFULY;
+        } else {
+            return ERROR;
+        }
+
+    }
+    public function decrementPi($mac)
+    {
+      $stmt = $this->conn->prepare ("UPDATE `Rp_Log` SET `Jobs_Num`=Jobs_Num - 1 WHERE Mac = ?");
+      $stmt->bind_param("s", $mac);
+      $result = $stmt->execute();
+      $stmt->close();
     }
 
      public function deleteAdmin($id)
@@ -63,35 +81,77 @@
         $stmt->bind_param("i", $id);
         $result = $stmt->execute();
         $stmt->close();
+        if ($result) {
+            return CREATED_SUCCESSFULY;
+        } else {
+            return ERROR;
+        }
+    }
+
+    public function addGov($Fname, $Lname, $username, $password, $email ,  $image )
+    {
+        $stmt = $this->conn->prepare ("INSERT INTO `Government`( `Gov_username`, `Fname`, `Lname`, `Email`, `Password`, `image`) VALUES (?,?,?,?,?,?)");
+        $stmt->bind_param("ssssss", $username,$Fname, $Lname,$email , $password, $image );
+        $result = $stmt->execute();
+        $stmt->close();
+        session_start();
+        $id = $_SESSION['id'];
+        $Action = "Added government employee ".$username;
+        $this->addAdminLog($id,$Action);
+
+        if ($result) {
+            return CREATED_SUCCESSFULY;
+        }
+        else {
+            return ERROR;
+        }
     }
 
 
-     public function deleteGov($id)
+     public function deleteGov($id,$username)
     {
         $stmt = $this->conn->prepare ("DELETE FROM `Government` WHERE Gov_id = ?");
         $stmt->bind_param("i", $id);
         $result = $stmt->execute();
         $stmt->close();
+         session_start();
+        $id = $_SESSION['id'];
+        $Action = "Deleted government employee ".$username;
+        $this->addAdminLog($id,$Action);
+
+        if ($result) {
+            return CREATED_SUCCESSFULY;
+        } else {
+            return ERROR;
+        }
     }
 
 
-     public function updateAdmin($id, $Password)
-    {
-        $stmt = $this->conn->prepare ("UPDATE `Admin` SET `Password`=? WHERE Admin_id = ?");
-        $stmt->bind_param("si",$Password, $id);
-        $result = $stmt->execute();
-        $stmt->close();
-    }
 
-
-
-
-     public function updateGov($id , $Password )
+     public function updateGov($id , $Password ,$username)
     {
         $stmt = $this->conn->prepare ("UPDATE `Government` SET `Password`=? WHERE Gov_id = ?");
         $stmt->bind_param("si",$Password, $id);
         $result = $stmt->execute();
         $stmt->close();
+        session_start();
+        $id = $_SESSION['id'];
+        $Action = "Updated government employee ".$username;
+        $this->addAdminLog($id,$Action);
+        if ($result) {
+            return CREATED_SUCCESSFULY;
+        } else {
+            return ERROR;
+        }
+    }
+
+    public function addAdminLog($id , $Action)
+    {
+        $stmt = $this->conn->prepare ("INSERT INTO `Admin_Log`(`Admin_id`, `Action`) VALUES (?,?)");
+        $stmt->bind_param("is", $id,$Action );
+        $result = $stmt->execute();
+        $stmt->close();
+
     }
 
     function getAdmins()
