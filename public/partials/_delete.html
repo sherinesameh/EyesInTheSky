@@ -8,23 +8,23 @@
           <table class="striped" style="list-style: none">
             <thead>
               <tr>
+                <th></th>
                 <th>Name</th>
                 <th>Path</th>
                 <th>Priority</th>
                 <th>Expiry Date</th>
-                <th>Photo</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="criminal in criminals | filter:searchForCriminal">
+                <td>
+                  <img class="responsive-img circle" ng-src="{{criminal.image}}"/>
+                </td>
                 <td>{{criminal.Fname}} {{criminal.Mname}} {{criminal.Lname}}</td>
                 <td>{{criminal.Dir_path}}</td>
                 <td>{{criminal.priority}}</td>
                 <td>{{criminal.expiry_date | date}}</td>
-                <td>
-                  <img class="responsive-img circle" ng-src="{{criminal.image}}"/>
-                </td>
                 <td>
                   <a class="btn-floating waves-effect waves btn-flat" ng-click="removeCriminal(criminal.Crim_id)">
                     <i class="material-icons red-text">close</i>
@@ -37,5 +37,3 @@
     </div>
   </div>
 </div>
-
-<!--   -->

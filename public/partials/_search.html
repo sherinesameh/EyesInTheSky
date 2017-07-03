@@ -5,25 +5,27 @@
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
               </div>
           </div>
-          <table class="striped" style="list-style: none" ng-show="searchForCriminal">
+          <table class="striped" style="list-style: none"> <!--ng-show="searchForCriminal"> -->
             <thead>
               <tr>
+                <th></th>
                 <th>Name</th>
                 <th>Path</th>
                 <th>Priority</th>
                 <th>Expiry Date</th>
-                <th>Photo</th>
+                <th>State</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="criminal in search | filter:searchForCriminal">
+                <td>
+                  <img class="responsive-img circle" ng-src="public/assets/img/uploads/{{criminal.image}}" style="width:50px;height:50px;"/>
+                </td>
                 <td>{{criminal.Fname}} {{criminal.Mname}} {{criminal.Lname}}</td>
                 <td>{{criminal.Dir_path}}</td>
                 <td>{{criminal.priority}}</td>
                 <td>{{criminal.expiry_date | date}}</td>
-                <td>
-                  <!-- <img class="responsive-img circle" ng-src="public/assets/img/uploads/{{criminal.image}}"/> -->
-                </td>
+                <th>{{criminal.State}}</th>
               </tr>
             </tbody>
           </table>

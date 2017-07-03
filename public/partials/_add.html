@@ -17,9 +17,9 @@
       </div>
       <div class="col s5">
         <div class="file-field input-field">
-          <div class="btn col s12">
+          <div class="btn">
           <span>Upload Photo</span>
-            <input ng-model="form.image" type="file" accept="image/*" onchange="angular.element(this).scope().imagePreview(this); angular.element(this).scope().getFileDetails(this,0)">
+            <input ng-model="form.image" type="file" accept="image/*" onchange="angular.element(this).scope().imagePreview(this); angular.element(this).scope().getFileDetails(this,0)" value="Upload Photo">
           </div>
         </div>
         <img class="col s12" ng-src="{{image_source}}" style="padding-top:2%; object-fit:cover;">

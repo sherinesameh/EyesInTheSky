@@ -34,13 +34,16 @@
     checkSession($http, $stateParams, $state);
 
   });
-  app.controller('searchCtrl', function($scope, $http, $stateParams, $state) {
+  app.controller('searchCtrl', function($scope, $interval ,$http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
-    params = {request: 'search'};
-    sendRequest($http, params).success(function(data) {
-      $scope.search = data;
-    });
+    $interval(function() {
+      params = {request: 'search'};
+      sendRequest($http, params).success(function(data) {
+        $scope.search = data;
+      });
+    }, 1000);
   });
+
   app.controller('addCtrl', function($scope, $http, $stateParams, $state) {
     $scope.form = [];
 	  $scope.files = [];
@@ -98,12 +101,14 @@
 		};
 
   });
-  app.controller('deleteCtrl', function($scope, $http, $stateParams, $state) {
+  app.controller('deleteCtrl', function($scope, $interval, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
-    params = {request: 'search'};
-    sendRequest($http, params).success(function(data) {
-      $scope.criminals = data;
-    });
+    $interval(function() {
+      params = {request: 'search'};
+      sendRequest($http, params).success(function(data) {
+        $scope.criminals = data;
+      });
+    }, 1000);
     $scope.removeCriminal = function(criminalID) {
         params = {};
         var criminals = eval( $scope.criminals );
