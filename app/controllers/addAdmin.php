@@ -3,11 +3,10 @@
   require_once '../models/dashboard.php';
   require_once '../models/user.php';
   require_once 'Socket.php';
- 
+
   $user = new User;
   $model = new Dashboard;
-
-
+  
   if(!empty($_FILES['image'])){
 		$ext = pathinfo($_FILES['image']['name'],PATHINFO_EXTENSION);
     $image = time().'.'.$ext;

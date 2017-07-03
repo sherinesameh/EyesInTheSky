@@ -1,0 +1,110 @@
+<div class="row">
+  <div class="col s12 m12">
+    <div class="card">
+      <div class="card-content">
+        <div class="row">
+          <h5 class="card-title col s6">Accounts Manager</h5>
+          <div class="col offset-s4">
+            <button data-target="addAccount" class="btn-floating btn-large waves-effect waves-light green" ng-click="addAccount()">
+              <i class="material-icons">add</i>
+            </button>
+          </div>
+        </div>
+          <br />
+          <div class="nav-wrapper card">
+              <div class="input-field">
+                <input id="accountsSearch" type="search" required ng-model="accountsSearch">
+                <label class="label-icon" for="accountsSearch"><i class="material-icons">search</i></label>
+              </div>
+          </div>
+          <table class="striped">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Authority</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="gov in govs| filter:accountsSearch">
+                <td>
+                  <img class="responsive-img circle" ng-src="public/assets/img/uploads/{{gov.image}}"/>
+                </td>
+                <td>{{gov.Gov_username}}</td>
+                <td>{{gov.Email}}</td>
+                <td>{{gov.authority}}</td>
+                <td>
+                  <a data-target="editAccount" class="btn-floating waves-effect waves btn-flat" ng-click="editAccount(gov.GovId, gov.Gov_username, gov.Email, gov.authority)">
+                    <i class="material-icons blue-text">mode_edit</i>
+                  </a>
+                </td>
+                <td>
+                  <a class="btn-floating waves-effect waves btn-flat" ng-click="removeAccount(gov.GovId)">
+                    <i class="material-icons red-text">delete_forever</i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="addAccount" class="modal">
+  <div class="modal-footer">
+    <a href="#dashboard" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click=""><i class="material-icons black-text">close</i>
+    </a>
+  </div>
+   <div class="modal-content">
+     <div class="row">
+       <form ng-submit="addCriminal()" name="form" role="form">
+         <div class="row">
+           <div class="col s7">
+             <div class="input-field">
+                <input ng-model="form.fname" id="fname" type="text" ng-required="true">
+                <label for="fname">First Name</label>
+             </div>
+             <div class="input-field">
+               <input ng-model="form.lname" id="lname" type="text" ng-required="true">
+               <label for="lname">last Name</label>
+             </div>
+             <div class="input-field">
+                <input ng-model="form.mname" id="mname" type="text" ng-required="true">
+                <label for="mname">Middle Name</label>
+             </div>
+           </div>
+           <div class="col s5">
+             <div class="file-field input-field">
+               <div class="btn">
+               <span>Upload Photo</span>
+                 <input ng-model="form.image" type="file" accept="image/*" onchange="angular.element(this).scope().imagePreview(this); angular.element(this).scope().getFileDetails(this)" value="Upload Photo">
+               </div>
+             </div>
+             <img class="col s12" ng-src="{{image_source}}" style="padding-top:2%; object-fit:cover;">
+           </div>
+         </div>
+
+         <input class="waves-effect waves-light btn col s5 offset-s7" type="submit" id="submit" value="Submit" />
+      </form>
+     </div>
+   </div>
+</div>
+
+<div id="editAccount" class="modal">
+  <div class="modal-footer">
+    <a href="#dashboard" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click=""><i class="material-icons black-text">close</i>
+    </a>
+  </div>
+   <div class="modal-content">
+     <div class="input-field col s6">
+          <input id="password" type="password" class="validate">
+          <label for="password">password</label>
+      </div>
+   </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $('.modal').modal();
+  });
+</script>

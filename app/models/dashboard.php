@@ -54,10 +54,10 @@
         $stmt->bind_param("ss", $mac,$contID);
         $result = $stmt->execute();
         $stmt->close();
-  
+
     }
 
-     public function deleteAdmin($id )
+     public function deleteAdmin($id)
     {
         $stmt = $this->conn->prepare ("DELETE FROM `Admin` WHERE Admin_id = ?");
         $stmt->bind_param("i", $id);
@@ -66,7 +66,7 @@
     }
 
 
-     public function deleteGov($id )
+     public function deleteGov($id)
     {
         $stmt = $this->conn->prepare ("DELETE FROM `Government` WHERE Gov_id = ?");
         $stmt->bind_param("i", $id);
@@ -75,7 +75,7 @@
     }
 
 
-     public function updateAdmin($id , $Password )
+     public function updateAdmin($id, $Password)
     {
         $stmt = $this->conn->prepare ("UPDATE `Admin` SET `Password`=? WHERE Admin_id = ?");
         $stmt->bind_param("si",$Password, $id);

@@ -27,6 +27,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
           'user@dashboard': {
               templateUrl: 'public/partials/_profile.html',
               controller:  'userCtrl'
+          },
+          'accountsManager@dashboard': {
+              templateUrl: 'public/partials/_accountsManager.html',
+              controller:  'accountsManagerCtrl'
           }
         }
     });

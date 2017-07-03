@@ -1,4 +1,3 @@
-
 app.controller('loginCtrl', function($scope, $http, $stateParams, $state)
 {
   $scope.submit = function()
@@ -9,6 +8,7 @@ app.controller('loginCtrl', function($scope, $http, $stateParams, $state)
     };
     return $http.post('app/controllers/login.php',params)
     .success(function(data) {
+      alert(data);
       if(data == 'true')
       {
         $scope.error = '';
@@ -20,6 +20,5 @@ app.controller('loginCtrl', function($scope, $http, $stateParams, $state)
     .error(function(error) {
         return error;
     });
-    // }
   }
 });
