@@ -135,7 +135,7 @@ class dbHandler:
         print(e)
 
    def shutPi(self, AdminID, mac ) :
-     query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`, `Mac` , `Cont_id`) VALUES ("+Admin_id+","+12030+",\'"+mac+"\',\'None\')"
+     query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`) VALUES ("+Admin_id+",\'Closed Raspberry pi "+mac+" \')"
      try:
         self.cursor.execute(query)
         self.db.commit()
@@ -149,7 +149,7 @@ class dbHandler:
         print(e)
 
    def restartPi(self, AdminID, mac ) :
-     query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`, `Mac` , `Cont_id`) VALUES ("+Admin_id+","+23456+",\'"+mac+"\',\'None\')"
+     query = "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`) VALUES ("+Admin_id+",\'Restarted Raspberry pi "+mac+" \')"
      try:
         self.cursor.execute(query)
         self.db.commit()
