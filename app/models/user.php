@@ -35,8 +35,16 @@
       $result = $stmt->execute();
       $stmt->store_result();
       $num_rows = $stmt->num_rows;
-      $stmt->close();
-      return $num_rows > 0;
+      if ($num_rows > 0) {
+          $result = $this->getResult($stmt);
+          $_SESSION['Email'] = $email;
+          $_SESSION['username'] = $result[0]["Admin_username"];
+          $_SESSION['id'] = $result[0]["Admin_id"];
+          return LOGGED_IN_SUCCESSFULY;
+      }
+      else {
+          return LOGGED_IN_ERROR;
+      }
     }
     private function isUserExists($email)
     {
@@ -66,5 +74,23 @@
       }
       return $RESULT;
     }
+
+
+      private function getResult( $Statement )
+    {
+        $RESULT = array();
+        $Statement->store_result();
+        for ( $i = 0; $i < $Statement->num_rows; $i++ ) {
+            $Metadata = $Statement->result_metadata();
+            $PARAMS = array();
+            while ( $Field = $Metadata->fetch_field() ) {
+                $PARAMS[] = &$RESULT[ $i ][ $Field->name ];
+            }
+            call_user_func_array( array( $Statement, 'bind_result' ), $PARAMS );
+            $Statement->fetch();
+        }
+        return $RESULT;
+    }
+    
   }
 ?>

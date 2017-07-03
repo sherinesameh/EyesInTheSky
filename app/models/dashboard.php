@@ -5,9 +5,9 @@
     function __construct()
     {
       require_once '../helpers/dbConnection.php';
-      require_once '../helpers/definitions.php';
       $db = new DbConnection();
       $this->conn = $db->connect();
+
     }
     function getAdminsLog()
     {
@@ -56,7 +56,6 @@
         $result = $stmt->execute();
         $stmt->close();
         $this->decrementPi($mac);
-        session_start();
         $id = $_SESSION['id'];
         $Action = "Killed Process at Raspberry pi ".$mac." with container ID ".$contID;
         $this->addAdminLog($id,$Action);
@@ -95,8 +94,8 @@
         $stmt->bind_param("ssssss", $username,$Fname, $Lname,$email , $password, $image );
         $result = $stmt->execute();
         $stmt->close();
-        session_start();
         $id = $_SESSION['id'];
+        
         $Action = "Added government employee ".$username;
         $this->addAdminLog($id,$Action);
 
@@ -115,7 +114,6 @@
         $stmt->bind_param("i", $id);
         $result = $stmt->execute();
         $stmt->close();
-         session_start();
         $id = $_SESSION['id'];
         $Action = "Deleted government employee ".$username;
         $this->addAdminLog($id,$Action);
@@ -135,7 +133,6 @@
         $stmt->bind_param("si",$Password, $id);
         $result = $stmt->execute();
         $stmt->close();
-        session_start();
         $id = $_SESSION['id'];
         $Action = "Updated government employee ".$username;
         $this->addAdminLog($id,$Action);
