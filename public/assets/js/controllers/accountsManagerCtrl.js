@@ -13,7 +13,8 @@ app.controller('accountsManagerCtrl', function($scope, $http, $stateParams, $sta
         if( govs[i].Gov_id === id ) {
           params = {
             request: 'deleteGov',
-            id: $scope.govs[i].Gov_id
+            id: $scope.govs[i].Gov_id,
+            username: $scope.govs[i].Gov_username
           };
           sendRequest($http, params)
           .success(function(data) {
@@ -25,13 +26,15 @@ app.controller('accountsManagerCtrl', function($scope, $http, $stateParams, $sta
         }
       }
   };
-  $scope.editAccount = function(id,password) {
+  $scope.editAccount = function(id,password,username) {
     $scope.currentID = id;
     $scope.currentPassword = password;
+    $scope.currentUsername = username;
     params = {
       request: 'updateGov',
       id: $scope.currentID,
-      password: $scope.currentPassword
+      password: $scope.currentPassword,
+      username: $scope.currentUsername
     };
     sendRequest($http, params)
     .success(function(data) {

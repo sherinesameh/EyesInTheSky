@@ -5,6 +5,7 @@
     function __construct()
     {
       require_once '../helpers/dbConnection.php';
+      require_once '../helpers/definitions.php';
       $db = new DbConnection();
       $this->conn = $db->connect();
     }
