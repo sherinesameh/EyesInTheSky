@@ -27,7 +27,7 @@ def updateSpecs():
     time.sleep(30)
     
 def createDir(processName):
-    directory = '/home/pi/Desktop/'+processName+'_' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    directory = '/home/pi/Desktop/'+processName
     return directory
 
 def receiveFile(directory):
@@ -58,14 +58,44 @@ def receiveFile(directory):
 def sendSpecs():
     s.send(specs.StaticSpecs())
 
+
+def receiveFileCamera(directory,filename):
+    try:
+        filesize = s.recv(32)
+        print('file size asly :  '+str(filesize)) 
+        filesize = int(filesize, 2)
+        print('file size '+str(filesize)) 
+
+        os.chdir(directory)
+        
+        if str(os.getcwd()) == directory:
+            f = open(filename,'wb')
+            chunksize = 4096
+            
+            while filesize > 0:
+                if filesize < chunksize:
+                    chunksize = filesize
+                data = s.recv(chunksize)
+                f.write(data)
+                filesize -= chunksize
+            f.close()
+            print 'File received successfully'
+    except IOError as e:
+        print e
+
 def executeCommand():
   while True:
     cmd = s.recv(6)
     print("el command eli galy "+cmd)
-    if cmd == 'upload' :
+    if cmd == 'upload' :  
+       directory = "/home/pi/Desktop/TF_FILES/generated-embeddings/"        
+       receiveFileCamera(directory , 'classifier.pkl')
+       s.send('done')
+    if cmd == 'docker' :
        processSize = s.recv(32)
        processSize = int(processSize, 2)
-       userID , processName = str(s.recv(processSize)).decode('utf-8').split(":_:")
+       data = str(s.recv(processSize)).decode('utf-8')
+       processName , userID = data.split(":_:")
        directory = createDir(processName)        
        receiveFile(directory)
        s.send('filecreated')
@@ -74,8 +104,12 @@ def executeCommand():
               build = 'docker build .' 
               buildDocker = subprocess.Popen(build, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
               
-              words = buildDocker.split('Successfully built')
+              buildDockeroutput , err = buildDocker.communicate()
+
+              words = buildDockeroutput.split('Successfully built')
               imgID = words[1].strip()
+
+
 
               run = 'docker run ' + imgID
               runDocker = subprocess.Popen(run, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
@@ -93,12 +127,12 @@ def executeCommand():
               splitHeader = header[1].split(' ')
               containerID = splitHeader[0]
 
-              IPAddressCMD = 'docker inspect --format ={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' + containerID
+              IPAddressCMD = "docker inspect --format '{{ .NetworkSettings.IPAddress }}' " + containerID
               addressDocker = subprocess.Popen(IPAddressCMD, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
               out , err = addressDocker.communicate()
               IPAddress = str(out)
 
-              PortCMD = 'docker inspect --format ={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' + containerID
+              PortCMD = "docker inspect -f '{{range $p, $conf := .NetworkSettings.Ports}} {{$p}} -> {{(index $conf 0).HostPort}} {{end}}' " + containerID
               portDocker = subprocess.Popen(PortCMD, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
               out , err = portDocker.communicate()
               port = str(out)
