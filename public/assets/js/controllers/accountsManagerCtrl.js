@@ -1,30 +1,35 @@
-app.controller('accountsManagerCtrl', function($scope, $http, $stateParams, $state) {
+app.controller('accountsManagerCtrl', function($scope, $http,$interval,$stateParams, $state) {
   checkSession($http, $stateParams, $state);
   specs = {request: 'getGovs'};
-  sendRequest($http, specs).success(function(data) {
-    $scope.govs = data;
-    console.log($scope.govs);
-  });
+  // $interval(function() {
+    sendRequest($http, specs).success(function(data) {
+      $scope.govs = data;
+      // console.log($scope.govs);
+    });
+  // }, 1000);
   $scope.removeAccount = function(id) {
-      var govs = eval( $scope.govs );
-      var index = -1;
-      for( var i = 0; i < govs.length; i++ )
-      {
-        if( govs[i].Gov_id === id ) {
-          params = {
-            request: 'deleteGov',
-            id: $scope.govs[i].Gov_id,
-            username: $scope.govs[i].Gov_username
-          };
-          sendRequest($http, params)
-          .success(function(data) {
-            $scope.govs.splice( i, 1 );
-          })
-          .error(function(error) {
-              console.log('error');
-          });
-        }
+    params = {};
+    var govs = eval($scope.govs);
+    var index = -1;
+    for( var i = 0; i < govs.length; i++ )
+    {
+      if( govs[i].Gov_id === id ) {
+        index = i;
+        params = {
+          request: 'deleteGov',
+          id: $scope.govs[i].Gov_id,
+          username: $scope.govs[i].Gov_username
+        };
+        sendRequest($http, params)
+        .success(function(data) {
+          alert(data);
+          $scope.govs.splice( index, 1 );
+        })
+        .error(function(error) {
+            console.log("error");
+        });
       }
+    }
   };
   $scope.editAccount = function(id,password,username) {
     $scope.currentID = id;
