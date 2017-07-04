@@ -56,7 +56,7 @@
     sendRequest($http, params).success(function(data) {
       $scope.locations = data;
     });
-    $scope.location = {
+    $scope.loc = {
       locationsSelect: []
     };
     $scope.addCriminal = function() {
@@ -75,7 +75,7 @@
               formData.append("file", $scope.form.file);
               formData.append("expireDate", $scope.form.expireDate);
               formData.append("priority", $scope.priority.prioritySelect);
-              formData.append("locations", $scope.location.locationsSelect);
+              formData.append("locations", $scope.loc.locationsSelect);
     		      return formData;
       	  },
       	  data : $scope.form,
@@ -91,12 +91,8 @@
            $scope.form.files = '';
            $scope.form.expireDate = '';
            $scope.priority.prioritySelect = '';
-           $scope.location.locationsSelect = [];
-           angular.element("input[type='file']").val(null);
-
-
-            alert(data);
-
+           $scope.loc.locationsSelect = [];
+          alert(data);
          });
     };
     $scope.getFileDetails = function (e,index) {
