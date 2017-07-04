@@ -26,7 +26,7 @@
     }
     public function addCriminal($Fname, $Mname, $Lname, $priority, $date, $path, $image, $id, $username)
     {
-       $query = "INSERT INTO `Criminals`(`Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image` ) VALUES ( '".$Mname ."','". $Fname ."','". $Lname ."','". $path ."',". $priority .",'". $date."' ,'". $image."')";
+       $query = "INSERT INTO `Criminals`(`Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image` ) VALUES ( '".$Mname ."','". $Fname ."','". $Lname ."','". $path ."',". $priority .",SELECT DATE_ADD(NOW(), INTERVAL ". $date." DAY) ,'". $image."')";
        $this->conn->query($query);
        $Crim_id = $this->conn->insert_id;
        $stmt = $this->conn->prepare("INSERT INTO `Gov_Log`(`Gov_id`, `Gov_username`, `Action`, `Crim_id`) VALUES (?,?,98312,?)");
@@ -39,6 +39,21 @@
           return ERROR;
       }
     }
+
+
+
+    public function updateExpired($id)
+    {
+        $stmt = $this->conn->prepare("UPDATE `Criminals` SET `State`=80808 WHERE Crim_id = ? ");
+        $stmt->bind_param("i", $id);
+        $result = $stmt->execute();
+        $stmt->close();
+        if ($result) {
+          return CREATED_SUCCESSFULY;
+        } else {
+          return ERROR;
+        }
+    }    
 
     public function deleteCriminal($id, $gov_id, $username)
     {

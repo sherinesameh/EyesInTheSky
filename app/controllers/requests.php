@@ -25,6 +25,13 @@ switch ($request) {
         break;
     case "search":
         $result = $actions->getAllCriminals();
+        for ($i=0; $i < sizeof($result); $i++) { 
+          if ($result[$i]["State"] === 20202) {
+            $actions->updateExpired($result[$i]["Crim_id"]);
+            $socket = new Socket;
+            $socket->send(1,$locations);
+          }
+        }
         echo json_encode($result);
         break;
     case 'getLocations':
