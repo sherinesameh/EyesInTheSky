@@ -8,19 +8,18 @@
     <div class="col s8">
       <ul class="collapsible popout" data-collapsible="accordion">
         <li>
-          <div class="collapsible-header"><i class="material-icons">search</i>Search</div>
-          <div class="collapsible-body" ui-view="search"></div>
+          <div class="collapsible-header active"><i class="material-icons">search</i>Criminals Data</div>
+          <div class="collapsible-body" ui-view="criminals"></div>
         </li>
         <li>
-          <div class="collapsible-header"><i class="material-icons">add</i>Add</div>
+          <div class="collapsible-header add" ><i class="material-icons">add</i>Add New Criminal</div>
           <div class="collapsible-body" ui-view="add"></div>
         </li>
         <li>
-          <div class="collapsible-header"><i class="material-icons">delete</i>Delete</div>
-          <div class="collapsible-body" ui-view="delete"></div>
+          <div class="collapsible-header"><i class="material-icons">archive</i>Government log</div>
+          <div class="collapsible-body" ui-view="log"></div>
         </li>
       </ul>
-      <div ui-view="log"></div>
     </div>
 </div>
 <script>

@@ -5,8 +5,27 @@
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
               </div>
           </div>
-          <table class="striped" style="list-style: none"> <!--ng-show="searchForCriminal"> -->
-            <thead>
+          <ul class="collection">
+             <li class="collection-item avatar" ng-repeat="criminal in search | filter:searchForCriminal">
+               <img class="circle" ng-src="public/assets/img/uploads/{{criminal.image}}">
+               <span class="title">{{criminal.Fname}} {{criminal.Mname}} {{criminal.Lname}}</span>
+               <p> {{criminal.priority}} <br> {{criminal.expiry_date | date}} </p>
+               <div class="secondary-content" ng-switch="{{criminal.State}}">
+                 <div ng-switch-when="32141" >
+                    <i class="small material-icons yellow-text">autorenew</i>
+                 </div>
+                 <div ng-switch-when="76767">
+                   <i class="small material-icons green-text">done_all</i>
+                 </div>
+                 <div ng-switch-when="20202">
+                   <i class="small material-icons red-text">remove_circle</i>
+                 </div>
+               </div>
+             </li>
+           </ul>
+          <!-- <table class="striped" style="list-style: none">  -->
+            <!--ng-show="searchForCriminal"> -->
+            <!-- <thead>
               <tr>
                 <th></th>
                 <th>Name</th>
@@ -25,10 +44,28 @@
                 <td>{{criminal.Dir_path}}</td>
                 <td>{{criminal.priority}}</td>
                 <td>{{criminal.expiry_date | date}}</td>
-                <th>{{criminal.State}}</th>
+                <th>
+                <div ng-switch="{{criminal.State}}">
+                <div ng-switch-when="20202" >
+                   <div class="preloader-wrapper small active">
+                     <div class="spinner-layer spinner-red-only">
+                       <div class="circle-clipper left">
+                         <div class="circle"></div>
+                       </div><div class="gap-patch">
+                         <div class="circle"></div>
+                       </div><div class="circle-clipper right">
+                         <div class="circle"></div>
+                       </div>
+                     </div>
+                   </div>
+                </div>
+                <div ng-switch-when="76767">
+                  <i class="small material-icons green-text">done_all</i>
+                </div>
+                </th>
               </tr>
             </tbody>
-          </table>
+          </table> -->
       </div>
     </div>
   </div>

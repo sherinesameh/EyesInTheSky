@@ -23,27 +23,28 @@
       $scope.user = data[0];
     });
   });
-  app.controller('logCtrl', function($scope, $http, $stateParams, $state) {
+  app.controller('logCtrl', function($scope, $interval, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
-    params = {request: 'getLog'};
-    sendRequest($http, params).success(function(data) {
-      $scope.logs = data;
-    });
+    $interval(function() {
+      params = {request: 'getLog'};
+      sendRequest($http, params).success(function(data) {
+        $scope.logs = data;
+      });
+    }, 1000);
   });
   app.controller('billingCtrl', function($scope, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
 
   });
-  app.controller('searchCtrl', function($scope, $interval ,$http, $stateParams, $state) {
-    checkSession($http, $stateParams, $state);
-    $interval(function() {
-      params = {request: 'search'};
-      sendRequest($http, params).success(function(data) {
-        $scope.search = data;
-      });
-    }, 1000);
-  });
-
+  // app.controller('searchCtrl', function($scope, $interval ,$http, $stateParams, $state) {
+  //   checkSession($http, $stateParams, $state);
+  //   $interval(function() {
+  //     params = {request: 'search'};
+  //     sendRequest($http, params).success(function(data) {
+  //       $scope.search = data;
+  //     });
+  //   }, 1000);
+  // });
   app.controller('addCtrl', function($scope, $http, $stateParams, $state) {
     $scope.form = [];
 	  $scope.files = [];
@@ -83,7 +84,19 @@
       	  }
          })
          .success(function(data){
-              alert(data);
+           $scope.form.fname = '';
+           $scope.form.mname = '';
+           $scope.form.lname = '';
+           $scope.form.image = '';
+           $scope.form.files = '';
+           $scope.form.expireDate = '';
+           $scope.priority.prioritySelect = '';
+           $scope.location.locationsSelect = [];
+           angular.element("input[type='file']").val(null);
+
+
+            alert(data);
+
          });
     };
     $scope.getFileDetails = function (e,index) {
@@ -101,7 +114,7 @@
 		};
 
   });
-  app.controller('deleteCtrl', function($scope, $interval, $http, $stateParams, $state) {
+  app.controller('criminalsCtrl', function($scope, $interval, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
     $interval(function() {
       params = {request: 'search'};

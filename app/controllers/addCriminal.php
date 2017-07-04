@@ -30,9 +30,9 @@
   $username = $_SESSION['username'];
 
   $result= $actions->addCriminal($Fname, $Mname, $Lname, $priority, $date, $filename, $image, $id, $username);
-  // if ($result) {
-  // $socket = new Socket;
-  // $socket->send($type,$locations);
-  // }
+  if ($result) {
+    // $socket = new Socket;s
+    // $socket->send(1,$locations);
+  }
   echo json_encode($result);
 ?>

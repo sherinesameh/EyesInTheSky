@@ -32,14 +32,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
               templateUrl: 'public/partials/_add.html',
               controller:  'addCtrl'
           },
-          'delete@home': {
-              templateUrl: 'public/partials/_delete.html',
-              controller:  'deleteCtrl'
-          },
-          'search@home': {
-              templateUrl: 'public/partials/_search.html',
-              controller:  'searchCtrl'
+          'criminals@home': {
+              templateUrl: 'public/partials/_criminalsData.html',
+              controller:  'criminalsCtrl'
           }
+          // 'search@home': {
+          //     templateUrl: 'public/partials/_search.html',
+          //     controller:  'searchCtrl'
+          // }
         }
     });
 });

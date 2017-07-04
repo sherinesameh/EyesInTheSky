@@ -1,0 +1,88 @@
+<div class="row">
+      <div class="nav-wrapper card">
+          <div class="input-field">
+            <input id="search" type="search" required ng-model="searchForCriminal">
+            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+          </div>
+      </div>
+        <table class="striped" style="list-style: none">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Periority</th>
+              <th>Expiry Date</th>
+              <th>State</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="criminal in criminals | filter:searchForCriminal">
+              <td>
+                <img class="responsive-img circle"  style="height:40px; width:40px;" ng-src="public/assets/img/uploads/{{criminal.image}}"/>
+              </td>
+              <td>{{criminal.Fname}} {{criminal.Mname}} {{criminal.Lname}}</td>
+              <td>
+                  <div ng-switch="{{criminal.priority}}">
+                    <div ng-switch-when="99999">
+                      <i class="material-icons red-text">priority_high</i>
+                      <i class="material-icons red-text">priority_high</i>
+                      <i class="material-icons red-text">priority_high</i>
+                    </div>
+                    <div ng-switch-when="77777">
+                      <i class="material-icons yellow-text">priority_high</i>
+                      <i class="material-icons yellow-text">priority_high</i>
+                    </div>
+                    <div ng-switch-when="55555">
+                      <i class="material-icons blue-text">priority_high</i>
+                    </div>
+                  </div>
+              </td>
+              <td>{{criminal.expiry_date | date}}</td>
+              <td>
+                <div ng-switch="{{criminal.State}}">
+                  <div ng-switch-when="70707">
+                    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Searching">
+                      <!-- <i class="small material-icons yellow-text">autorenew</i> -->
+                      <div class="preloader-wrapper small active">
+                        <div class="spinner-layer spinner-yellow-only">
+                          <div class="circle-clipper left">
+                            <div class="circle"></div>
+                          </div><div class="gap-patch">
+                            <div class="circle"></div>
+                          </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <div ng-switch-when="76767">
+                    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Found">
+                      <i class="small material-icons green-text">done_all</i>
+                    </a>
+                  </div>
+                  <div ng-switch-when="20202">
+                    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Not Found">
+                      <i class="small material-icons red-text">remove_circle</i>
+                    </a>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <a class="btn-floating waves-effect waves btn-flat" ng-click="removeCriminal(criminal.Crim_id)">
+                  <i class="medium material-icons grey-text text-darken-2">delete_forever</i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+   </div>
+  </div>
+</div>
+<script>
+    $(document).ready(function() {
+      $('.tooltipped').tooltip({delay: 50});
+    });
+</script>

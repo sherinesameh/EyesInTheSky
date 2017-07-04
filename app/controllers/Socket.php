@@ -1,7 +1,8 @@
 <?php
 class Socket
 {
-	private $host = "localhost";
+	// private $host = "localhost";
+	private $host = "192.168.43.114";
   private $port = 8080;
   private $socket;
 	function __construct()
