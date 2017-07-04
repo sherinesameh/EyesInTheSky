@@ -51,14 +51,7 @@ class dbHandler:
      except Exception as e:
       print(e)
 
-   
-   def incrementPi(self,userID , processName , results):
-     query = 'UPDATE `Rp_Log` SET `Jobs_Num`=Jobs_Num + 1 WHERE Mac = \'' + mac + '\''
-     try:
-        self.cursor.execute(query)
-        self.db.commit()
-     except Exception as e:
-        print(e) 
+    
 
    def incrementPi(self,mac):
      query = 'UPDATE `Rp_Log` SET `Jobs_Num`=Jobs_Num + 1 WHERE Mac = \'' + mac + '\''
@@ -83,7 +76,7 @@ class dbHandler:
      macs = []
      results = self.cursor.fetchall()
      for x in results:
-         macs.append(x)
+         macs.append(x["Mac"])
      return macs        
 
    def getLocatedPis(self,Locations):
@@ -93,7 +86,7 @@ class dbHandler:
        self.cursor.execute(query)
        results = self.cursor.fetchall()
        for y in results:
-           macs.append(y)
+           macs.append(y["Mac"])
      
      return macs
 
@@ -126,14 +119,7 @@ class dbHandler:
         print(e)
    
 
-   def adminKill(self, Admin_id , mac , Cont_id):
-     query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`, `Mac` , `Cont_id`) VALUES ("+Admin_id+","+27693+",\'"+mac+"\',\'"+Cont_id+"\')"
-     try:
-        self.cursor.execute(query)
-        self.db.commit()
-     except Exception as e:
-        print(e)
-
+  
    def shutPi(self, AdminID, mac ) :
      query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`) VALUES ("+Admin_id+",\'Closed Raspberry pi "+mac+" \')"
      try:
