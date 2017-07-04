@@ -49,11 +49,13 @@ def connectRP(connection):
     print("el handshak "+handshakePck)
     specs = handshakePck.split('\n')
     mac = specs[1]
-    CONNECTIONS[mac] = specs[0]
+    mac = 'b8:27:eb:8d:24:80'
+    CONNECTIONS[mac] = connection
 
 def adminCommands(connection):
     AdminID = str(connection.recv(5)).decode("utf-8")
-    cmd = str(connection.recv(2048)).decode("utf-8").split(":_:")
+    cmd = str(connection.recv(2048)).decode("utf-8")
+    cmd = cmd.split(":_:")
     if cmd[0] == "15151":
         mac = cmd[1]
         connectionRP = CONNECTIONS[mac]
@@ -77,16 +79,20 @@ def adminCommands(connection):
 
 def userCommands(connection):
     mac = DB.getBestPi()
-    path = str(connection.recv(1024))
-    path = path.decode('utf-8')
-    processName = str(connection.recv(1024)).decode('utf-8')
+    print("mac is "+mac)
+    data = str(connection.recv(1024))
+    print("data is "+data)
+    path , processName , userID = data.split(":_:")
+    print("path "+path + " ,processName "+processName)
     connectionRP = CONNECTIONS[mac]
     connectionRP.send('docker')
-    utilities.sendFile(connectionRP, path, processName,  'Dockerfile')
+    utilities.sendFile(connectionRP, path, processName, userID , 'Dockerfile')
     response = str(connectionRP.recv(11)).decode('utf-8')
     if response == 'filecreated':
         connectionRP.send('rundocker')
-        connection.send(str(connectionRP.recv(1024)).decode('utf-8'))
+    results = str(connectionRP.recv(1024)).decode('utf-8')
+    print("results iare "+results)
+    DB.updateResults(userID , processName , results)
 
 # def userCommands(connection):
     # bestPi = dbHandler()
@@ -105,38 +111,35 @@ def govCommands(connection):
 
     type = str(connection.recv(1)).strip()
     #train the set producing the 2 files
-    os.system('python ~/Desktop/RemoteShell/Trainer.py')
+    os.system('cd ~/Desktop/TF_FILES; python train.py')
     print("type is "+type)
     if type == "1":
-    #general --> send to all pi-s with camera 
-        macs = getCameraPis()
+    general --> send to all pi-s with camera 
+        macs = DB.getCameraPis()
         for x in macs:
+            print("el mac "+x)
             connectionRP = CONNECTIONS[x]
             sendToCamera(connectionRP)
+        x = "b8:27:eb:8d:24:80"
+        connectionRP = CONNECTIONS[x]
+        sendToCamera(connectionRP)
 
     if type == "2":
     #specific to pi-s in specific locations    
         locations = str(connection.recv(1024)).strip().split(":_:")
         print(locations)
-        macs = getLocatedPis(locations)
+        macs = DB.getLocatedPis(locations)
         for x in macs:
             connectionRP = CONNECTIONS[x]
             sendToCamera(connectionRP)
 
     
 def sendToCamera(connection):
-    directory = "/opt/lampp/htdocs/sherif/TF_FILES"
+    directory = "/home/yamen/Desktop/TF_FILES/generated-embeddings"
 
     connection.send("upload")
-    utilities.sendFile(connection , directory , 'Graph.npy' )
+    utilities.sendFileCamera(connection , directory , 'classifier.pkl' )
     response = connection.recv(4)
-
-    if response == 'done':
-        utilities.sendFile(connection , directory , 'Labels.npy')
-        response = connection.recv(4)
-        if response == 'done':
-            result = str(connection.recv(1024)).decode('utf-8')
-            print("result "+ result)
 
 def main():
     setupConnection()

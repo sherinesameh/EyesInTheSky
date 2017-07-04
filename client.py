@@ -20,10 +20,11 @@ def establishConnection():
         print(errorMsg)
 
 def updateSpecs():
+  sendSpecs()
   while(True):
-    currentSpecs = specs.CurrentSpecs().split('\n')
+    currentSpecs = specs.CurrentSpecs().split(':_:')
     mac = specs.getMac()
-    db.updateSpecs(mac, currentSpecs[0], currentSpecs[1], currentSpecs[2], currentSpecs[3])
+    db.updateSpecs(mac, currentSpecs[0], currentSpecs[1], currentSpecs[2], currentSpecs[3], currentSpecs[4])
     time.sleep(30)
     
 def createDir(processName):
@@ -88,7 +89,7 @@ def executeCommand():
     cmd = s.recv(6)
     print("el command eli galy "+cmd)
     if cmd == 'upload' :  
-       directory = "/home/pi/Desktop/TF_FILES/generated-embeddings/"        
+       directory = "/home/pi/Desktop/TF_FILES/generated-embeddings/" 
        receiveFileCamera(directory , 'classifier.pkl')
        s.send('done')
     if cmd == 'docker' :
@@ -153,11 +154,11 @@ def executeCommand():
        killDocker = subprocess.Popen(PortCMD, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
        out , err = killDocker.communicate()
     if cmd == 'shutdw':
-       shutCMD = 'sudo shutdown -r now '
+       shutCMD = ' shutdown -r now '
        killDocker = subprocess.Popen(shutCMD, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
     
     if cmd == 'restrt':
-       shutCMD = 'sudo reboot '
+       shutCMD = ' reboot '
        killDocker = subprocess.Popen(shutCMD, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
     
     if cmd == 'finish':
@@ -167,11 +168,9 @@ def executeCommand():
 def main():
     establishConnection()
     thread1 = threading.Thread(target = executeCommand)
-    thread2 = threading.Thread(target = updateSpecs)
     thread1.daemon = True
-    thread2.daemon = True
     thread1.start()
-    thread2.start()
-
+    updateSpecs()
+    
 if __name__ == '__main__':
     main()
