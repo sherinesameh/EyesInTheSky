@@ -111,13 +111,21 @@ class dbHandler:
       
 
    def updateResults(self, userID, processName, results):
-     query = "UPDATE `Process` SET `result`=\'"+results+"\', WHERE Process_name = \'"+processName+"\' AND User_id = "+str(userID)+" ORDER BY Time DESC LIMIT 1"
+     query = "UPDATE `Process` SET `result`=\'"+results+"\' WHERE Process_name = \'"+processName+"\' AND User_id = "+str(userID)+" ORDER BY Start_time DESC LIMIT 1"
+     try:
+        self.cursor.execute(query)
+        self.db.commit()
+        self.updateUserLog2(userID,processName)
+     except Exception as e:
+        print(e)
+ 
+    def updateUserLog2(self, userID,processName):
+     query =  "UPDATE `User_Log` SET  Action =  19195  WHERE User_id = "+str(userID)+" AND Process_name = \""+processName+"\" ORDER BY Time DESC LIMIT 1"
      try:
         self.cursor.execute(query)
         self.db.commit()
      except Exception as e:
-        print(e)
-   
+        print(e)  
 
   
    def shutPi(self, AdminID, mac ) :
