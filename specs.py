@@ -60,7 +60,7 @@ def StaticSpecs():
     RAM = psutil.phymem_usage()
     RAM_total = RAM.total / 2**20       # MiB.
     DISK = psutil.disk_usage('/')
-    DISK_total = disk.total / 2**30     # GiB.
+    DISK_total = DISK.total / 2**30     # GiB.
     # RAM_stats = getRAMinfo()
     # RAM_total = round(int(RAM_stats[0]) / 1000,1)
     # DISK_stats = getDiskSpace()
@@ -76,7 +76,7 @@ def CurrentSpecs():
     RAM = psutil.phymem_usage()
     RAM_usage = RAM.percent
     DISK = psutil.disk_usage('/')
-    DISK_usage = disk.percent
+    DISK_usage = DISK.percent
     # RAM_stats = getRAMinfo()
     # RAM_total = round(int(RAM_stats[0]) / 1000,1)
     # RAM_used = round(int(RAM_stats[1]) / 1000,1)
