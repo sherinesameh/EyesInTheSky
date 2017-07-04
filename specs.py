@@ -9,7 +9,8 @@ def getPublicIP():
 
 def getPrivateIP():
     # Return Private IP
-    return os.popen('hostname -I').read().replace('"','')
+    ip = os.popen('hostname -I').read().replace('"','')
+    return ip.replace('\n','')
 
 def getMac():
     # Return Mac address over eth0
@@ -61,11 +62,10 @@ def StaticSpecs():
     RAM_total = RAM.total / 2**20       # MiB.
     DISK = psutil.disk_usage('/')
     DISK_total = DISK.total / 2**30     # GiB.
-    # RAM_stats = getRAMinfo()
-    # RAM_total = round(int(RAM_stats[0]) / 1000,1)
-    # DISK_stats = getDiskSpace()
-    # DISK_total = DISK_stats[0]
-
+    #RAM_stats = getRAMinfo()
+    #RAM = round(int(RAM_stats[0]) / 1000,1)
+    #DISK_stats = getDiskSpace()
+    #DISK = DISK_stats[0]
     return (PublicIP + ':_:' + MAC + ':_:' + OS +':_:' + str(RAM_total) + ':_:' + str(DISK_total))
 
 
@@ -75,8 +75,8 @@ def CurrentSpecs():
     CPU_usage = getCPUusage()
     RAM = psutil.phymem_usage()
     RAM_usage = RAM.percent
-    DISK = psutil.disk_usage('/')
-    DISK_usage = DISK.percent
+    disk = psutil.disk_usage('/')
+    DISK_usage = disk.percent
     # RAM_stats = getRAMinfo()
     # RAM_total = round(int(RAM_stats[0]) / 1000,1)
     # RAM_used = round(int(RAM_stats[1]) / 1000,1)
@@ -86,4 +86,5 @@ def CurrentSpecs():
     # DISK_free = DISK_stats[1]
     # DISK_used = DISK_stats[2]
     # DISK_perc = DISK_stats[3]
-    return(PrivateIP +':_:'+ CPU_temp +':_:'+ CPU_usage +':_:'+ DISK_usage +':_:'+ RAM_usage)
+    return(PrivateIP +':_:'+ CPU_temp +':_:'+ CPU_usage +':_:'+ str(DISK_usage) +':_:'+ str(RAM_usage))
+
