@@ -9,6 +9,7 @@ app.controller('loginCtrl', function($scope, $http, $stateParams, $state)
     };
     return $http.post('app/controllers/login.php',params)
     .success(function(data) {
+      alert(data);
       if(data)
       {
         $scope.error = '';

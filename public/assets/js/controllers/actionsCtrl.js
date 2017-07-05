@@ -75,7 +75,6 @@
       	  }
          })
          .success(function(data){
-           alert(data);
            $scope.form = {};
          });
     };
@@ -113,7 +112,10 @@
             params = {
               request: 'deleteCriminal',
               criminalID: $scope.criminals[i].Crim_id,
-              filename: $scope.criminals[i].Dir_path
+              filename: $scope.criminals[i].Dir_path,
+              fname: $scope.criminals[i].Fname,
+              mname: $scope.criminals[i].Mname,
+              lname: $scope.criminals[i].Lname
             };
             sendRequest($http, params)
             .success(function(data) {
