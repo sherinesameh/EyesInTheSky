@@ -17,7 +17,7 @@
                 <th>Time</th>
               </tr>
             </thead>
-            <tbody style="display: block; height:100px; overflow:scroll;">
+            <tbody style="display: block; height:80em; overflow-y:auto;">
               <tr ng-repeat="log in logs| filter:logSearch">
                 <td>{{log.name}}</td>
                 <td>{{log.Action}}</td>

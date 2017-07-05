@@ -82,7 +82,7 @@ app.controller('accountsManagerCtrl', function($scope, $http, $interval, $stateP
             sendRequest($http, specs).success(function(data) {
               $scope.govs = data;
             });
-            $scope.form.error = '';
+            // $scope.form.error = '';
             $('#addAccount').modal('close');
           }
           // else {
