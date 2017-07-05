@@ -5,8 +5,8 @@ import operator
 
 class dbHandler:
    def __init__(self):
-       self.db = pymysql.connect(host='46.101.180.169', port= 3306, user='pi',password='eits2017',db='EITS')
-       # self.db = pymysql.connect(host='localhost',user='root',password='',db='EITS')
+       # self.db = pymysql.connect(host='46.101.180.169', port= 3306, user='pi',password='eits2017',db='EITS')
+       self.db = pymysql.connect(host='localhost',user='root',password='eits2017',db='EITS')
        self.cursor =  self.db.cursor(pymysql.cursors.DictCursor)
 
    def get_points(self,Camera,FreeStorage,CPU,RAM,Temperature,Jobs_Num,time):
@@ -33,6 +33,7 @@ class dbHandler:
      try:
         self.cursor.execute(query)
         results = self.cursor.fetchall()
+        print("3dad el results "+str(len(results)))
         for row in results:
             Mac = row["Mac"]
             Camera = row["HasCamera"]
@@ -48,6 +49,31 @@ class dbHandler:
                 best = rp[Mac]
                 temp = Mac
         return temp
+     except Exception as e:
+      print(e)
+
+
+
+   def addPi(self , ip , mac , os , ram , disk , camera):     
+     query1 = "SELECT `Mac` FROM `Rp_Specs` WHERE Mac = \'"+mac+"\'"
+     try:
+        self.cursor.execute(query1)
+        results = self.cursor.fetchall()
+        print("el results " + str(len(results)))
+        if len(results) == 0:
+           query2 = "INSERT INTO `Rp_Specs`(`Mac`, `Ram`, `Storage`, `HasCamera`,  `OS`,  `PublicIP`) VALUES (\'"+mac+"\',"+str(ram)+","+str(disk)+","+str(camera)+",\'"+os+"\',\'"+ip+"\')"
+           self.cursor.execute(query2)
+           self.db.commit()
+           query4 = "INSERT INTO `Current_Specs`(`Mac`, `PrivateIP`, `FreeStorage`, `CpuUsage`, `RamUsage`, `Temperature`, `State`) VALUES (\'"+mac+"\' ,'0',0,0,0,0,22894)"
+           self.cursor.execute(query4)
+           self.db.commit()
+           query5 = "INSERT INTO `Rp_Log`(`Mac`, `Jobs_Num`) VALUES ( \'"+mac+"\',0)"
+           self.cursor.execute(query5)
+           self.db.commit()        
+        else:
+           query3 = "UPDATE `Rp_Specs` SET `Ram`= "+ str(ram) + ",`Storage`= " + str(disk) + ",`HasCamera`= " + str(camera) + ", `OS`= \'"+os+"\' WHERE Mac = \'"+mac+"\'"   
+           self.cursor.execute(query3)
+           self.db.commit()
      except Exception as e:
       print(e)
 
@@ -129,13 +155,13 @@ class dbHandler:
 
   
    def shutPi(self, AdminID, mac ) :
-     query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`) VALUES ("+Admin_id+",\'Closed Raspberry pi "+mac+" \')"
+     query =  "INSERT INTO `Admin_Log`(`Admin_id`, `Action`) VALUES ("+AdminID+",\'Closed Raspberry pi "+mac+" \')"
      try:
         self.cursor.execute(query)
         self.db.commit()
      except Exception as e:
         print(e)
-     query =  "UPDATE `Process` SET `Process_State`="+22198+" WHERE Mac = \'"+mac+"\'"
+     query =  "UPDATE `Process` SET `Process_State`= 22198 WHERE Mac = \'"+mac+"\'"
      try:
         self.cursor.execute(query)
         self.db.commit()
@@ -143,13 +169,13 @@ class dbHandler:
         print(e)
 
    def restartPi(self, AdminID, mac ) :
-     query = "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`) VALUES ("+Admin_id+",\'Restarted Raspberry pi "+mac+" \')"
+     query = "INSERT INTO `Admin_Log`(`Admin_id`, `Action`) VALUES ("+AdminID+",\'Restarted Raspberry pi "+mac+" \')"
      try:
         self.cursor.execute(query)
         self.db.commit()
      except Exception as e:
         print(e)
-     query =  "UPDATE `Process` SET `Process_State`="+22198+" WHERE Mac = \'"+mac+"\'"
+     query =  "UPDATE `Process` SET `Process_State`=22198 WHERE Mac = \'"+mac+"\'"
      try:
         self.cursor.execute(query)
         self.db.commit()

@@ -48,8 +48,8 @@ def connectRP(connection):
     handshakePck = str(connection.recv(80))
     print("el handshak "+handshakePck)
     specs = handshakePck.split(':_:')
+    DB.addPi(specs[0],specs[1],specs[2],specs[3],specs[4],1)
     mac = specs[1]
-    mac= "b8:27:eb:8d:24:80"
     print("El mac eli gayely "+mac)
     CONNECTIONS[mac] = connection
 
@@ -66,17 +66,17 @@ def adminCommands(connection):
         processNameSize = bin(processNameSize)[2:].zfill(32)
         connection.send(processNameSize)
         connection.send(container)
-        DB.adminKill(AdminID , mac , container)
     if cmd[0] == "27351":
        mac = cmd[1]
        connectionRP = CONNECTIONS[mac]
-       connection.send('shutdw')
+       print("el mac eli ray7lo "+mac)
+       connectionRP.send('shutdw')
        DB.shutPi(AdminID, mac )
     if cmd[0] == "87452":
        mac = cmd[1]
        connectionRP = CONNECTIONS[mac]
-       connection.send('restrt')
-       DB.shutPi(AdminID, mac )           
+       connectionRP.send('restrt')
+       DB.restartPi(AdminID, mac )           
 
 def userCommands(connection):
     mac = DB.getBestPi()
