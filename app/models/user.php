@@ -62,7 +62,6 @@
             $_SESSION['Email'] = $email;
             $_SESSION['username'] = $result[0]["Gov_username"];
             $_SESSION['id'] = $result[0]["Gov_id"];
-            $_SESSION['authority'] = $result[0]["authority"];
             return LOGGED_IN_SUCCESSFULY;
         }
         else {

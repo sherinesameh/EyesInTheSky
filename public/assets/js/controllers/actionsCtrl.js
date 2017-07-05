@@ -36,15 +36,6 @@
     checkSession($http, $stateParams, $state);
 
   });
-  // app.controller('searchCtrl', function($scope, $interval ,$http, $stateParams, $state) {
-  //   checkSession($http, $stateParams, $state);
-  //   $interval(function() {
-  //     params = {request: 'search'};
-  //     sendRequest($http, params).success(function(data) {
-  //       $scope.search = data;
-  //     });
-  //   }, 1000);
-  // });
   app.controller('addCtrl', function($scope, $http, $stateParams, $state) {
     $scope.form = [];
 	  $scope.files = [];
@@ -84,15 +75,8 @@
       	  }
          })
          .success(function(data){
-           $scope.form.fname = '';
-           $scope.form.mname = '';
-           $scope.form.lname = '';
-           $scope.form.image = '';
-           $scope.form.files = '';
-           $scope.form.expireDate = '';
-           $scope.priority.prioritySelect = '';
-           $scope.loc.locationsSelect = [];
-          alert(data);
+           alert(data);
+           $scope.form = {};
          });
     };
     $scope.getFileDetails = function (e,index) {
@@ -113,11 +97,11 @@
   app.controller('criminalsCtrl', function($scope, $interval, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
     $interval(function() {
-      params = {request: 'search'};
+      params = {request: 'getAllCriminals'};
       sendRequest($http, params).success(function(data) {
         $scope.criminals = data;
       });
-    }, 1000);
+    }, 5000);
     $scope.removeCriminal = function(criminalID) {
         params = {};
         var criminals = eval( $scope.criminals );
@@ -133,7 +117,7 @@
             };
             sendRequest($http, params)
             .success(function(data) {
-              $scope.criminals.splice( index, 1 );
+              $scope.criminals.splice(index, 1);
             })
             .error(function(error) {
                 console.log("error");
