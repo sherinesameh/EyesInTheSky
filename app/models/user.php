@@ -70,7 +70,7 @@
     }
     public function getProfile($email)
     {
-        $stmt = $this->conn->prepare("SELECT Gov_username, Fname,Lname,Email,authority,image FROM Government WHERE Email = ? ");
+        $stmt = $this->conn->prepare("SELECT Gov_username, Fname,Lname,Email,image FROM Government WHERE Email = ? ");
         $stmt->bind_param("s",$email);
         $stmt->execute();
         $result = $this->getResult($stmt);

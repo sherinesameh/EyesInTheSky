@@ -13,7 +13,7 @@ class Socket
 	}
 	function send($type,$location)
 	{
-		if (!strcmp($type, "general")) {
+		if (!strcmp($type, "1")) {
 			$type = 1;
 		}else{
 			$type = 2;

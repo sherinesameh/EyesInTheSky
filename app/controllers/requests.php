@@ -7,7 +7,6 @@ require_once 'Socket.php';
 session_start();
 $user = new User;
 $actions = new Actions;
-// $socket = new Socket;
 $email = $_SESSION['Email'];
 $params = json_decode(file_get_contents("php://input"));
 $request = $params->request;
@@ -29,6 +28,7 @@ switch ($request) {
         for ($i=0; $i < sizeof($result); $i++) {
           if ($result[$i]["State"] === 20202) {
             $actions->updateExpired($result[$i]["Crim_id"]);
+            // $socket = new Socket;
             // $socket->send(1,$locations);
           }
         }
@@ -41,12 +41,16 @@ switch ($request) {
     case "deleteCriminal":
       $criminalID = $params->criminalID;
       $filename = $params->filename;
+      $Fname = $params->fname;
+      $Mname = $params->mname;
+      $Lname = $params->lname;
       $govID= $_SESSION['id'];
       $username = $_SESSION['username'];
       system("rm -rf ".escapeshellarg($filename));
       $result= $actions->deleteCriminal($criminalID, $govID,$username);
        if ($result) {
-          // $socket->send('general',null);
+          $socket = new Socket;
+          $socket->send('general',null);
         }
       echo json_encode($result);
       break;

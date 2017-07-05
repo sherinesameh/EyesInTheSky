@@ -26,11 +26,12 @@
     }
     public function addCriminal($Fname, $Mname, $Lname, $priority, $date, $path, $image, $id, $username)
     {
-       $query = "INSERT INTO `Criminals`(`Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image` ) VALUES ( '".$Mname ."','". $Fname ."','". $Lname ."','". $path ."',". $priority .",SELECT DATE_ADD(NOW(), INTERVAL ". $date." DAY) ,'". $image."')";
+       $query = "INSERT INTO `Criminals`(`Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image` ) VALUES ( '".$Mname ."','". $Fname ."','". $Lname ."','". $path ."',". $priority .", DATE_ADD(NOW(), INTERVAL ". $date." DAY) ,'". $image."')";
        $this->conn->query($query);
        $Crim_id = $this->conn->insert_id;
-       $stmt = $this->conn->prepare("INSERT INTO `Gov_Log`(`Gov_id`, `Gov_username`, `Action`, `Crim_id`) VALUES (?,?,98312,?)");
-       $stmt->bind_param("isi", $id , $username , $Crim_id );
+       $Action = "Added Criminal ".Fname." ".$Mname." ".$Lname;
+       $stmt = $this->conn->prepare("INSERT INTO `Gov_Log`(`Gov_id`, `Gov_username`, `Action`) VALUES (?,?,?)");
+       $stmt->bind_param("iss", $id , $username , $Action );
        $result = $stmt->execute();
        $stmt->close();
        if ($result) {
@@ -55,13 +56,14 @@
         }
     }    
 
-    public function deleteCriminal($id, $gov_id, $username)
+    public function deleteCriminal($id, $gov_id, $username , $Fname ,$Mname ,$Lname)
     {
         $stmt = $this->conn->prepare("DELETE FROM `Criminals` WHERE Crim_id = ? ");
         $stmt->bind_param("i", $id);
         $stmt->execute();
-        $stmt2 = $this->conn->prepare("INSERT INTO `Gov_Log`(`Gov_id`, `Gov_username`, `Action`, `Crim_id`) VALUES (?,?,56489,?)");
-        $stmt2->bind_param("isi", $gov_id , $username , $id );
+        $Action = "Deleted Criminal ".$Fname.' '.$Mname.' '.$Lname;
+        $stmt2 = $this->conn->prepare("INSERT INTO `Gov_Log`(`Gov_id`, `Gov_username`, `Action`) VALUES (?,?,?)");
+        $stmt2->bind_param("iss", $gov_id , $username , $Action );
         $result = $stmt2->execute();
         if ($result) {
           return CREATED_SUCCESSFULY;
@@ -87,7 +89,7 @@
     }
     public function getLog()
     {
-      $stmt = $this->conn->prepare("SELECT Gov_Log.Gov_id, Gov_Log.Gov_username,Code_index.Action,Gov_Log.Start_time,Gov_Log.Crim_id , Criminals.Mname,Criminals.Fname ,Criminals.Lname FROM Gov_Log INNER JOIN Criminals ON Gov_Log.Crim_id = Criminals.Crim_id INNER JOIN Code_index ON Code_index.Code = Gov_Log.Action ORDER BY Gov_Log.Start_time DESC ");
+      $stmt = $this->conn->prepare("SELECT Gov_Log.Gov_id, Gov_Log.Gov_username,Code_index.Action,Gov_Log.Start_time FROM Gov_Log  INNER JOIN Code_index ON Code_index.Code = Gov_Log.Action ORDER BY Gov_Log.Start_time DESC ");
       $result = $stmt->execute();
       $stmt->execute();
       $result = $this->getResult($stmt);
