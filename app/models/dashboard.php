@@ -97,10 +97,10 @@
         $stmt->close();
         $id = $_SESSION['id'];
 
-        $Action = "Added government employee ".$username;
-        $this->addAdminLog($id,$Action);
-
         if ($result) {
+
+            $Action = "Added government employee ".$username;
+            $this->addAdminLog($id,$Action);
             return CREATED_SUCCESSFULY;
         }
         else {

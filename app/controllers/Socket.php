@@ -13,8 +13,7 @@ class Socket
 	}
 	function kill($mac , $contID)
 	{
-		session_start();
-		$id = $_SESSION['Id'];
+		$id = $_SESSION['id'];
 		$cmd = "15151".":_:".$mac.":_:".$contID;
 		socket_write($this->socket, $id, strlen ($id)) or die("Could not write output\n");
 		sleep(1);
@@ -23,8 +22,7 @@ class Socket
 
 	function shutDown($mac)
 	{
-		session_start();
-		$id = $_SESSION['Id'];
+		$id = $_SESSION['id'];
 		$cmd = "27351".":_:".$mac;
 		socket_write($this->socket, $id, strlen ($id)) or die("Could not write output\n");
 		sleep(1);
@@ -33,8 +31,7 @@ class Socket
 
 	function restart($mac)
 	{
-		session_start();
-		$id = $_SESSION['Id'];
+		$id = $_SESSION['id'];
 		$cmd = "87452".":_:".$mac;
 		socket_write($this->socket, $id, strlen ($id)) or die("Could not write output\n");
 		sleep(1);

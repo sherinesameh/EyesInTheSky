@@ -6,7 +6,6 @@
   session_start();
   $user = new User;
   $model = new Dashboard;
-  // $socket = new Socket;
   $email = $_SESSION['Email'];
   $params = json_decode(file_get_contents('php://input'));
   $request = $params->request;
@@ -70,15 +69,18 @@
         $mac = $params->mac;
         $contID = $params->contID;
         $model->killProcess($mac,$contID);
-        // $socket->kill($mac,$contID);
+        $socket = new Socket;
+        $socket->kill($mac,$contID);
         break;
     case 'shutdownPi':
         $mac = $params->mac;
-        // $socket->shutDown($mac);
+        $socket = new Socket;
+        $socket->shutDown($mac);
         break;
     case 'restartPi':
         $mac = $params->mac;
-        // $socket->restart($mac);
+        $socket = new Socket;
+        $socket->restart($mac);
         break;
     default:
       echo json_encode('404 Error');
