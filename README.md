@@ -16,21 +16,21 @@
   * ~~Admin Details~~
   * ~~Actions Log~~
   * ~~Raspberry pie specs, tasks and location~~
-  * DB Admin Page [Display, add and delete accounts(Admin and Gov)]
+  * ~~DB Admin Page [Display, add, edit and delete accounts(Admin and Gov)]~~
 5. **User Portal**
   * Registration form
   * ~~User Details~~
   * ~~Upload New Job~~
   * ~~Jobs History~~
-  * Receiving results
-  * [Pending] Notification
+  * ~~Receiving results~~
+  * [Cancel] ~~Notification~~
 6. **Government Portal**
   * ~~User Details~~
   * ~~Add Criminal~~
   * ~~Search~~
   * ~~Delete Criminal~~
   * ~~Train~~
-  * Receiving Result
+  * ~~Receiving Result~~
   * Billing Details
   * ~~Actions Log~~
 7. ~~Host the 3 websites with different portals on the same droplet~~
@@ -38,7 +38,7 @@
 * **Raspberry Pi**:
 1. ~~Reverse shell Multi-clients~~
 2. ~~Send broadcast message to all raspberry pies~~
-3. [Failed] ~~3G module driver~~
+3. ~~3G module driver~~
 4. Autorun client script on startup
 5. ~~Run docker remotely on a specific raspberry pi~~
 6. ~~Manage Raspberry pies remotely~~
@@ -63,7 +63,10 @@
 2. **Government/app/controllers/addCriminal.php:** Change the image path into the directory of the uploaded zip file *(line 12)*
 3. **Government/app/controllers/Socket.php:** Please check if the type at *(line 17)* is correct
 4. **Government/public/partials/_add.html:** Add restrictions on expire date *(line 56)*
-5. **Government/public/partials/_search.html & _delete.html:** Save the full path of the images in database
-6. Fix Raspberry pies **3G Connection**
+5. ~~ **Government/public/partials/_search.html & _delete.html:** Save the full path of the images in database ~~
+6. ~~ Fix Raspberry pies **3G Connection** ~~
 7. **Administration/public/partials/_rasberrypies.html:** Fix Google Map Display *from (line 143)*
-8. **Administration/public/partials/_rasberrypies.html:** Allow data binding from server to web
+8. ~~ **Administration/public/partials/_rasberrypies.html:** Allow data binding from server to web ~~
+9. ~~ **Administration/public/partials/_rasberrypies.html:** Add RP restart and shutdown buttons ~~
+10. add new log rplog on startup
+11. add searching state at Government

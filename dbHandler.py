@@ -6,7 +6,7 @@ import operator
 class dbHandler:
    def __init__(self):
        self.db = pymysql.connect(host='46.101.180.169', port= 3306, user='pi',password='eits2017',db='EITS')
-       # self.db = pymysql.connect(host='localhost',user='root',password='',db='EITS')
+       #self.db = pymysql.connect(host='192.168.43.114',user='pi',password='eits2017',db='EITS')
        self.cursor =  self.db.cursor(pymysql.cursors.DictCursor)
 
    def get_points(self,Camera,FreeStorage,CPU,RAM,Temperature,Jobs_Num,time):
@@ -30,6 +30,7 @@ class dbHandler:
      temp = "none"
 
      query = 'SELECT Rp_Specs.Mac ,Rp_Specs.HasCamera, Current_Specs.FreeStorage , Current_Specs.RamUsage ,Current_Specs.CpuUsage ,Current_Specs.Temperature ,Rp_Log.Jobs_Num , TIMESTAMPDIFF(HOUR,Rp_Log.Start_time,NOW()) AS time FROM Rp_Log INNER JOIN Rp_Specs ON Rp_Log.Mac = Rp_Specs.Mac INNER JOIN Current_Specs ON Rp_Specs.Mac = Current_Specs.Mac  WHERE Current_Specs.State = 22894 ORDER BY rand()'
+    #  query2 =  'UPDATE Rp_Log SET  Jobs_Num = Jobs_Num + 1 WHERE 1'
      try:
         self.cursor.execute(query)
         results = self.cursor.fetchall()
@@ -51,7 +52,14 @@ class dbHandler:
      except Exception as e:
       print(e)
 
-    
+
+   def incrementPi(self,userID , processName , results):
+     query = 'UPDATE `Rp_Log` SET `Jobs_Num`=Jobs_Num + 1 WHERE Mac = \'' + mac + '\''
+     try:
+        self.cursor.execute(query)
+        self.db.commit()
+     except Exception as e:
+        print(e)
 
    def incrementPi(self,mac):
      query = 'UPDATE `Rp_Log` SET `Jobs_Num`=Jobs_Num + 1 WHERE Mac = \'' + mac + '\''
@@ -68,7 +76,7 @@ class dbHandler:
         self.db.commit()
      except Exception as e:
         print(e)
-   
+
 
    def getCameraPis(self):
      query = "SELECT `Mac` FROM `Rp_Specs` WHERE HasCamera = 1";
@@ -76,8 +84,8 @@ class dbHandler:
      macs = []
      results = self.cursor.fetchall()
      for x in results:
-         macs.append(x["Mac"])
-     return macs        
+         macs.append(x)
+     return macs
 
    def getLocatedPis(self,Locations):
      macs = []
@@ -86,13 +94,13 @@ class dbHandler:
        self.cursor.execute(query)
        results = self.cursor.fetchall()
        for y in results:
-           macs.append(y["Mac"])
-     
+           macs.append(y)
+
      return macs
 
 
-   def addProcess(self, containerID , imgID , IPAddress , port, userID ,processName , mac):
-     query =  "INSERT INTO `Process`(`Img_id`, `Process_name`, `Cont_id`, `Cont_IP`, `Mac`, `User_id`, `Process_State`, `port`, `result`) VALUES (\'"+imgID+"\',\'"+processName+"\',\'"+containerID+"\',\'"+IPAddress+"\',\'"+mac+"\',"+str(userID)+",22894,"+"\'"+port+"\',\'\')"
+   def addProcess(self,containerID , imgID , IPAddress , port, userID ,processName , mac):
+     query =  "UPDATE `Process` SET `Img_id`=\'"+imgID+"\',`Cont_id`=\'"+containerID+"\',`Cont_IP`=\'"+IPAddress+"\',`Mac`=\'"+mac+"\',`Process_State`=32141 WHERE Process_name = \'"+processName+"\' AND User_id = "+str(userID)
      try:
         self.cursor.execute(query)
         self.db.commit()
@@ -101,35 +109,34 @@ class dbHandler:
      except Exception as e:
         print(e)
 
-   def updateUserLog(self, userID,imgID,processName,state):
+   def updateUserLog(self,userID,imgID,processName,state):
      query =  "UPDATE `User_Log` SET `Img_id`= \""+imgID+"\" , Action =  "+str(state)+" WHERE User_id = "+str(userID)+" AND Process_name = \""+processName+"\" ORDER BY Time DESC LIMIT 1"
      try:
         self.cursor.execute(query)
         self.db.commit()
      except Exception as e:
         print(e)
-      
 
-   def updateResults(self, userID, processName, results):
-     query = "UPDATE `Process` SET `result`=\'"+results+"\' WHERE Process_name = \'"+processName+"\' AND User_id = "+str(userID)+" ORDER BY Start_time DESC LIMIT 1"
+
+   def updateResults(self,userID,processName, results):
+     query = "UPDATE `Process` SET `result`=\'"+results+"\', WHERE Process_name = \'"+processName+"\' AND User_id = "+str(userID)+" ORDER BY Time DESC LIMIT 1"
      try:
         self.cursor.execute(query)
         self.db.commit()
-        self.updateUserLog2(userID,processName)
      except Exception as e:
         print(e)
- 
-    def updateUserLog2(self, userID,processName):
-     query =  "UPDATE `User_Log` SET  Action =  19195  WHERE User_id = "+str(userID)+" AND Process_name = \""+processName+"\" ORDER BY Time DESC LIMIT 1"
+
+
+   def adminKill(self,Admin_id , mac , Cont_id):
+     query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`, `Mac` , `Cont_id`) VALUES ("+Admin_id+","+27693+",\'"+mac+"\',\'"+Cont_id+"\')"
      try:
         self.cursor.execute(query)
         self.db.commit()
      except Exception as e:
-        print(e)  
+        print(e)
 
-  
-   def shutPi(self, AdminID, mac ) :
-     query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`) VALUES ("+Admin_id+",\'Closed Raspberry pi "+mac+" \')"
+   def shutPi(self,AdminID, mac ) :
+     query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`, `Mac` , `Cont_id`) VALUES ("+Admin_id+","+12030+",\'"+mac+"\',\'None\')"
      try:
         self.cursor.execute(query)
         self.db.commit()
@@ -142,8 +149,8 @@ class dbHandler:
      except Exception as e:
         print(e)
 
-   def restartPi(self, AdminID, mac ) :
-     query = "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`) VALUES ("+Admin_id+",\'Restarted Raspberry pi "+mac+" \')"
+   def restartPi(self,AdminID, mac ) :
+     query =  "INSERT INTO `Admin_Log`(`Admin_id`, `The_Actions`, `Mac` , `Cont_id`) VALUES ("+Admin_id+","+23456+",\'"+mac+"\',\'None\')"
      try:
         self.cursor.execute(query)
         self.db.commit()
@@ -156,7 +163,7 @@ class dbHandler:
      except Exception as e:
         print(e)
 
-   def getSpecs(self, Mac):
+   def getSpecs(self,Mac):
      query2 = "SELECT Username , Password , PublicIP  FROM `Rp_Specs` WHERE Mac = \""+ Mac+" \""
      try:
        self.cursor.execute(query2)
@@ -180,7 +187,6 @@ class dbHandler:
          print(e)
 
    def updateCriminalStatus(self, criminal):
-
         query = "UPDATE Criminals SET Status = "+str(76767)+" WHERE Crim_id = \""+ str(criminal)+" \"   "
         try:
             self.cursor.execute(query)

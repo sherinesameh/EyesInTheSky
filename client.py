@@ -8,7 +8,7 @@ import threading
 import time
 from dbHandler import dbHandler
 
-# host = '46.101.180.16'
+# host = '46.101.180.169'
 host = '172.20.10.4'
 port = 8080
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -28,7 +28,7 @@ def updateSpecs():
     mac = specs.getMac()
     db.updateCurrentSpecs(mac, currentSpecs[0], currentSpecs[1], currentSpecs[2], currentSpecs[3], currentSpecs[4])
     time.sleep(30)
-    
+
 def createDir(processName):
     directory = '/home/pi/Desktop/'+processName
     return directory
@@ -38,15 +38,15 @@ def receiveFile(directory):
 
         filesize = s.recv(32)
         filesize = int(filesize, 2)
-        print('file size '+str(filesize)) 
+        print('file size '+str(filesize))
 
         os.mkdir(directory, 0755);
         os.chdir(directory)
-        
+
         if str(os.getcwd()) == directory:
             f = open('Dockerfile','wb')
             chunksize = 4096
-            
+
             while filesize > 0:
                 if filesize < chunksize:
                     chunksize = filesize
@@ -65,16 +65,16 @@ def sendSpecs():
 def receiveFileCamera(directory,filename):
     try:
         filesize = s.recv(32)
-        print('file size asly :  '+str(filesize)) 
+        print('file size asly :  '+str(filesize))
         filesize = int(filesize, 2)
-        print('file size '+str(filesize)) 
+        print('file size '+str(filesize))
 
         os.chdir(directory)
-        
+
         if str(os.getcwd()) == directory:
             f = open(filename,'wb')
             chunksize = 4096
-            
+
             while filesize > 0:
                 if filesize < chunksize:
                     chunksize = filesize
@@ -88,11 +88,11 @@ def receiveFileCamera(directory,filename):
 
 def executeCommand():
   while True:
-    print("hey")  
+    print("hey")
     cmd = s.recv(6)
     print("el command eli galy "+cmd)
-    if cmd == 'upload' :  
-       directory = "/home/pi/Desktop/TF_FILES/generated-embeddings/"        
+    if cmd == 'upload' :
+       directory = "/home/pi/Desktop/TF_FILES/generated-embeddings/"
        receiveFileCamera(directory , 'classifier.pkl')
        s.send('done')
     if cmd == 'docker' :
@@ -100,7 +100,7 @@ def executeCommand():
        processSize = int(processSize, 2)
        data = str(s.recv(processSize)).decode('utf-8')
        processName , userID = data.split(":_:")
-       directory = createDir(processName)        
+       directory = createDir(processName)
        receiveFile(directory)
        s.send('filecreated')
        cmd = s.recv(9)
@@ -108,7 +108,7 @@ def executeCommand():
        if cmd == 'rundocker':
           try:
               print("hi")
-              build = 'docker build .' 
+              build = 'docker build .'
               buildDocker = subprocess.Popen(build, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
 
               outDocker , err = buildDocker.communicate()
@@ -121,8 +121,8 @@ def executeCommand():
 
               run = 'docker run ' + imgID
               runDocker = subprocess.Popen(run, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
-              
-              
+
+
               outputBytes = runDocker.stdout.read() + runDocker.stderr.read()
               output = str.encode(outputBytes)
               print("el vytes " +output)
@@ -170,14 +170,14 @@ def executeCommand():
     if cmd == 'shutdw':
        shutCMD = 'sudo shutdown -r now '
        killDocker = subprocess.Popen(shutCMD, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
-    
+
     if cmd == 'restrt':
        shutCMD = 'sudo reboot '
        killDocker = subprocess.Popen(shutCMD, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin = subprocess.PIPE)
-    
+
     if cmd == 'finish':
-       break;      
-  
+       break;
+
   s.close()
 
 def main():
