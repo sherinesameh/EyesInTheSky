@@ -34,7 +34,7 @@
                 <td>{{gov.Gov_username}}</td>
                 <td>{{gov.Email}}</td>
                 <td>
-                  <a data-target="editAccount" class="btn-floating waves-effect waves btn-flat" ng-click="editAccount(gov.Gov_id)">
+                  <a data-target="editAccount" class="btn-floating waves-effect waves btn-flat" ng-click="editAccount(gov.Gov_id, gov.Gov_username)">
                     <i class="material-icons blue-text">mode_edit</i>
                   </a>
                 </td>
@@ -50,75 +50,85 @@
     </div>
   </div>
 </div>
-<div id="addAccount" class="modal" style="width: 65%; height: 100%; ">
-  <div class="modal-footer">
-    <a href="#dashboard" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click=""><i class="material-icons black-text">close</i>
-    </a>
-  </div>
+<div id="addAccount" class="modal" style="width: 55%; height:100%; ">
    <div class="modal-content">
-     <div class="row">
-       <span>Add New Government</span>
-     </div>
-     <div class="row">
        <form ng-submit="addGov()" name="form" role="form">
          <div class="row">
-           <div class="col s6">
-             <div class="input-field">
+          <div class="col s10 offset-s1">
+             <h6 class="grey-text text-darken-2">Add new government account:</h6>
+             <hr />
+           </div>
+           <div class="input-field col s5 offset-s1">
+             <input ng-model="form.email" id="email" type="text" ng-required="true">
+             <label for="email">Email</label>
+           </div>
+           <div class="input-field col s5">
+             <input ng-model="form.password" id="password" type="password" ng-required="true">
+             <label for="password">password</label>
+           </div>
+           <div class="col s5 offset-s1">
+            <div class="input-field">
                <input ng-model="form.username" id="username" type="text" ng-required="true">
                <label for="username">Username</label>
-             </div>
-             <div class="input-field">
+            </div>
+            <div class="input-field">
                 <input ng-model="form.fname" id="fname" type="text" ng-required="true">
                 <label for="fname">First Name</label>
-             </div>
-             <div class="input-field">
+            </div>
+            <div class="input-field">
                <input ng-model="form.lname" id="lname" type="text" ng-required="true">
                <label for="lname">Last Name</label>
-             </div>
-           </div>
-           <div class="col s6">
+            </div>
+          </div>
+          <div class="col s5">
              <div class="file-field input-field">
-               <div class="btn">
-               <span>Upload Photo</span>
-                 <input ng-model="form.image" type="file" class="form-control input-lg" accept="image/*" onchange="angular.element(this).scope().uploadedFile(this)" style="width:400px" >
+               <div class="btn grey darken-2">
+                 <input ng-model="form.image" type="file" class=" col s12 form-control input-lg" accept="image/*" onchange="angular.element(this).scope().uploadedFile(this)" >
+                 <span><i class="material-icons">file_upload</i> Upload Photo</span>
                </div>
              </div>
              <img class="col s12" ng-src="{{image_source}}" style="padding-top:2%; object-fit:cover;">
-           </div>
-         </div>
-        <div class="row">
-         <div class="col s6 input-field">
-           <input ng-model="form.email" id="email" type="text" ng-required="true">
-           <label for="email">Email</label>
-         </div>
-
-         <div class="col s6 input-field">
-           <input ng-model="form.password" id="password" type="password" ng-required="true">
-           <label for="password">password</label>
-         </div>
-       </div>
-         <div class="row">
-           <input class="waves-effect waves-light btn" type="submit" id="submit" value="Submit" />
-         </div>
-         <span class="error red-text">{{ form.error }}</span>
+          </div>
+        </div>
+        <div>
+          <span class="error red-text">{{ form.error }}</span>
+          <div class="col s5 offset-s6">
+            <div class="waves-effect waves-light btn">
+              <span><i class="material-icons">send</i></span>
+              <input type="submit"/>
+            </div>
+          </div>
+        </div>
       </form>
      </div>
-   </div>
+
 </div>
 
-<div id="editAccount" class="modal">
+<div id="editAccount" class="modal" style="height:55%">
   <div class="modal-footer">
     <a href="#dashboard" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click=""><i class="material-icons black-text">close</i>
     </a>
   </div>
    <div class="modal-content">
     <form ng-submit="editGov()" name="form" role="form">
-      <p>Update Password:</p>
-      <div class="input-field col s6">
-            <input id="password" type="password" class="validate" ng-model="form.password">
-            <label for="password">password</label>
+      <div class="col s10 offset-s1">
+        <h6 class="blue-text text-darken-2">Update Password:</h6>
+        <hr />
       </div>
-      <div class="row">
+      <div class="col s10 offset-s2 grey-text text-darken-2">
+          <i class="material-icons">person</i> Username:
+          <div class="input-field inline">
+            <input disabled value="{{currentUsername}}" id="disabled" type="text">
+          </div>
+       </div>
+       <div class="col s10 offset-s2 grey-text text-darken-2">
+          <i class="material-icons">vpn_key</i> Password:
+          <div class="input-field inline">
+            <input id="password" type="password" ng-model="form.password" ng-required = "true">
+          </div>
+       </div>
+      <br /><br /><br />
+      <div class="col s4 offset-s7">
         <input class="waves-effect waves-light btn" type="submit" id="submit" value="Submit" />
       </div>
     </form>

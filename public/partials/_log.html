@@ -17,7 +17,7 @@
                 <th>Time</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style="display: block; height:100px; overflow:scroll;">
               <tr ng-repeat="log in logs| filter:logSearch">
                 <td>{{log.name}}</td>
                 <td>{{log.Action}}</td>
@@ -29,5 +29,3 @@
     </div>
   </div>
 </div>
-
-<!--  style="list-style: none" ng-show="search" -->

@@ -1,12 +1,13 @@
-app.controller('accountsManagerCtrl', function($scope, $http,$interval,$stateParams, $state) {
+app.controller('accountsManagerCtrl', function($scope, $http, $interval, $stateParams, $state) {
   checkSession($http, $stateParams, $state);
-  specs = {request: 'getGovs'};
-  // $interval(function() {
+
+  $interval(function() {
+    specs = {request: 'getGovs'};
     sendRequest($http, specs).success(function(data) {
       $scope.govs = data;
-      // console.log($scope.govs);
     });
-  // }, 1000);
+  }, 5000);
+
   $scope.removeAccount = function(id) {
     params = {};
     var govs = eval($scope.govs);
@@ -22,8 +23,7 @@ app.controller('accountsManagerCtrl', function($scope, $http,$interval,$statePar
         };
         sendRequest($http, params)
         .success(function(data) {
-          alert(data);
-          $scope.govs.splice( index, 1 );
+          $scope.govs.splice(index, 1);
         })
         .error(function(error) {
             console.log("error");
@@ -31,24 +31,28 @@ app.controller('accountsManagerCtrl', function($scope, $http,$interval,$statePar
       }
     }
   };
-  $scope.editAccount = function(id,password,username) {
+
+  $scope.editAccount = function(id, username) {
     $scope.currentID = id;
-    $scope.currentPassword = password;
     $scope.currentUsername = username;
-    params = {
-      request: 'updateGov',
-      id: $scope.currentID,
-      password: $scope.currentPassword,
-      username: $scope.currentUsername
+    $scope.editGov = function()
+    {
+      params = {
+        request: 'updateGov',
+        id: $scope.currentID,
+        username: $scope.currentUsername,
+        password: $scope.form.password
+      };
+      sendRequest($http, params)
+      .success(function(data) {
+          alert(data);
+      })
+      .error(function(error) {
+          console.log('error');
+      });
     };
-    sendRequest($http, params)
-    .success(function(data) {
-      alert(data);
-    })
-    .error(function(error) {
-      console.log('error');
-    });
   };
+
   $scope.addAccount = function() {
     $scope.form = [];
     $scope.files = [];
@@ -73,33 +77,36 @@ app.controller('accountsManagerCtrl', function($scope, $http,$interval,$statePar
              'Content-Type': undefined
       }
       }).success(function(data){
-          specs = {request: 'getGovs'};
-          sendRequest($http, specs).success(function(data) {
-            $scope.govs = data;
-          });
-          $('#addAccount').modal('close');
-          $scope.form.error = '';
-     }).error(function(error){
-          $scope.form.image = '';
-          $scope.form.fname = '';
-          $scope.form.lname = '';
-          $scope.form.username = '';
-          $scope.form.email = '';
-          $scope.form.password = '';
-          $scope.form.error = 'Account already exists';
-     });
-    };
-    $scope.uploadedFile = function(element) {
-    $scope.currentFile = element.files[0];
-    var reader = new FileReader();
+          // if(data == 'true') {
+            specs = {request: 'getGovs'};
+            sendRequest($http, specs).success(function(data) {
+              $scope.govs = data;
+            });
+            $scope.form.error = '';
+            $('#addAccount').modal('close');
+          }
+          // else {
+          //   $scope.form.image = null;
+          //   $scope.form.fname = '';
+          //   $scope.form.lname = '';
+          //   $scope.form.username = '';
+          //   $scope.form.email = '';
+          //   $scope.form.password = '';
+          //   $scope.form.error = 'Account already exists';
+          // }
+        });
+      };
 
-    reader.onload = function(event) {
-      $scope.image_source = event.target.result
-      $scope.$apply(function($scope) {
-        $scope.files = element.files;
-      });
-    }
-    reader.readAsDataURL(element.files[0]);
+      $scope.uploadedFile = function(element) {
+        $scope.currentFile = element.files[0];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          $scope.image_source = event.target.result
+          $scope.$apply(function($scope) {
+          $scope.files = element.files;
+          });
+        }
+        reader.readAsDataURL(element.files[0]);
     }
   };
 });

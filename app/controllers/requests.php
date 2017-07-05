@@ -55,7 +55,7 @@
         $id = $params->id;
         $newPassword = $params->password;
         $username = $params->username;
-        $result = $model->updateGov($id,$newPassword,$username);
+        $result = $model->updateGov($id, $newPassword, $username);
         echo json_encode($result);
         break;
     case 'getRpSpecs':
