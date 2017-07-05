@@ -21,9 +21,11 @@
             <thead>
               <tr>
                 <th></th>
+                <th>Full Name</th>
                 <th>Username</th>
                 <th>Email</th>
-                <th>Authority</th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -31,6 +33,7 @@
                 <td>
                   <img class="responsive-img circle" ng-src="/Administration/public/assets/img/uploads/{{gov.image}}"  style="padding-top:2%; object-fit:cover; width:40px;"/>
                 </td>
+                <td>{{gov.Fname}} {{gov.Lname}}</td>
                 <td>{{gov.Gov_username}}</td>
                 <td>{{gov.Email}}</td>
                 <td>
@@ -87,15 +90,15 @@
                  <span><i class="material-icons">file_upload</i> Upload Photo</span>
                </div>
              </div>
-             <img class="col s12" ng-src="{{image_source}}" style="padding-top:2%; object-fit:cover;">
+             <img class="col s12" ng-src="{{form.imagesrc}}" style="padding-top:2%; object-fit:cover;">
           </div>
         </div>
         <div>
-          <!-- <span class="error red-text">{{ form.error }}</span> -->
+          <span class="error red-text">{{ form.error }}</span>
           <div class="col s5 offset-s6">
             <div class="waves-effect waves-light btn">
               <span><i class="material-icons">send</i></span>
-              <input type="submit"/>
+              <input type="submit" ng-disabled="form.$invalid"/>
             </div>
           </div>
         </div>
@@ -129,7 +132,7 @@
        </div>
       <br /><br /><br />
       <div class="col s4 offset-s7">
-        <input class="waves-effect waves-light btn" type="submit" id="submit" value="Submit" />
+        <input class="waves-effect waves-light btn" type="submit" id="submit" value="Submit"/>
       </div>
     </form>
    </div>

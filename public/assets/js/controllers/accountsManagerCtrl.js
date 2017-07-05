@@ -45,7 +45,7 @@ app.controller('accountsManagerCtrl', function($scope, $http, $interval, $stateP
       };
       sendRequest($http, params)
       .success(function(data) {
-          alert(data);
+        $('#editAccount').modal('close');
       })
       .error(function(error) {
           console.log('error');
@@ -77,22 +77,18 @@ app.controller('accountsManagerCtrl', function($scope, $http, $interval, $stateP
              'Content-Type': undefined
       }
       }).success(function(data){
-          // if(data == 'true') {
+          alert(data);
+          // if(data == true) {
+            $scope.form.error = '';
             specs = {request: 'getGovs'};
             sendRequest($http, specs).success(function(data) {
               $scope.govs = data;
             });
-            // $scope.form.error = '';
             $('#addAccount').modal('close');
-          }
+          // }
           // else {
-          //   $scope.form.image = null;
-          //   $scope.form.fname = '';
-          //   $scope.form.lname = '';
-          //   $scope.form.username = '';
-          //   $scope.form.email = '';
-          //   $scope.form.password = '';
-          //   $scope.form.error = 'Account already exists';
+            // $scope.form = {};
+            // $scope.form.error = 'Account already exists';
           // }
         });
       };
@@ -101,7 +97,7 @@ app.controller('accountsManagerCtrl', function($scope, $http, $interval, $stateP
         $scope.currentFile = element.files[0];
         var reader = new FileReader();
         reader.onload = function(event) {
-          $scope.image_source = event.target.result
+          $scope.form.imagesrc = event.target.result
           $scope.$apply(function($scope) {
           $scope.files = element.files;
           });
