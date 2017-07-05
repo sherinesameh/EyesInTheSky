@@ -31,7 +31,7 @@
             <tbody>
               <tr ng-repeat="gov in govs| filter:accountsSearch">
                 <td>
-                  <img class="responsive-img circle" ng-src="/Administration/public/assets/img/uploads/{{gov.image}}"  style="padding-top:2%; object-fit:cover; width:40px;"/>
+                  <img class="responsive-img circle" ng-src="/Administration/public/assets/img/uploads/{{gov.image}}"  style="padding-top:2%; object-fit:cover; width:40px; height: 40px"/>
                 </td>
                 <td>{{gov.Fname}} {{gov.Lname}}</td>
                 <td>{{gov.Gov_username}}</td>
@@ -104,7 +104,6 @@
         </div>
       </form>
      </div>
-
 </div>
 
 <div id="editAccount" class="modal" style="height:55%">

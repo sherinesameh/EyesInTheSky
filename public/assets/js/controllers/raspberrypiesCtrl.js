@@ -22,7 +22,7 @@
           console.log(error);
       });
     };
-    $scope.KillProcess = function(Cont_id,currentMac) {
+    $scope.killProcess = function(Cont_id,currentMac) {
         params = {};
         var processes = eval($scope.processes);
         var index = -1;
@@ -31,7 +31,7 @@
           if( processes[i].Cont_id === Cont_id ) {
             index = i;
             params = {
-              request: 'KillProcess',
+              request: 'killProcess',
               mac: currentMac,
               contID: Cont_id
             };
