@@ -29,11 +29,11 @@
     sendRequest($http, params).success(function(data) {
       $scope.logs = data;
     });
-
     $scope.showDetails = function(Process_name){
       params = {request: 'getProcessSpecs', processName: Process_name};
       sendRequest($http, params).success(function(data) {
-        $scope.result = data;
+        $scope.data = data[0];
+        console.log($scope.data);
       });
     }
   });
@@ -43,7 +43,6 @@
 	  $scope.files = [];
     $scope.addTask = function() {
       $scope.form.dockerfile = $scope.files[0];
-      // $scope.form.extrafiles = $scope.files[1];
       $http({
     		  method  : 'POST',
     		  url     : 'app/controllers/upload.php',
@@ -63,7 +62,6 @@
               alert(data);
          });
        };
-
     $scope.getFileDetails = function (e) {
         $scope.$apply(function () {
             $scope.files.push(e.files[0]);
