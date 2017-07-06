@@ -23,7 +23,7 @@ if (isset($_FILES['dockerfile'])) {
 	if ($check_docker == 0) {
 				echo json_encode("1");
 		}  else {
-			##make directory 
+			##make directory
 
 			$date = date("Y-m-d_h:i:s");
             $filename = $date."_".$id."_".$processName;
@@ -32,12 +32,12 @@ if (isset($_FILES['dockerfile'])) {
 	        umask($oldmask);
 
 	        $directory = "../../uploads/".$filename."/";
-	        #put files in the directory   
-			
+	        #put files in the directory
+
 				if (move_uploaded_file($temp_array, $directory.$name_array)) {
 					chmod($directory.$name_array, 0777);
 				}
-			
+
 
 		    #send to server
 			$user->addProcessInprogress($id,$processName);
@@ -47,6 +47,6 @@ if (isset($_FILES['dockerfile'])) {
 
 		}
 
-		
+
 	}
 ?>

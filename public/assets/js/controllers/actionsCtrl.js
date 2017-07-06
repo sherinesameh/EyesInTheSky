@@ -23,12 +23,14 @@
       $scope.user = data[0];
     });
   });
-  app.controller('logCtrl', function($scope, $http, $stateParams, $state) {
+  app.controller('logCtrl', function($scope, $interval, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
-    params = {request: 'getLog'};
-    sendRequest($http, params).success(function(data) {
-      $scope.logs = data;
-    });
+    $interval(function () {
+      params = {request: 'getLog'};
+      sendRequest($http, params).success(function(data) {
+        $scope.logs = data;
+      });
+    }, 1000);
     $scope.showDetails = function(Process_name){
       params = {request: 'getProcessSpecs', processName: Process_name};
       sendRequest($http, params).success(function(data) {
@@ -59,7 +61,8 @@
       	  }
          })
          .success(function(data){
-              alert(data);
+              $scope.form={};
+              location.reload(true);
          });
        };
     $scope.getFileDetails = function (e) {

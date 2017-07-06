@@ -103,7 +103,7 @@
     }
     public function getLog($id)
     {
-      $stmt = $this->conn->prepare("SELECT User_Log.Process_name , User_Log.Time , Code_index.Action FROM `User_Log` INNER JOIN Code_index ON User_Log.Action = Code_index.Code  WHERE User_Log.User_id = ?");
+      $stmt = $this->conn->prepare("SELECT User_Log.Process_name , User_Log.Time , User_Log.Action FROM `User_Log`   WHERE User_Log.User_id = ?");
       $stmt->bind_param("i",$id);
       $result = $stmt->execute();
       $stmt->execute();

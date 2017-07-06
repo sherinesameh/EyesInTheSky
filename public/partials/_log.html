@@ -22,7 +22,50 @@
               <tr ng-repeat="log in logs | filter:search">
                 <td>{{log.Process_name}}</td>
                 <td>{{log.Time | date}}</td>
-                <td>{{log.Action}}</td>
+                <!-- <td>
+                  {{log.Action}}
+                </td> -->
+                <td>
+                  <div ng-switch="{{log.Action}}">
+                    <div ng-switch-when="32141">
+                      <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="In Progress">
+                        <!-- <i class="small material-icons yellow-text">autorenew</i> -->
+                        <div class="preloader-wrapper small active">
+                          <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div ng-switch-when="22894">
+                      <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Running">
+                        <!-- <i class="small material-icons yellow-text">autorenew</i> -->
+                        <div class="preloader-wrapper small active">
+                          <div class="spinner-layer spinner-yellow-only">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div ng-switch-when="19195">
+                      <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Finished">
+                        <i class="small material-icons green-text">done_all</i>
+                      </a>
+                    </div>
+                  </div>
+                </td>
                 <td>
                   <button data-target="showDetails" class="btn-large processBtn waves-effect waves-light btn-flat" ng-click="showDetails(log.Process_name)">
                     <i class="material-icons">more_vert</i>
@@ -49,5 +92,6 @@
 <script>
   $(document).ready(function(){
     $('.modal').modal();
+    $('.tooltipped').tooltip({delay: 50});
   });
 </script>
