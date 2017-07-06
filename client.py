@@ -95,10 +95,10 @@ def executeCommand():
     cmd = s.recv(6)
     print("el command eli galy "+cmd)
     if cmd == 'upload' :  
-       directory = "/home/pi/Desktop/TF_FILES/generated-embeddings/" 
+       directory = "/home/pi/Desktop/server_current/generated-embeddings" 
        receiveFileCamera(directory , 'classifier.pkl')
        s.send('done')
-       command = 'cd /home/pi/openface/demos; python classifier_webcam.py /home/pi/openface/generated-embeddings/classifier.pkl'
+       command = 'cd /home/pi/Desktop/server_current; python classifier.py'
        os.system(command)
     
     if cmd == 'docker' :
