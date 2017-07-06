@@ -1,7 +1,4 @@
-
-![alt text][logo]
-[logo]: https://github.com/SherineSameh/EyesInTheSky/blob/Users/public/assets/img/icon.png "Logo"
-
+[logo]: https://github.com/SherineSameh/EyesInTheSky/blob/Users/public/assets/img/icon.png
 # EyesInTheSky [EITS]
 ## Description:
 
@@ -138,8 +135,8 @@
 
 ## Support:
 >If you are having issues, please let us know.
-**Issue Tracker:** https://github.com/SherineSameh/EyesInTheSky/issues
-**Mailbox:** eits@gmail.com
+>**Issue Tracker:** https://github.com/SherineSameh/EyesInTheSky/issues
+>**Mailbox:** eits@gmail.com
 
 ## License:
 >The Project is licensed under [Apache License 2.0](http://www.apache.org/licenses/)
