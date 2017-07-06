@@ -46,8 +46,8 @@ switch ($request) {
       $Lname = $params->lname;
       $govID= $_SESSION['id'];
       $username = $_SESSION['username'];
-      system("rm -rf ".escapeshellarg($filename));
-      $result= $actions->deleteCriminal($criminalID, $govID,$username);
+      // system("rm -rf ".escapeshellarg($filename));
+      $result= $actions->deleteCriminal($criminalID, $govID,$username, $Fname , $Mname , $Lname);
        if ($result) {
           $socket = new Socket;
           $socket->send('general',null);
