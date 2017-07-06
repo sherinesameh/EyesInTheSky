@@ -30,7 +30,7 @@ def updateSpecs():
     time.sleep(30)
     
 def createDir(processName):
-    directory = '/home/pi/Desktop/'+processName
+    directory = '/home/pi/Desktop/'+processName+"_"+datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     return directory
 
 def receiveFile(directory):
