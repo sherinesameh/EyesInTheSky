@@ -29,6 +29,11 @@
        $query = "INSERT INTO `Criminals`(`Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image` ) VALUES ( '".$Mname ."','". $Fname ."','". $Lname ."','". $path ."',". $priority .", DATE_ADD(NOW(), INTERVAL ". $date." DAY) ,'". $image."')";
        $this->conn->query($query);
        $Crim_id = $this->conn->insert_id;
+
+       $oldname = DIRECTORY.$path;
+       $newname = DIRECTORY.$Crim_id;
+       rename($oldname, $newname);
+
        $Action = "Added Criminal ".Fname." ".$Mname." ".$Lname;
        $stmt = $this->conn->prepare("INSERT INTO `Gov_Log`(`Gov_id`, `Gov_username`, `Action`) VALUES (?,?,?)");
        $stmt->bind_param("iss", $id , $username , $Action );

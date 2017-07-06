@@ -8,17 +8,19 @@ class uploadCriminal
   */
 	function __construct($file)
 	{
+    require_once '../helpers/definitions.php';
 		/* Initiating the class constructor */
 		$this->filename = $file["name"]; //file name uploaded by user
 		$this->size     = $file['size']; //file size
 		$this->source   = $file["tmp_name"]; //file source
 		$this->type     = $file["type"]; //file type
-    $this->path     = '/opt/lampp/htdocs/TF_FILES/criminals/'; //path that the file will be saved at
+    $this->path     = DIRECTORY; //path that the file will be saved at
 	}
 	function check_zip()
 	{
 		/* Function to check if the uploaded file is a .zip file */
     $name = explode('.', $this->filename);
+    $this->name = $name[0];
     if ($name[1]!='zip') {
       return 'False';
     }
@@ -33,6 +35,10 @@ class uploadCriminal
           $zip->extractTo($this->path);
           $zip->close();
           echo 'extraction successful <br/>';
+          $filename = $this->path.$this->name;
+          chmod($filename,0777);
+          exec("chmod -R 777 ".$filename);
+
       }
       else {
         echo 'extraction error';
@@ -52,6 +58,7 @@ class uploadCriminal
 			echo "The upload is successful <br />";
 			echo "File Size :".$this->size." <br />";
 			$result = $this->unZip();
+      return $this->name;
     }
   }
 }
