@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 05, 2017 at 03:34 PM
--- Server version: 5.7.18-0ubuntu0.16.04.1
--- PHP Version: 7.0.18-0ubuntu0.16.04.1
+-- Generation Time: Jul 06, 2017 at 04:48 AM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 7.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -69,7 +69,27 @@ CREATE TABLE `Admin_Log` (
 INSERT INTO `Admin_Log` (`Admin_id`, `Action`, `Action_time`) VALUES
 (1, 'Added government employee sherinesameh', '2017-07-04 22:06:26'),
 (1, 'Deleted government employee farida94', '2017-07-04 22:06:36'),
-(1, 'Updated government employee ', '2017-07-04 22:12:07');
+(1, 'Updated government employee ', '2017-07-04 22:12:07'),
+(1, 'Killed Process at Raspberry pi b8:27:eb:f5:d6:1c with container ID dwqdwq', '2017-07-05 19:20:20'),
+(1, 'Added government employee mayar', '2017-07-05 19:21:33'),
+(1, 'Added government employee ahmedsameh', '2017-07-05 19:32:57'),
+(1, 'Added government employee boshrakandil', '2017-07-05 19:36:17'),
+(1, 'Added government employee sherinesameh', '2017-07-05 19:41:26'),
+(1, 'Added government employee sherine', '2017-07-05 19:44:16'),
+(1, 'Added government employee yarakhaled', '2017-07-05 19:46:59'),
+(1, 'Added government employee yomna98', '2017-07-05 19:57:58'),
+(1, 'Deleted government employee yomna98', '2017-07-05 19:59:12'),
+(1, 'Deleted government employee yarakhaled', '2017-07-05 19:59:14'),
+(1, 'Deleted government employee boshrakandil', '2017-07-05 19:59:18'),
+(1, 'Deleted government employee ahmedsameh', '2017-07-05 19:59:20'),
+(1, 'Deleted government employee mayar', '2017-07-05 19:59:22'),
+(1, 'Deleted government employee sherinesameh', '2017-07-05 19:59:23'),
+(1, 'Deleted government employee Raspberry Pi', '2017-07-05 19:59:25'),
+(1, 'Deleted government employee sherine', '2017-07-05 19:59:48'),
+(1, 'Updated government employee yamen94', '2017-07-05 20:00:50'),
+(1, 'Added government employee hamada', '2017-07-05 20:10:56'),
+(1, 'Closed Raspberry pi b8:27:eb:d8:71:d5 ', '2017-07-05 20:26:18'),
+(1, 'Closed Raspberry pi b8:27:eb:d8:71:d5 ', '2017-07-05 20:28:22');
 
 -- --------------------------------------------------------
 
@@ -129,6 +149,17 @@ CREATE TABLE `Criminals` (
   `State` int(5) NOT NULL DEFAULT '70707'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `Criminals`
+--
+
+INSERT INTO `Criminals` (`Crim_id`, `Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image`, `State`) VALUES
+(39, 'sherif', 'mohamed', 'hosny', '', 77777, '2017-07-15', '1499283697.png', 70707),
+(40, 'mahmoud', 'farida', 'menisy', '', 77777, '2017-07-10', '1499284664.png', 70707),
+(41, 'sameh', 'sherine', 'aly', '', 77777, '2017-07-10', '1499285222.png', 70707),
+(43, 'gamal', 'hany', 'elsayed', '', 77777, '2017-07-10', '1499287840.png', 70707),
+(48, '3aly', 'baha2', 'hish', 'sherif', 99999, '2017-07-11', '1499307619.png', 70707);
+
 -- --------------------------------------------------------
 
 --
@@ -150,8 +181,7 @@ CREATE TABLE `Current_Specs` (
 --
 
 INSERT INTO `Current_Specs` (`Mac`, `PrivateIP`, `FreeStorage`, `CpuUsage`, `RamUsage`, `Temperature`, `State`) VALUES
-('255.255.255.9', '', 36.5, 2, 14, 37, 22198),
-('b8:27:eb:8d:24:80', '', 36.5, 2, 14, 37, 22198),
+('b8:27:eb:d8:71:d5', '192.168.43.249 172.17.0.1 ', 37.8, 2.1, 16.8, 47.8, 22894),
 ('b8:27:eb:f5:d6:1c', '172.20.10.3 172.17.0.1 ', 37.8, 2.7, 16.1, 47.2, 22894);
 
 -- --------------------------------------------------------
@@ -175,9 +205,8 @@ CREATE TABLE `Government` (
 --
 
 INSERT INTO `Government` (`Gov_id`, `Gov_username`, `Fname`, `Lname`, `Email`, `Password`, `image`) VALUES
-(2, 'yamen94', 'yamen', 'emad', 'yamen@gmail.com', 'yamen123', 'x.png'),
-(3, 'Raspberry Pi', 'rasp', 'pi', 'pi@gmail.com', 'pi123123', ''),
-(4, 'sherinesameh', 'sherine', 'sameh', 'sherine-sameh@hotmail.com', 's123123', '1499205986.jpg');
+(2, 'yamen94', 'yamen', 'emad', 'yamen@gmail.com', '123123', 'x.png'),
+(12, 'hamada', 'mohamed', 'samy', 'hamada@gmail.com', '123123', '1499278256.png');
 
 -- --------------------------------------------------------
 
@@ -188,65 +217,16 @@ INSERT INTO `Government` (`Gov_id`, `Gov_username`, `Fname`, `Lname`, `Email`, `
 CREATE TABLE `Gov_Log` (
   `Gov_id` int(10) NOT NULL,
   `Gov_username` varchar(70) NOT NULL,
-  `Action` int(5) NOT NULL,
-  `Start_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Crim_id` int(10) NOT NULL
+  `Action` varchar(150) NOT NULL,
+  `Start_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Gov_Log`
 --
 
-INSERT INTO `Gov_Log` (`Gov_id`, `Gov_username`, `Action`, `Start_time`, `Crim_id`) VALUES
-(2, 'yamen94', 98312, '2017-07-01 01:05:53', 11),
-(2, 'yamen94', 98312, '2017-07-01 14:34:07', 12),
-(2, 'yamen94', 98312, '2017-07-01 14:37:29', 13),
-(2, 'yamen94', 98312, '2017-07-01 14:41:56', 14),
-(2, 'yamen94', 98312, '2017-07-01 14:44:18', 15),
-(2, 'yamen94', 98312, '2017-07-01 14:50:16', 16),
-(2, 'yamen94', 98312, '2017-07-01 14:56:42', 17),
-(2, 'yamen94', 98312, '2017-07-01 14:57:03', 18),
-(2, 'yamen94', 98312, '2017-07-01 15:01:34', 19),
-(2, 'yamen94', 98312, '2017-07-01 15:04:09', 20),
-(2, 'yamen94', 98312, '2017-07-01 15:08:57', 21),
-(2, 'yamen94', 98312, '2017-07-01 15:09:12', 22),
-(2, 'yamen94', 98312, '2017-07-01 15:09:51', 23),
-(2, 'yamen94', 98312, '2017-07-01 15:14:07', 24),
-(2, 'yamen94', 98312, '2017-07-01 15:16:50', 25),
-(2, 'yamen94', 98312, '2017-07-01 15:20:01', 26),
-(2, 'yamen94', 98312, '2017-07-01 15:20:54', 27),
-(2, 'yamen94', 98312, '2017-07-01 15:22:53', 28),
-(2, 'yamen94', 98312, '2017-07-01 15:24:46', 29),
-(2, 'yamen94', 98312, '2017-07-01 15:50:58', 30),
-(2, 'yamen94', 98312, '2017-07-01 15:54:55', 31),
-(2, 'yamen94', 98312, '2017-07-01 16:04:18', 32),
-(2, 'yamen94', 98312, '2017-07-01 16:13:40', 33),
-(2, 'yamen94', 98312, '2017-07-01 16:16:17', 34),
-(2, 'yamen94', 98312, '2017-07-01 16:27:14', 35),
-(2, 'yamen94', 98312, '2017-07-01 16:29:39', 36),
-(2, 'yamen94', 98312, '2017-07-03 19:51:59', 0),
-(2, 'yamen94', 98312, '2017-07-03 19:55:08', 0),
-(2, 'yamen94', 98312, '2017-07-03 19:56:45', 0),
-(2, 'yamen94', 98312, '2017-07-03 20:00:00', 0),
-(2, 'yamen94', 98312, '2017-07-03 20:02:26', 0),
-(2, 'yamen94', 98312, '2017-07-03 20:06:10', 0),
-(2, 'yamen94', 98312, '2017-07-03 20:09:09', 0),
-(2, 'yamen94', 98312, '2017-07-03 20:11:40', 0),
-(2, 'yamen94', 98312, '2017-07-03 20:14:40', 0),
-(2, 'yamen94', 98312, '2017-07-03 20:15:30', 0),
-(2, 'yamen94', 98312, '2017-07-03 20:16:29', 0),
-(2, 'yamen94', 98312, '2017-07-04 18:38:54', 0),
-(2, 'yamen94', 98312, '2017-07-04 18:47:38', 0),
-(2, 'yamen94', 98312, '2017-07-04 18:49:54', 0),
-(2, 'yamen94', 98312, '2017-07-04 18:56:23', 0),
-(2, 'yamen94', 98312, '2017-07-04 18:58:12', 0),
-(2, 'yamen94', 98312, '2017-07-04 18:59:59', 0),
-(2, 'yamen94', 98312, '2017-07-04 19:16:47', 0),
-(2, 'yamen94', 98312, '2017-07-04 19:18:01', 0),
-(2, 'yamen94', 98312, '2017-07-04 19:20:16', 0),
-(2, 'yamen94', 98312, '2017-07-04 19:21:20', 0),
-(2, 'yamen94', 98312, '2017-07-04 19:40:17', 0),
-(2, 'yamen94', 56489, '2017-07-04 21:41:31', 20);
+INSERT INTO `Gov_Log` (`Gov_id`, `Gov_username`, `Action`, `Start_time`) VALUES
+(2, 'yamen94', 'Deleted Criminal yamen eqwew ewqeqw', '2017-07-06 03:16:08');
 
 -- --------------------------------------------------------
 
@@ -286,8 +266,7 @@ CREATE TABLE `Process` (
 INSERT INTO `Process` (`Img_id`, `Process_name`, `Cont_id`, `Cont_IP`, `Mac`, `User_id`, `Start_time`, `Process_State`, `result`, `port`) VALUES
 ('e968adf61310', 'mayar 2', '1685f3f9f44b', '', 'b8:27:eb:f5:d6:1c', 1, '2017-07-04 17:55:37', 22894, 'Hello World!', ''),
 ('e968adf61310', 'mayar 3', '00210f022a31', '', 'b8:27:eb:f5:d6:1c', 1, '2017-07-04 18:04:55', 22894, 'Hello World!\n', ''),
-('75f76658eb0c', 'yamen 6', 'b05e08054686', '172.17.0.2\n', 'b8:27:eb:f5:d6:1c', 1, '2017-07-03 04:28:47', 22894, NULL, ' 85/tcp -> 85 \n'),
-('dwqdwqd', 'yamenTest', 'dwqdwq', '', 'b8:27:eb:f5:d6:1c', 1, '2017-07-04 16:04:11', 22894, '', '');
+('75f76658eb0c', 'yamen 6', 'b05e08054686', '172.17.0.2\n', 'b8:27:eb:f5:d6:1c', 1, '2017-07-03 04:28:47', 22894, NULL, ' 85/tcp -> 85 \n');
 
 -- --------------------------------------------------------
 
@@ -306,8 +285,8 @@ CREATE TABLE `Rp_Log` (
 --
 
 INSERT INTO `Rp_Log` (`Mac`, `Jobs_Num`, `Start_time`) VALUES
-('b8:27:eb:8d:24:80', 0, '2017-06-30 16:15:04'),
-('b8:27:eb:f5:d6:1c', 6, '2017-07-02 19:33:29');
+('b8:27:eb:d8:71:d5', 0, '2017-07-05 19:14:29'),
+('b8:27:eb:f5:d6:1c', 5, '2017-07-02 19:33:29');
 
 -- --------------------------------------------------------
 
@@ -320,14 +299,14 @@ CREATE TABLE `Rp_Specs` (
   `Ram` int(10) NOT NULL,
   `Storage` int(20) NOT NULL,
   `HasCamera` tinyint(1) NOT NULL,
-  `Generation` varchar(10) NOT NULL,
-  `OS` varchar(20) NOT NULL,
-  `Username` varchar(30) NOT NULL,
-  `Password` varchar(30) NOT NULL,
+  `Generation` varchar(10) DEFAULT '3',
+  `OS` varchar(40) NOT NULL,
+  `Username` varchar(30) NOT NULL DEFAULT 'pi',
+  `Password` varchar(30) NOT NULL DEFAULT 'pi',
   `PublicIP` varchar(30) NOT NULL,
-  `LocationLat` float NOT NULL,
-  `LocationLng` float NOT NULL,
-  `LocationName` varchar(30) NOT NULL
+  `LocationLat` float NOT NULL DEFAULT '0',
+  `LocationLng` float NOT NULL DEFAULT '0',
+  `LocationName` varchar(30) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -335,8 +314,7 @@ CREATE TABLE `Rp_Specs` (
 --
 
 INSERT INTO `Rp_Specs` (`Mac`, `Ram`, `Storage`, `HasCamera`, `Generation`, `OS`, `Username`, `Password`, `PublicIP`, `LocationLat`, `LocationLng`, `LocationName`) VALUES
-('255.255.255.9', 1024, 16384, 0, '3', '', 'pi', 'not real', '192.168.8.100', 0, 0, 'boukla'),
-('b8:27:eb:8d:24:80', 3000, 18000, 1, '1', '', 'pi', '123123', '192.1', 0, 0, 'mandara'),
+('b8:27:eb:d8:71:d5', 859, 13, 1, '3', 'Raspbian GNU/Linux 8 (jessie)', 'pi', 'pi', '196.153.104.93', 0, 0, '0'),
 ('b8:27:eb:f5:d6:1c', 2048, 16384, 0, '3', '', 'pi', 'pi123123', '192.168.8.100', 31.2099, 29.952, 'Semouha');
 
 -- --------------------------------------------------------
@@ -466,8 +444,7 @@ ALTER TABLE `Government`
 -- Indexes for table `Gov_Log`
 --
 ALTER TABLE `Gov_Log`
-  ADD PRIMARY KEY (`Gov_id`,`Start_time`),
-  ADD KEY `Crim_id` (`Crim_id`);
+  ADD PRIMARY KEY (`Gov_id`,`Start_time`);
 
 --
 -- Indexes for table `IPs`
@@ -527,12 +504,12 @@ ALTER TABLE `Admin`
 -- AUTO_INCREMENT for table `Criminals`
 --
 ALTER TABLE `Criminals`
-  MODIFY `Crim_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `Crim_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `Government`
 --
 ALTER TABLE `Government`
-  MODIFY `Gov_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Gov_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `User`
 --
@@ -585,6 +562,34 @@ ALTER TABLE `Rp_Log`
 ALTER TABLE `User_Log`
   ADD CONSTRAINT `User_Log_ibfk_1` FOREIGN KEY (`User_id`) REFERENCES `User` (`User_id`),
   ADD CONSTRAINT `User_Log_ibfk_4` FOREIGN KEY (`Action`) REFERENCES `Code_index` (`Code`);
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `clear_log` ON SCHEDULE EVERY 3 DAY STARTS '2017-07-06 04:47:48' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM Gov_Log
+WHERE Start_time NOT IN (
+  SELECT Start_time
+  FROM (
+    SELECT Start_time
+    FROM Gov_Log
+    ORDER BY Start_time DESC
+    LIMIT 100
+  ) foo
+)$$
+
+CREATE DEFINER=`root`@`localhost` EVENT `clear_log2` ON SCHEDULE EVERY 3 DAY STARTS '2017-07-06 04:48:11' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM Admin_Log
+WHERE Action_time NOT IN (
+  SELECT Action_time
+  FROM (
+    SELECT Action_time
+    FROM Admin_Log
+    ORDER BY Action_time DESC
+    LIMIT 100
+  ) foo
+)$$
+
+DELIMITER ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
