@@ -3,8 +3,8 @@
 ## Description:
 
 >EITS is a mobile adhoc cloud system that serves the government since it provides an affordable tool that helps in detecting criminals and their location as fast as possible.
-> Website: MVC Model - No Framework - Angular JS - Material Design.
-> Back-End: PHP and Python
+>Website: MVC Model - No Framework - Angular JS - Material Design.
+>Back-End: PHP and Python
 
 ## Table of Contents:
 1. Installation
@@ -30,12 +30,12 @@
       $ sudo apt-get install git
       ```
 4. **Import EITS Database**
-      i. Download EITS.sql
+     1. Download EITS.sql
     ```bash
     $ wget https://github.com/SherineSameh/EyesInTheSky/blob/master/EITS.sql
     ```
-      ii. Open http://hostname/phpmyadmin/
-      iii. Create new database and Import EITS.sql
+      2. Open http://hostname/phpmyadmin/
+      3. Create new database and Import EITS.sql
 5. Add firewall rules to allow traffic on port **3306** and **8080**
       ```bash
       $ iptables -A INPUT -i eth0 -p tcp --dport 8080 -j ACCEPT
@@ -110,9 +110,9 @@
       $ iptables -A INPUT -i eth0 -p tcp --dport 3306 -j ACCEPT
       ```  
 ## Source Code:
-> EITS is actively developed on **GitHub**, where the code is always available.
-> You can either clone the public repository or download it as a zip file
-> Source Code: https://github.com/SherineSameh/EyesInTheSky.git
+>EITS is actively developed on **GitHub**, where the code is always available.
+>You can either clone the public repository or download it as a zip file.
+>Source Code: https://github.com/SherineSameh/EyesInTheSky.git
 
 ## Configurations and Running:
 1. Clone master branch on the Rasbperry pi(s) and the server at /home/_username_
