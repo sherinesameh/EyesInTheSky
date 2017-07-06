@@ -207,7 +207,7 @@ class dbHandler:
 
    def updateCriminalStatus(self, criminal):
 
-        query = "UPDATE Criminals SET Status = "+str(76767)+" WHERE Crim_id = \""+ str(criminal)+" \"   "
+        query = "UPDATE Criminals SET State = "+str(76767)+" WHERE Crim_id = \""+ str(criminal)+" \"   "
         try:
             self.cursor.execute(query)
             self.db.commit()
