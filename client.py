@@ -3,10 +3,11 @@ import sys
 import os
 import subprocess
 import datetime
-import specs
 import threading
 import time
-from dbHandler import dbHandler
+
+from EITS import specs
+from EITS.dbHandler import dbHandler
 
 # host = '46.101.180.16'
 host = '192.168.43.114'

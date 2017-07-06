@@ -2,6 +2,10 @@ import os
 import threading
 from requests import get
 import psutil
+import re
+import subprocess
+
+Camera_Types = {"Creative":'0458:707e'}
 
 def getPublicIP():
     # Return Public IP
@@ -54,6 +58,21 @@ def getDiskSpace():
         if i==2:
             return line.split()[1:5]
 
+def hasCamera():
+
+    device_re = re.compile("Bus\s+(?P<bus>\d+)\s+Device\s+(?P<device>\d+).+ID\s(?P<id>\w+:\w+)\s(?P<tag>.+)$", re.I)
+    df = subprocess.check_output("lsusb")
+    
+    for i in df.split('\n'):
+        if i:
+            info = device_re.match(i)
+
+            if info:
+                dinfo = info.groupdict()
+                if dinfo['id'] in Camera.values():
+                    return 1
+    return 0
+
 def StaticSpecs():
     PublicIP = getPublicIP()
     MAC = getMac()
@@ -62,11 +81,12 @@ def StaticSpecs():
     RAM_total = RAM.total / 2**20       # MiB.
     DISK = psutil.disk_usage('/')
     DISK_total = DISK.total / 2**30     # GiB.
+    Camera = hasCamera()
     #RAM_stats = getRAMinfo()
     #RAM = round(int(RAM_stats[0]) / 1000,1)
     #DISK_stats = getDiskSpace()
     #DISK = DISK_stats[0]
-    return (PublicIP + ':_:' + MAC + ':_:' + OS +':_:' + str(RAM_total) + ':_:' + str(DISK_total))
+    return (PublicIP + ':_:' + MAC + ':_:' + OS +':_:' + str(RAM_total) + ':_:' + str(DISK_total)+ ':_:' + str(Camera))
 
 
 def CurrentSpecs():

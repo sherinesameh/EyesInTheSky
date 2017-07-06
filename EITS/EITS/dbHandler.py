@@ -6,7 +6,7 @@ import operator
 class dbHandler:
    def __init__(self):
        # self.db = pymysql.connect(host='46.101.180.169', port= 3306, user='pi',password='eits2017',db='EITS')
-       self.db = pymysql.connect(host='localhost',user='root',password='eits2017',db='EITS')
+       self.db = pymysql.connect(host='localhost',user='root',password='Pi',db='EITS')
        self.cursor =  self.db.cursor(pymysql.cursors.DictCursor)
 
    def get_points(self,Camera,FreeStorage,CPU,RAM,Temperature,Jobs_Num,time):

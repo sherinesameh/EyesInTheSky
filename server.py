@@ -1,11 +1,12 @@
 import datetime
-from   dbHandler import dbHandler
 import os
 import socket
 import subprocess
 import sys
 import threading
-import utilities
+
+from EITS import utilities
+from EITS.dbHandler import dbHandler
 
 HOST = ''
 PORT = 8080
