@@ -89,7 +89,7 @@
     }
     public function getLog()
     {
-      $stmt = $this->conn->prepare("SELECT Gov_Log.Gov_id, Gov_Log.Gov_username,Code_index.Action,Gov_Log.Start_time FROM Gov_Log  INNER JOIN Code_index ON Code_index.Code = Gov_Log.Action ORDER BY Gov_Log.Start_time DESC ");
+      $stmt = $this->conn->prepare("SELECT Gov_Log.Gov_id, Gov_Log.Gov_username,Gov_Log.Action,Gov_Log.Start_time FROM Gov_Log ORDER BY Gov_Log.Start_time DESC ");
       $result = $stmt->execute();
       $stmt->execute();
       $result = $this->getResult($stmt);
