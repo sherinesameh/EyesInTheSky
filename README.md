@@ -135,7 +135,9 @@
 
 ## Support:
 >If you are having issues, please let us know.
+
 >**Issue Tracker:** https://github.com/SherineSameh/EyesInTheSky/issues
+
 >**Mailbox:** eits@gmail.com
 
 ## License:
