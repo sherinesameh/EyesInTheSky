@@ -3,7 +3,7 @@
 ## Description:
 
 >EITS is a mobile adhoc cloud system that serves the government since it provides an affordable tool that helps in detecting criminals and their location as fast as possible.
-> Website: MVC Model - No Framework - Angular JS - Material Design.  
+> Website: MVC Model - No Framework - Angular JS - Material Design.
 > Back-End: PHP and Python
 
 ## Table of Contents:
@@ -135,9 +135,7 @@
 
 ## Support:
 >If you are having issues, please let us know.
-
 >**Issue Tracker:** https://github.com/SherineSameh/EyesInTheSky/issues
-
 >**Mailbox:** eits@gmail.com
 
 ## License:
