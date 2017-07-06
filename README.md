@@ -72,7 +72,7 @@
       $ make -j2
       $ sudo make install
       ```
-      **iii. dlib**
+ **iii. dlib**
       ```bash
       $ sudo apt-get install build-essential cmake
       $ sudo apt-get install libgtk-3-dev
@@ -83,7 +83,8 @@
       $ pip install dlib
       ```
       *Check That Dlib Is Correctly Linked To Python2*
-      **iv. Torch**
+      
+  **iv. Torch**
       ```bash
       $ git clone https://github.com/torch/distro.git ~/torch --recursive
       $ cd ~/torch
@@ -93,11 +94,13 @@
       $ for NAME in dpnn nn optim optnet csvigo cutorch cunn fblualib torchx tds; do luarocks install $NAME; done
       ```
       *Check That Torch Is Correctly Installed By Typing 'th' In Terminal*
-      **v. bash.sh**
+      
+   **v. bash.sh**
       ```bash
       $ wget https://github.com/SherineSameh/EyesInTheSky/blob/master/bash.sh
       $ sh bash.sh
       ```
+      
       **vi. EITS Package**
       ```bash
       $ wget https://github.com/SherineSameh/EyesInTheSky/blob/master/setup.py
@@ -112,6 +115,7 @@
 ## Source Code:
 >EITS is actively developed on **GitHub**, where the code is always available.
 >You can either clone the public repository or download it as a zip file.
+
 >Source Code: https://github.com/SherineSameh/EyesInTheSky.git
 
 ## Configurations and Running:
@@ -135,6 +139,7 @@
 
 ## Support:
 >If you are having issues, please let us know.
+
 >**Issue Tracker:** https://github.com/SherineSameh/EyesInTheSky/issues
 >**Mailbox:** eits@gmail.com
 
