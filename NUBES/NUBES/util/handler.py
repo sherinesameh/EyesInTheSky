@@ -42,10 +42,6 @@ class Handler:
 
         #check that each subfolder must contain at least 23 images
         for folder_name in os.listdir(self.image_dir):
-            
-            if folder_name is str:
-                raise ValueError('WARNING: Folder name has to be an ID of the criminal not his name.')
-
-            else:     
-                if len(os.listdir(os.path.join(self.image_dir,folder_name))) < self.MIN_NUM_IMAGES_PER_CLASS:
-                    raise ValueError('WARNING: Folder ' + folder_name + ' has less than 23 images, which may cause issues.')  
+        	
+            if len(os.listdir(os.path.join(self.image_dir,folder_name))) < self.MIN_NUM_IMAGES_PER_CLASS:
+                raise ValueError('WARNING: Folder ' + folder_name + ' has less than 23 images, which may cause issues.')  
