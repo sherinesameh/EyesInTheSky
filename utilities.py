@@ -3,7 +3,6 @@ import getpass
 import sys
 import os
 import subprocess
-import pysftp
 import datetime
 
 def createPiDir():
