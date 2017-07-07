@@ -1,7 +1,8 @@
 <?php
 class Socket
 {
-	private $host = "46.101.180.169";
+	// private $host = "46.101.180.169";
+  private $host ="localhost";
   private $port = 8080;
   private $socket;
 
@@ -12,13 +13,11 @@ class Socket
     $type ="40307";
 		socket_write($this->socket, $type, strlen ($type)) or die("Could not write output\n");
 	}
-	function send($path)
+	function send($path,$processName,$userID)
 	{
-		$type ='40307';
-		$output = $path;
-		socket_write($this->socket, $type, strlen ($type)) or die("Could not write output\n");
-		sleep(1);
+		$output = $path.":_:".$processName.":_:".$userID;
 		socket_write($this->socket, $output, strlen ($output)) or die("Could not write output\n");
+		$this->close();
 	}
 	function receive()
 	{
