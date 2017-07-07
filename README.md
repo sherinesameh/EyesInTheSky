@@ -112,6 +112,14 @@
       $ iptables -A INPUT -i eth0 -p tcp --dport 8080 -j ACCEPT
       $ iptables -A INPUT -i eth0 -p tcp --dport 3306 -j ACCEPT
       ```  
+5. Configure Auto Connection Run
+      ```bash  
+      $ cd /etc/init.d/_init_.sh
+      $ sudo wget https://github.com/SherineSameh/EyesInTheSky/blob/master/_init_.sh
+      $ sudo chmod 755 /etc/init.d/_init_.sh
+      $ sudo update-rc.d autoconnectnet defaults
+      ```
+
 ## Source Code:
 >EITS is actively developed on **GitHub**, where the code is always available.
 >You can either clone the public repository or download it as a zip file.
@@ -134,14 +142,13 @@
 3. Set SQL Server Config at **EITS/dbHandler.py (line 8)**
 4. Set Web Server Config at **/var/www/html/_PortalName_/app/helpers/config.py**
 5. SSH on the server and run **server.py** script
-6. Connect RP with a power Source add the 3G modem stick and run **client.py**
+6. Connect 3G modem 'ZTE WCDMA Technologies MSM'then connect with a 5V power source
 7. Open any portal, login and start enjoying it's functionalities
 
 ## Support:
 >If you are having issues, please let us know.
-
->**Issue Tracker:** https://github.com/SherineSameh/EyesInTheSky/issues
->**Mailbox:** eits@gmail.com
+> - **Issue Tracker:** https://github.com/SherineSameh/EyesInTheSky/issues
+> - **Mailbox:** eits@gmail.com
 
 ## License:
 >The Project is licensed under [Apache License 2.0](http://www.apache.org/licenses/)
