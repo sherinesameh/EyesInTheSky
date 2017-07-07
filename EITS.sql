@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 06, 2017 at 04:48 AM
+-- Generation Time: Jul 07, 2017 at 10:51 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -89,7 +89,9 @@ INSERT INTO `Admin_Log` (`Admin_id`, `Action`, `Action_time`) VALUES
 (1, 'Updated government employee yamen94', '2017-07-05 20:00:50'),
 (1, 'Added government employee hamada', '2017-07-05 20:10:56'),
 (1, 'Closed Raspberry pi b8:27:eb:d8:71:d5 ', '2017-07-05 20:26:18'),
-(1, 'Closed Raspberry pi b8:27:eb:d8:71:d5 ', '2017-07-05 20:28:22');
+(1, 'Closed Raspberry pi b8:27:eb:d8:71:d5 ', '2017-07-05 20:28:22'),
+(1, 'Closed Raspberry pi b8:27:eb:d8:71:d5 ', '2017-07-07 16:37:55'),
+(1, 'Closed Raspberry pi b8:27:eb:d8:71:d5 ', '2017-07-07 20:26:11');
 
 -- --------------------------------------------------------
 
@@ -146,19 +148,21 @@ CREATE TABLE `Criminals` (
   `priority` int(5) NOT NULL,
   `expiry_date` date NOT NULL,
   `image` text NOT NULL,
-  `State` int(5) NOT NULL DEFAULT '70707'
+  `State` int(5) NOT NULL DEFAULT '70707',
+  `Location` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Criminals`
 --
 
-INSERT INTO `Criminals` (`Crim_id`, `Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image`, `State`) VALUES
-(39, 'sherif', 'mohamed', 'hosny', '', 77777, '2017-07-15', '1499283697.png', 70707),
-(40, 'mahmoud', 'farida', 'menisy', '', 77777, '2017-07-10', '1499284664.png', 70707),
-(41, 'sameh', 'sherine', 'aly', '', 77777, '2017-07-10', '1499285222.png', 70707),
-(43, 'gamal', 'hany', 'elsayed', '', 77777, '2017-07-10', '1499287840.png', 70707),
-(48, '3aly', 'baha2', 'hish', 'sherif', 99999, '2017-07-11', '1499307619.png', 70707);
+INSERT INTO `Criminals` (`Crim_id`, `Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image`, `State`, `Location`) VALUES
+(40, 'mahmoud', 'farida', 'menisy', '', 77777, '2017-07-10', '1499284664.png', 70707, NULL),
+(41, 'sameh', 'sherine', 'aly', '', 77777, '2017-07-10', '1499285222.png', 70707, NULL),
+(43, 'gamal', 'hany', 'elsayed', '', 77777, '2017-07-10', '1499287840.png', 70707, NULL),
+(51, 'emad', 'yamen', 'gebril', 'yamen', 77777, '2017-07-17', '1499439150.jpg', 70707, NULL),
+(56, 'sherif', 'mohamed', 'hosny', 'sherif', 99999, '2017-07-17', '1499450778.png', 70707, NULL),
+(57, 'sherif', 'mohamed', 'hosny', 'sherif', 99999, '2017-07-17', '1499451245.png', 76767, NULL);
 
 -- --------------------------------------------------------
 
@@ -181,8 +185,8 @@ CREATE TABLE `Current_Specs` (
 --
 
 INSERT INTO `Current_Specs` (`Mac`, `PrivateIP`, `FreeStorage`, `CpuUsage`, `RamUsage`, `Temperature`, `State`) VALUES
-('b8:27:eb:d8:71:d5', '192.168.43.249 172.17.0.1 ', 37.8, 2.1, 16.8, 47.8, 22894),
-('b8:27:eb:f5:d6:1c', '172.20.10.3 172.17.0.1 ', 37.8, 2.7, 16.1, 47.2, 22894);
+('b8:27:eb:d8:71:d5', '192.168.43.75 172.17.0.1 ', 82.3, 4.1, 20, 49.9, 22894),
+('b8:27:eb:f5:d6:1c', '172.20.10.3 172.17.0.1 ', 37.8, 2.7, 16.1, 47.2, 22198);
 
 -- --------------------------------------------------------
 
@@ -226,7 +230,16 @@ CREATE TABLE `Gov_Log` (
 --
 
 INSERT INTO `Gov_Log` (`Gov_id`, `Gov_username`, `Action`, `Start_time`) VALUES
-(2, 'yamen94', 'Deleted Criminal yamen eqwew ewqeqw', '2017-07-06 03:16:08');
+(2, 'yamen94', 'Deleted Criminal yamen eqwew ewqeqw', '2017-07-06 03:16:08'),
+(2, 'yamen94', 'Added Criminal Fname usama kandil', '2017-07-07 16:45:24'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-07 16:52:20'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-07 17:05:20'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-07 17:17:09'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-07 17:22:17'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-07 17:28:21'),
+(2, 'yamen94', 'Deleted Criminal mohamed sherif hosny', '2017-07-07 19:54:25'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-07 20:06:19'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-07 20:14:05');
 
 -- --------------------------------------------------------
 
@@ -264,9 +277,9 @@ CREATE TABLE `Process` (
 --
 
 INSERT INTO `Process` (`Img_id`, `Process_name`, `Cont_id`, `Cont_IP`, `Mac`, `User_id`, `Start_time`, `Process_State`, `result`, `port`) VALUES
-('e968adf61310', 'mayar 2', '1685f3f9f44b', '', 'b8:27:eb:f5:d6:1c', 1, '2017-07-04 17:55:37', 22894, 'Hello World!', ''),
-('e968adf61310', 'mayar 3', '00210f022a31', '', 'b8:27:eb:f5:d6:1c', 1, '2017-07-04 18:04:55', 22894, 'Hello World!\n', ''),
-('75f76658eb0c', 'yamen 6', 'b05e08054686', '172.17.0.2\n', 'b8:27:eb:f5:d6:1c', 1, '2017-07-03 04:28:47', 22894, NULL, ' 85/tcp -> 85 \n');
+('131be14646fb', 'Farida', '78a93fc02cba', '\n', 'b8:27:eb:d8:71:d5', 1, '2017-07-07 19:49:43', 22198, 'Hello World!\n', '\n'),
+('131be14646fb', 'Hello', '170901f98e22', '\n', 'b8:27:eb:d8:71:d5', 1, '2017-07-07 19:52:58', 22198, 'Hello World!\n', '\n'),
+('131be14646fb', 'yamen', '62cce114dace', '\n', 'b8:27:eb:d8:71:d5', 1, '2017-07-07 20:24:27', 22198, 'Hello World!\n', '\n');
 
 -- --------------------------------------------------------
 
@@ -285,7 +298,7 @@ CREATE TABLE `Rp_Log` (
 --
 
 INSERT INTO `Rp_Log` (`Mac`, `Jobs_Num`, `Start_time`) VALUES
-('b8:27:eb:d8:71:d5', 0, '2017-07-05 19:14:29'),
+('b8:27:eb:d8:71:d5', 5, '2017-07-05 19:14:29'),
 ('b8:27:eb:f5:d6:1c', 5, '2017-07-02 19:33:29');
 
 -- --------------------------------------------------------
@@ -364,37 +377,9 @@ CREATE TABLE `User_Log` (
 --
 
 INSERT INTO `User_Log` (`User_id`, `Img_id`, `Process_name`, `Action`, `Time`) VALUES
-(1, 'dwq2dq1dw', 'Task 1', 32141, '2017-06-29 23:12:26'),
-(1, '', 'Task2', 32141, '2017-06-29 23:12:59'),
-(1, 'gege', 'Task 1', 22894, '2017-06-29 23:16:32'),
-(1, '', 'yamen2', 32141, '2017-07-02 15:47:24'),
-(1, '', 'yamen 3', 32141, '2017-07-02 16:03:22'),
-(1, '', 'yamen 4', 32141, '2017-07-02 16:15:16'),
-(1, '', 'sherine', 32141, '2017-07-02 19:22:04'),
-(1, '', 'Tamer', 32141, '2017-07-02 19:23:54'),
-(1, '', 'sherif', 32141, '2017-07-02 19:27:16'),
-(1, '', 'yamen 8', 32141, '2017-07-02 19:35:10'),
-(1, '', 'yamen 5', 32141, '2017-07-02 19:37:09'),
-(1, '75f76658eb0c', 'yamen 6', 22894, '2017-07-02 19:39:43'),
-(1, '', 'yamen 7', 32141, '2017-07-02 19:41:13'),
-(1, '', 'yamen 9', 32141, '2017-07-02 19:44:53'),
-(1, '', 'yamen77', 32141, '2017-07-02 19:54:17'),
-(1, '', 'yamen777', 32141, '2017-07-02 19:57:17'),
-(1, '', 'sherine7', 32141, '2017-07-02 19:59:08'),
-(1, '', 'sherine77', 32141, '2017-07-02 20:01:24'),
-(1, '', 'sherinesameh7', 32141, '2017-07-02 20:06:10'),
-(1, 'e968adf61310', 'sherinesameh77', 22894, '2017-07-02 20:13:33'),
-(1, '', 'task yamen', 32141, '2017-07-04 15:47:02'),
-(1, '', 'task yamen', 32141, '2017-07-04 15:47:50'),
-(1, '', 'task yamen', 32141, '2017-07-04 15:50:51'),
-(1, 'e968adf61310', 'task yamen', 22894, '2017-07-04 15:52:24'),
-(1, '', 'dw', 32141, '2017-07-04 15:55:29'),
-(1, '', 'task yamen', 32141, '2017-07-04 16:44:06'),
-(1, '', 'task yamen', 32141, '2017-07-04 16:48:20'),
-(1, 'e968adf61310', 'mayar', 22894, '2017-07-04 17:50:02'),
-(1, '', 'mayar', 32141, '2017-07-04 17:54:02'),
-(1, 'e968adf61310', 'mayar 2', 22894, '2017-07-04 17:55:07'),
-(1, 'e968adf61310', 'mayar 3', 22894, '2017-07-04 18:04:34');
+(1, '131be14646fb', 'Farida', 19195, '2017-07-07 17:49:26'),
+(1, '131be14646fb', 'Hello', 19195, '2017-07-07 17:52:45'),
+(1, '131be14646fb', 'yamen', 19195, '2017-07-07 18:24:06');
 
 --
 -- Indexes for dumped tables
@@ -504,7 +489,7 @@ ALTER TABLE `Admin`
 -- AUTO_INCREMENT for table `Criminals`
 --
 ALTER TABLE `Criminals`
-  MODIFY `Crim_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `Crim_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 --
 -- AUTO_INCREMENT for table `Government`
 --
