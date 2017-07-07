@@ -1,12 +1,11 @@
 import datetime
+from   dbHandler import dbHandler
 import os
 import socket
 import subprocess
 import sys
 import threading
-
-from EITS import utilities
-from EITS.dbHandler import dbHandler
+import utilities
 
 HOST = ''
 PORT = 8080
@@ -49,7 +48,7 @@ def connectRP(connection):
     handshakePck = str(connection.recv(80))
     print("el handshak "+handshakePck)
     specs = handshakePck.split(':_:')
-    DB.addPi(specs[0],specs[1],specs[2],specs[3],specs[4],1)
+    DB.addPi(specs[0],specs[1],specs[2],specs[3],specs[4],specs[5])
     mac = specs[1]
     print("El mac eli gayely "+mac)
     CONNECTIONS[mac] = connection
@@ -92,6 +91,7 @@ def userCommands(connection):
     connectionRP.send('docker')
     utilities.sendFile(connectionRP, path, processName, userID , 'Dockerfile')
     response = str(connectionRP.recv(11)).decode('utf-8')
+    print("el response "+response)
     if response == 'filecreated':
         connectionRP.send('rundocker')
     results = str(connectionRP.recv(1024)).decode('utf-8')
