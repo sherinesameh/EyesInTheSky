@@ -16,8 +16,8 @@ if (isset($_FILES['dockerfile'])) {
 	$error_array = $_FILES['dockerfile']['error'];
 
 	$check_docker = 0;
+		if (!strcmp($name_array, "Dockerfile")) {
 				$check_docker = $check_docker + 1;
-				if (!strcmp($name_array, "Dockerfile")) {
 			}
 
 	if ($check_docker == 0) {

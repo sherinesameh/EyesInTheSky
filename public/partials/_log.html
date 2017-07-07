@@ -15,12 +15,16 @@
                 <th>Process Name</th>
                 <th>Start Time</th>
                 <th>Status</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="log in logs | filter:search">
                 <td>{{log.Process_name}}</td>
                 <td>{{log.Time | date}}</td>
+                <!-- <td>
+                  {{log.Action}}
+                </td> -->
                 <td>
                   <div ng-switch="{{log.Action}}">
                     <div ng-switch-when="32141">
@@ -56,11 +60,16 @@
                       </a>
                     </div>
                     <div ng-switch-when="19195">
-                      <a data-target="showDetails" class="btn-large btn-floating processBtn waves-effect waves-light btn-flat" ng-click="showDetails(log.Process_name)">
-                        <i class="large material-icons green-text">done_all</i>
+                      <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Finished">
+                        <i class="small material-icons green-text">done_all</i>
                       </a>
                     </div>
                   </div>
+                </td>
+                <td>
+                  <button data-target="showDetails" class="btn-large processBtn waves-effect waves-light btn-flat" ng-click="showDetails(log.Process_name)">
+                    <i class="material-icons">more_vert</i>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -75,22 +84,10 @@
     </a>
   </div>
    <div class="modal-content">
-    <h6>Process: {{data.Process_name}}</h6> <hr />
-    <div class ="row">
-      <div class="col s5">
-       <span style="text-align:left">
-         Started Time: {{data.Start_time}} <br />
-         Image ID: {{data.Img_id}} <br />
-         Container ID: {{data.Cont_id}} <br />
-         Container IP: {{data.Cont_IP}} <br />
-         Port: {{data.port}} <br />
-       </span>
-      </div>
-      <div class="col s7">
-        Result: {{data.result}}
-      </div>
+      <p>
+        {{data.result}}
+      </p>
    </div>
-  </div>
 </div>
 <script>
   $(document).ready(function(){

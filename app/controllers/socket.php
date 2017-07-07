@@ -5,6 +5,7 @@ class Socket
   private $host ="localhost";
   private $port = 8080;
   private $socket;
+
 	function __construct()
 	{
 		$this->socket = socket_create(AF_INET, SOCK_STREAM,0) or die("Could not create socket\n");
@@ -28,3 +29,4 @@ class Socket
       socket_close($this->socket) ;
 	}
 }
+?>
