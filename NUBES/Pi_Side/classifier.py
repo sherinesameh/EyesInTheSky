@@ -5,6 +5,7 @@ import pickle
 import sys
 import numpy as np
 
+from EITS import specs
 from EITS.dbHandler import dbHandler
 from NUBES.util.align_dlib import AlignDlib
 from NUBES.openface.torch_neural_net import TorchNeuralNet
@@ -137,10 +138,11 @@ if __name__ == '__main__':
     #0.23445-->0.23
     np.set_printoptions(precision=2)
 
+    pi_mac = specs.getMac() 
+    pi_location = notifyLocation(pi_mac)
     #create instance of aligment and neural network classes
     align = AlignDlib(FLAGS.dlibFacePredictor)
     net = TorchNeuralNet(FLAGS.network_model,imgDim=FLAGS.size)
-    Handler = dbHandler()
     
     #load the classifier
     le,clf = load_classifier(FLAGS.classifier_model)
@@ -162,7 +164,7 @@ if __name__ == '__main__':
         for i, c in enumerate(confidences):
             if c >= FLAGS.threshold:  # 0.5 is kept as threshold for known face.
                 #persons[i] = "_unknown"
-                Handler.updateCriminalStatus(persons[i])
+                dbHandler.updateCriminalStatus(persons[i],pi_location)
                 
 #==================================================================================
 

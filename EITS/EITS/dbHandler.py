@@ -205,9 +205,20 @@ class dbHandler:
          self.db.rollback()
          print(e)
 
-   def updateCriminalStatus(self, criminal):
+   def notifyLocation(self,mac):
 
-        query = "UPDATE Criminals SET State = "+str(76767)+" WHERE Crim_id = \""+ str(criminal)+" \"   "
+        query = "SELECT LocationName FROM Rp_Specs WHERE Mac = \''+ PrivateIP +'\' "
+        try:
+            self.cursor.execute(query)
+            self.db.commit()
+        except Exception as e:
+            self.db.rollback()
+            print(e)
+
+
+   def updateCriminalStatus(self, criminal,location):
+
+        query = "UPDATE Criminals SET State = "+str(76767)+", Location = \""+ str(location)+" \"   WHERE Crim_id = \""+ str(criminal)+" \"   "
         try:
             self.cursor.execute(query)
             self.db.commit()

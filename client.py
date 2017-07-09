@@ -3,16 +3,17 @@ import sys
 import os
 import subprocess
 import datetime
-import specs
 import threading
 import time
-from dbHandler import dbHandler
+
+from EITS import specs
+from EITS.dbHandler import dbHandler
+
 
 # host = '46.101.180.16'
 host = '192.168.43.114'
 port = 8080
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-db = dbHandler()
 
 def establishConnection():
     try:
@@ -26,7 +27,7 @@ def updateSpecs():
   while(True):
     currentSpecs = specs.CurrentSpecs().split(':_:')
     mac = specs.getMac()
-    db.updateCurrentSpecs(mac, currentSpecs[0], currentSpecs[1], currentSpecs[2], currentSpecs[3], currentSpecs[4])
+    dbHandler.updateCurrentSpecs(mac, currentSpecs[0], currentSpecs[1], currentSpecs[2], currentSpecs[3], currentSpecs[4])
     time.sleep(30)
     
 def createDir(processName):
@@ -147,8 +148,7 @@ def executeCommand():
               out , err = portDocker.communicate()
               port = str(out)
 
-              db = dbHandler()
-              db.addProcess(containerID , imgID , IPAddress , port, userID ,processName , specs.getMac())
+              dbHandler.addProcess(containerID , imgID , IPAddress , port, userID ,processName , specs.getMac())
 
           except Exception as e:
               output = e
