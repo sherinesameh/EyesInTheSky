@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 07, 2017 at 10:51 PM
+-- Generation Time: Jul 09, 2017 at 08:18 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -159,10 +159,7 @@ CREATE TABLE `Criminals` (
 INSERT INTO `Criminals` (`Crim_id`, `Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image`, `State`, `Location`) VALUES
 (40, 'mahmoud', 'farida', 'menisy', '', 77777, '2017-07-10', '1499284664.png', 70707, NULL),
 (41, 'sameh', 'sherine', 'aly', '', 77777, '2017-07-10', '1499285222.png', 70707, NULL),
-(43, 'gamal', 'hany', 'elsayed', '', 77777, '2017-07-10', '1499287840.png', 70707, NULL),
-(51, 'emad', 'yamen', 'gebril', 'yamen', 77777, '2017-07-17', '1499439150.jpg', 70707, NULL),
-(56, 'sherif', 'mohamed', 'hosny', 'sherif', 99999, '2017-07-17', '1499450778.png', 70707, NULL),
-(57, 'sherif', 'mohamed', 'hosny', 'sherif', 99999, '2017-07-17', '1499451245.png', 76767, NULL);
+(43, 'gamal', 'hany', 'elsayed', '', 77777, '2017-07-10', '1499287840.png', 70707, NULL);
 
 -- --------------------------------------------------------
 
@@ -185,7 +182,7 @@ CREATE TABLE `Current_Specs` (
 --
 
 INSERT INTO `Current_Specs` (`Mac`, `PrivateIP`, `FreeStorage`, `CpuUsage`, `RamUsage`, `Temperature`, `State`) VALUES
-('b8:27:eb:d8:71:d5', '192.168.43.75 172.17.0.1 ', 82.3, 4.1, 20, 49.9, 22894),
+('b8:27:eb:d8:71:d5', '192.168.43.249 172.17.0.1 ', 79.5, 0.5, 15, 46.2, 22894),
 ('b8:27:eb:f5:d6:1c', '172.20.10.3 172.17.0.1 ', 37.8, 2.7, 16.1, 47.2, 22198);
 
 -- --------------------------------------------------------
@@ -239,7 +236,12 @@ INSERT INTO `Gov_Log` (`Gov_id`, `Gov_username`, `Action`, `Start_time`) VALUES
 (2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-07 17:28:21'),
 (2, 'yamen94', 'Deleted Criminal mohamed sherif hosny', '2017-07-07 19:54:25'),
 (2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-07 20:06:19'),
-(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-07 20:14:05');
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-07 20:14:05'),
+(2, 'yamen94', 'Deleted Criminal mohamed sherif hosny', '2017-07-08 17:18:30'),
+(2, 'yamen94', 'Deleted Criminal mohamed sherif hosny', '2017-07-08 17:18:46'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosy', '2017-07-08 17:19:46'),
+(2, 'yamen94', 'Deleted Criminal mohamed sherif hosy', '2017-07-08 17:24:51'),
+(2, 'yamen94', 'Deleted Criminal yamen emad gebril', '2017-07-08 17:24:53');
 
 -- --------------------------------------------------------
 
@@ -279,6 +281,9 @@ CREATE TABLE `Process` (
 INSERT INTO `Process` (`Img_id`, `Process_name`, `Cont_id`, `Cont_IP`, `Mac`, `User_id`, `Start_time`, `Process_State`, `result`, `port`) VALUES
 ('131be14646fb', 'Farida', '78a93fc02cba', '\n', 'b8:27:eb:d8:71:d5', 1, '2017-07-07 19:49:43', 22198, 'Hello World!\n', '\n'),
 ('131be14646fb', 'Hello', '170901f98e22', '\n', 'b8:27:eb:d8:71:d5', 1, '2017-07-07 19:52:58', 22198, 'Hello World!\n', '\n'),
+('131be14646fb', 'sherine', 'a1dff03a9db7', '\n', 'b8:27:eb:d8:71:d5', 1, '2017-07-08 17:12:09', 22894, 'Hello World!\n', '\n'),
+('131be14646fb', 'test', 'ffd4f4ccb9a9', '\n', 'b8:27:eb:d8:71:d5', 1, '2017-07-08 16:19:07', 22894, 'Hello World!\n', '\n'),
+('131be14646fb', 'test2', '99cec5131de7', '\n', 'b8:27:eb:d8:71:d5', 1, '2017-07-08 16:21:42', 22894, 'Hello World!\n', '\n'),
 ('131be14646fb', 'yamen', '62cce114dace', '\n', 'b8:27:eb:d8:71:d5', 1, '2017-07-07 20:24:27', 22198, 'Hello World!\n', '\n');
 
 -- --------------------------------------------------------
@@ -298,7 +303,7 @@ CREATE TABLE `Rp_Log` (
 --
 
 INSERT INTO `Rp_Log` (`Mac`, `Jobs_Num`, `Start_time`) VALUES
-('b8:27:eb:d8:71:d5', 5, '2017-07-05 19:14:29'),
+('b8:27:eb:d8:71:d5', 8, '2017-07-05 19:14:29'),
 ('b8:27:eb:f5:d6:1c', 5, '2017-07-02 19:33:29');
 
 -- --------------------------------------------------------
@@ -327,7 +332,7 @@ CREATE TABLE `Rp_Specs` (
 --
 
 INSERT INTO `Rp_Specs` (`Mac`, `Ram`, `Storage`, `HasCamera`, `Generation`, `OS`, `Username`, `Password`, `PublicIP`, `LocationLat`, `LocationLng`, `LocationName`) VALUES
-('b8:27:eb:d8:71:d5', 859, 13, 1, '3', 'Raspbian GNU/Linux 8 (jessie)', 'pi', 'pi', '196.153.104.93', 0, 0, '0'),
+('b8:27:eb:d8:71:d5', 859, 13, 0, '3', 'Raspbian GNU/Linux 8 (jessie)', 'pi', 'pi', '196.153.104.93', 0, 0, '0'),
 ('b8:27:eb:f5:d6:1c', 2048, 16384, 0, '3', '', 'pi', 'pi123123', '192.168.8.100', 31.2099, 29.952, 'Semouha');
 
 -- --------------------------------------------------------
@@ -379,7 +384,10 @@ CREATE TABLE `User_Log` (
 INSERT INTO `User_Log` (`User_id`, `Img_id`, `Process_name`, `Action`, `Time`) VALUES
 (1, '131be14646fb', 'Farida', 19195, '2017-07-07 17:49:26'),
 (1, '131be14646fb', 'Hello', 19195, '2017-07-07 17:52:45'),
-(1, '131be14646fb', 'yamen', 19195, '2017-07-07 18:24:06');
+(1, '131be14646fb', 'yamen', 19195, '2017-07-07 18:24:06'),
+(1, '131be14646fb', 'test', 19195, '2017-07-08 14:19:01'),
+(1, '131be14646fb', 'test2', 19195, '2017-07-08 14:21:27'),
+(1, '131be14646fb', 'sherine', 19195, '2017-07-08 15:11:56');
 
 --
 -- Indexes for dumped tables
@@ -489,7 +497,7 @@ ALTER TABLE `Admin`
 -- AUTO_INCREMENT for table `Criminals`
 --
 ALTER TABLE `Criminals`
-  MODIFY `Crim_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `Crim_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT for table `Government`
 --
