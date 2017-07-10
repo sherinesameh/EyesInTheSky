@@ -38,6 +38,11 @@ switch ($request) {
           $result = $actions->getLocations();
           echo json_encode($result);
           break;
+    case 'getCriminalLocation'
+          $id = $params->criminalID;
+          $result = $actions->getCriminalLocation($id);
+          echo json_encode($result);
+          break;
     case "deleteCriminal":
       $criminalID = $params->criminalID;
       $filename = $params->filename;
