@@ -204,16 +204,13 @@ class dbHandler:
       except Exception as e:
          self.db.rollback()
          print(e)
-
    def notifyLocation(self,mac):
 
-        query = "SELECT LocationName FROM Rp_Specs WHERE Mac = \''+ PrivateIP +'\' "
-        try:
-            self.cursor.execute(query)
-            self.db.commit()
-        except Exception as e:
-            self.db.rollback()
-            print(e)
+        query = "SELECT LocationName FROM Rp_Specs WHERE Mac = \'"+mac+"\' "
+        self.cursor.execute(query)
+        results = self.cursor.fetchone()  
+
+        return results["LocationName"] 
 
 
    def updateCriminalStatus(self, criminal,location):
