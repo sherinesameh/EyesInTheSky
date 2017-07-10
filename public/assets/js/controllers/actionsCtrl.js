@@ -71,10 +71,11 @@
       	  },
       	  data : $scope.form,
       	  headers: {
-      	         'Content-Type': undefined
+      	      'Content-Type': undefined
       	  }
          })
-         .success(function(data){
+         .success(function(data) {
+           location.reload(true);
            $scope.form = {};
          });
     };
@@ -83,7 +84,7 @@
            $scope.files[index] = e.files[0];
            console.log($scope.files[index]);
        });
-   };
+    };
 	  $scope.imagePreview= function(element) {
 	    var reader = new FileReader();
 	    reader.onload = function(event) {
@@ -100,7 +101,7 @@
       sendRequest($http, params).success(function(data) {
         $scope.criminals = data;
       });
-    }, 5000);
+    }, 1000);
     $scope.removeCriminal = function(criminalID) {
         params = {};
         var criminals = eval( $scope.criminals );
