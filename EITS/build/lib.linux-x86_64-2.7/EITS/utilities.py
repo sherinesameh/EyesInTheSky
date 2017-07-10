@@ -3,7 +3,6 @@ import getpass
 import sys
 import os
 import subprocess
-import pysftp
 import datetime
 
 def createPiDir():
@@ -80,7 +79,7 @@ def buildAndRunDocker(hostname, username, password, directory):
 def sendFile(connection, path, processName ,userID, filename):
     data = processName + ":_:" + userID
     processNameSize = len(data)
-    processNameSize = bin(processNameSize)[2:].zfill(32)
+    processNameSize = bin(data)[2:].zfill(32)
     connection.send(processNameSize)
     print("process size is "+str(processNameSize))
     connection.send(data)
@@ -91,7 +90,7 @@ def sendFile(connection, path, processName ,userID, filename):
     connection.send(filesize2)
     file_to_send = open(path+'/'+ filename, 'rb')
 
-    chunksize = 4096
+    chunksize = 40960
 
     while filesize > 0:
         if filesize < chunksize:
@@ -104,6 +103,7 @@ def sendFile(connection, path, processName ,userID, filename):
     print 'Done Sending'
 
 
+
 def sendFileCamera(connection, path , filename):
     filename2 = os.path.join(path,filename)
     filesize = os.path.getsize(filename2)
@@ -112,7 +112,7 @@ def sendFileCamera(connection, path , filename):
     connection.send(filesize2)
     file_to_send = open(path+'/'+ filename, 'rb')
 
-    chunksize = 1000
+    chunksize = 40960
 
     while filesize > 0:
         if filesize < chunksize:
@@ -120,11 +120,6 @@ def sendFileCamera(connection, path , filename):
         data = file_to_send.read(chunksize)
         connection.send(data)
         filesize -= chunksize
-        acc = connection.recv(1)
-        print("el acc "+acc)
-        if acc == '1':
-            print(str(filesize))
-            continue
+        print(str(filesize))
     file_to_send.close()
-    print 'Done Sending'      
-
+    print 'Done Sending'    

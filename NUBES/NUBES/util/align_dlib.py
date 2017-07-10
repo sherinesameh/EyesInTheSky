@@ -1,3 +1,37 @@
+# Developed By 2017 Computer and Communication Department-Alexandria University graduation project team
+#
+# Email: EITS@gmail.com
+#
+# Authors: MOHAMED SHERIF,YAMEN EMAD, SHERINE SAMEH
+#
+# Copyright (c) EITS TEAM 2017 
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#=================================================================================
+"""
+   This HGO face detection in training for it's high accuracy and opencv 
+   face detection for recognition for it's real time performance.
+
+   There is a tradeoff between time and accuracy.
+
+"""
+
 import cv2
 import dlib
 import numpy as np
@@ -65,12 +99,16 @@ class AlignDlib:
         """
         Instantiate an 'AlignDlib' object.
 
-        :param facePredictor: The path to dlib's
+        :param facePredictor: The path to dlib's facial landmark detector
         :type facePredictor: str
+        :param OPENCV_Detector: The path to opencv's HaarCasscade
+        :type  OPENCV_Detector: str
+        :param HOG_Detector: The path to dlib's HGO face detection model
+        :type  HOG_Detector: str                
         """
         assert facePredictor is not None
         
-        self.OPENCV_Detector =  cv2.CascadeClassifier("/home/sherif/opencv/opencv-master/data/haarcascades/haarcascade_frontalface_default.xml")
+        self.OPENCV_Detector =  cv2.CascadeClassifier("/home/pi/opencv-3.1.0/data/haarcascades/haarcascade_frontalface_default.xml")
         self.HOG_Detector    = dlib.get_frontal_face_detector()
         self.predictor       = dlib.shape_predictor(facePredictor)
 
@@ -81,7 +119,7 @@ class AlignDlib:
         :param rgbImg: RGB image to process. Shape: (height, width, 3)
         :type rgbImg: numpy.ndarray
         :return: All face bounding boxes in an image.
-        :rtype: dlib.rectangles
+        :rtype: opencv.rectangles
         """
         assert rgbImg is not None
         

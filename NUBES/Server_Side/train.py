@@ -1,8 +1,10 @@
-"""Functions for building the face recognition system.
-"""
-#Developed By 2017 Computer and Communication Department-Alexandria University graduation project team
-# 
-# Copyright (c) 2017 MOHAMED SHERIF
+# Developed By 2017 Computer and Communication Department-Alexandria University graduation project team
+#
+# Email: EITS@gmail.com
+#
+# Authors: MOHAMED SHERIF,YAMEN EMAD, SHERINE SAMEH
+#
+# Copyright (c) EITS TEAM 2017 
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +24,40 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #=================================================================================
+"""
+   This module gets the loaded immages of criminal that the goverment's
+   admin has uploaded and perform face aligment on them to prepare
+   the images before feeding them to the neural network, a CNN then loads
+   the aligned images and calculate the 128-featyre representation of each
+   face.
 
+   The output of this module will be a SVM classifier fited with the 
+   results of reprsentations of each criminal
 
+   This example shows how to train criminal's faces using NUBES.
+
+   The example folder crminials should have a structure like this:
+   subfolders, each full of images for each label. 
+
+        MainFolder
+
+            CriminalName
+                CriminalImages
+           
+            CriminalName(1)
+                CriminalImages
+
+    all you have to do is to run run the trainer with a command like this:
+   ```bash
+          python NUBES/train.py \
+          --image_dir ~/MainFolder  \
+          --output_dir ~/align_images \
+          --verbose = True
+   ```
+   The SVM classifier model will be saved in a (.pkl) format,Then EITS client
+   will send it to the goverment's pi(s) to recognize the wanted criminals.
+
+"""
 import os
 import errno
 import argparse
@@ -166,10 +200,11 @@ def Main():
 
     AlignFaces = alignMain(align,landmarkIndices,ErrorHandler) 
 
+    print('********Caluculating The 128-Features Of Face..')
+
     if FLAGS.verbose:
-        print('********Caluculating The 128-Features Of Face..')
-    
-    start = time.time()
+        start = time.time()
+    #Feeding the aligned images to the neural network to get the 128_face reprsentations to build the SVM classifier
     results = subprocess.check_output(['./batch-represent/main.lua',
     	                               '-outDir','./generated-embeddings/',
                                        '-data','./aligned-images/']) 

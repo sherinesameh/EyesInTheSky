@@ -5,7 +5,7 @@ setup(
     version='0.2',
     description="Face Recognition Application Running Over EITS Mobile Adhoc Cloud System.",
     author='Sherine Sameh , Yamen Emad , Mohamed Sherif ',
-    author_email='EITS@hotmail.com',
+    author_email='EITS@gmail.com',
     url='https://github.com/SherineSameh/EyesInTheSky.git ',
     classifiers=[
         'Development Status :: 2 - Beta',

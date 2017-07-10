@@ -43,7 +43,7 @@ cmd:text()
 opt = cmd:parse(arg or {})
 -- print(opt)
 
-net = torch.load(opt.model)
+net = torch.load(opt.model,'ascii')
 net:evaluate()
 -- print(net)
 

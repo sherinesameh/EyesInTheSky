@@ -1,11 +1,12 @@
 import datetime
-from   dbHandler import dbHandler
 import os
 import socket
 import subprocess
 import sys
 import threading
-import utilities
+
+from EITS.dbHandler import dbHandler
+from EITS import utilities
 
 HOST = ''
 PORT = 8080
@@ -45,7 +46,7 @@ def acceptConnections():
         print("Connections has been established | IP: " + address[0] + " | Port: " + str(address[1]))
 
 def connectRP(connection):
-    handshakePck = str(connection.recv(80))
+    handshakePck = str(connection.recv(90))
     print("el handshak "+handshakePck)
     specs = handshakePck.split(':_:')
     DB.addPi(specs[0],specs[1],specs[2],specs[3],specs[4],specs[5])
@@ -98,18 +99,6 @@ def userCommands(connection):
     print("results iare "+results)
     DB.updateResults(userID , processName , results)
 
-# def userCommands(connection):
-    # bestPi = dbHandler()
-    # mac = bestPi.getBestPi()
-    # hostname = CONNECTIONS[mac]
-    # specs = str(bestPi.getSpecs(mac)).split(':')
-    # username = specs[0]
-    # password = specs[1]
-    # localPath = str(connection.recv(1024)).decode('utf-8')
-    # remotePath = utilities.createPiDir()
-    # sftp = utilities.put(hostname, username, password, localPath, remotePath)
-    # if sftp:
-    #     connection.send(utilities.buildAndRunDocker(hostname, username, password, remotePath))
 
 def govCommands(connection):
 

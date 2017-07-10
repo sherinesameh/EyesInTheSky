@@ -2,6 +2,10 @@ import os
 import threading
 from requests import get
 import psutil
+import re
+import subprocess
+
+Camera_Types = {"Creative":'0458:707e'}
 
 def getPublicIP():
     # Return Public IP
@@ -9,7 +13,8 @@ def getPublicIP():
 
 def getPrivateIP():
     # Return Private IP
-    return os.popen('hostname -I').read().replace('"','')
+    ip = os.popen('hostname -I').read().replace('"','')
+    return ip.replace('\n','')
 
 def getMac():
     # Return Mac address over eth0
@@ -53,6 +58,21 @@ def getDiskSpace():
         if i==2:
             return line.split()[1:5]
 
+def hasCamera():
+
+    device_re = re.compile("Bus\s+(?P<bus>\d+)\s+Device\s+(?P<device>\d+).+ID\s(?P<id>\w+:\w+)\s(?P<tag>.+)$", re.I)
+    df = subprocess.check_output("lsusb")
+    
+    for i in df.split('\n'):
+        if i:
+            info = device_re.match(i)
+
+            if info:
+                dinfo = info.groupdict()
+                if dinfo['id'] in Camera.values():
+                    return 1
+    return 0
+
 def StaticSpecs():
     PublicIP = getPublicIP()
     MAC = getMac()
@@ -60,13 +80,13 @@ def StaticSpecs():
     RAM = psutil.phymem_usage()
     RAM_total = RAM.total / 2**20       # MiB.
     DISK = psutil.disk_usage('/')
-    DISK_total = disk.total / 2**30     # GiB.
-    # RAM_stats = getRAMinfo()
-    # RAM_total = round(int(RAM_stats[0]) / 1000,1)
-    # DISK_stats = getDiskSpace()
-    # DISK_total = DISK_stats[0]
-
-    return (PublicIP + ':_:' + MAC + ':_:' + OS +':_:' + str(RAM_total) + ':_:' + str(DISK_total))
+    DISK_total = DISK.total / 2**30     # GiB.
+    Camera = hasCamera()
+    #RAM_stats = getRAMinfo()
+    #RAM = round(int(RAM_stats[0]) / 1000,1)
+    #DISK_stats = getDiskSpace()
+    #DISK = DISK_stats[0]
+    return (PublicIP + ':_:' + MAC + ':_:' + OS +':_:' + str(RAM_total) + ':_:' + str(DISK_total)+ ':_:' + str(Camera))
 
 
 def CurrentSpecs():
@@ -75,7 +95,7 @@ def CurrentSpecs():
     CPU_usage = getCPUusage()
     RAM = psutil.phymem_usage()
     RAM_usage = RAM.percent
-    DISK = psutil.disk_usage('/')
+    disk = psutil.disk_usage('/')
     DISK_usage = disk.percent
     # RAM_stats = getRAMinfo()
     # RAM_total = round(int(RAM_stats[0]) / 1000,1)
@@ -86,4 +106,5 @@ def CurrentSpecs():
     # DISK_free = DISK_stats[1]
     # DISK_used = DISK_stats[2]
     # DISK_perc = DISK_stats[3]
-    return(PrivateIP +':_:'+ CPU_temp +':_:'+ CPU_usage +':_:'+ DISK_usage +':_:'+ RAM_usage)
+    return(PrivateIP +':_:'+ CPU_temp +':_:'+ CPU_usage +':_:'+ str(DISK_usage) +':_:'+ str(RAM_usage))
+

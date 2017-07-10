@@ -5,8 +5,8 @@ import operator
 
 class dbHandler:
    def __init__(self):
-       # self.db = pymysql.connect(host='46.101.180.169', port= 3306, user='pi',password='eits2017',db='EITS')
-       self.db = pymysql.connect(host='localhost',user='root',password='eits2017',db='EITS')
+       self.db = pymysql.connect(host='46.101.180.169', port= 3306, user='pi',password='eits2017',db='EITS')
+       #self.db = pymysql.connect(host='localhost',user='root',password='Pi',db='EITS')
        self.cursor =  self.db.cursor(pymysql.cursors.DictCursor)
 
    def get_points(self,Camera,FreeStorage,CPU,RAM,Temperature,Jobs_Num,time):
@@ -205,9 +205,20 @@ class dbHandler:
          self.db.rollback()
          print(e)
 
-   def updateCriminalStatus(self, criminal):
+   def notifyLocation(self,mac):
 
-        query = "UPDATE Criminals SET Status = "+str(76767)+" WHERE Crim_id = \""+ str(criminal)+" \"   "
+        query = "SELECT LocationName FROM Rp_Specs WHERE Mac = \''+ PrivateIP +'\' "
+        try:
+            self.cursor.execute(query)
+            self.db.commit()
+        except Exception as e:
+            self.db.rollback()
+            print(e)
+
+
+   def updateCriminalStatus(self, criminal,location):
+
+        query = "UPDATE Criminals SET State = "+str(76767)+", Location = \""+ str(location)+" \"   WHERE Crim_id = \""+ str(criminal)+" \"   "
         try:
             self.cursor.execute(query)
             self.db.commit()

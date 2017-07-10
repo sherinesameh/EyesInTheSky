@@ -1,3 +1,48 @@
+# Developed By 2017 Computer and Communication Department-Alexandria University graduation project team
+#
+# Email: EITS@gmail.com
+#
+# Authors: MOHAMED SHERIF,YAMEN EMAD, SHERINE SAMEH
+#
+# Copyright (c) EITS TEAM 2017 
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#=================================================================================
+"""
+   This module gets the SVM model recived from the Server and start the detection
+   if the criminal has been found the goverment's portal will be notified
+   that the wanted criminal was found and his location.
+
+   This module support simultaneous criminal detection according to the recived
+   SVM model data.
+
+   all you have to do is to run run the trainer with a command like this:
+
+   ```bash
+          python NUBES/classifier.py \
+          --classifier_model ~/classifier.pkl  \
+          --network_model    ~/model.t7 \
+          --verbose = True
+   ```
+
+"""
+
 import argparse
 import cv2
 import os
@@ -98,28 +143,28 @@ if __name__ == '__main__':
     parser.add_argument(
       '--classifier_model',
       type=str,
-      default='/home/sherif/Desktop/packagetest/generated-embeddings/classifier.pkl',
+      default='/home/pi/Desktop/Pi_Side/generated-embeddings/classifier.pkl',
       help='Path to classifier folder.'
     )
 
     parser.add_argument(
       '--network_model',
       type=str,
-      default='/home/sherif/Desktop/packagetest/models/openface/nn4.small2.v1.t7',#nn4.v1.ascii
+      default='/home/pi/Desktop/Pi_Side/models/openface/nn4.v1.ascii.t7',
       help='Path to neural_network model folder.'
     ) 
 
     parser.add_argument(
       '--dlibFacePredictor',
       type=str,
-      default='/home/sherif/Desktop/packagetest/models/dlib/shape_predictor_68_face_landmarks.dat',
+      default='/home/pi/Desktop/Pi_Side/models/dlib/shape_predictor_68_face_landmarks.dat',
       help='path to dlib facemark detector classifier.'
     )
 
     parser.add_argument(
       '--threshold',
       type=float,
-      default=0.96,
+      default=0.90,
       help='The threshold for unkown person.'
     )  
 
@@ -137,15 +182,19 @@ if __name__ == '__main__':
     #set the precision of the output
     #0.23445-->0.23
     np.set_printoptions(precision=2)
+    #get the current mac to help get the pi's location
+    pi_mac = specs.getMac()
 
-    pi_mac = specs.getMac() 
-    pi_location = notifyLocation(pi_mac)
-    #create instance of aligment and neural network classes
+    #create instance of aligment, database_Handler and neural network classes
     align = AlignDlib(FLAGS.dlibFacePredictor)
     net = TorchNeuralNet(FLAGS.network_model,imgDim=FLAGS.size)
-    
+    DB = dbHandler()
+
     #load the classifier
     le,clf = load_classifier(FLAGS.classifier_model)
+
+    pi_location = DB.notifyLocation(pi_mac)
+    print(pi_location)
     # Capture device. Usually 0 will be webcam and 1 will be usb cam.
     video_capture = cv2.VideoCapture(0)
     #set the width and height == resolution
@@ -162,9 +211,12 @@ if __name__ == '__main__':
 #================================================================================== 
 
         for i, c in enumerate(confidences):
-            if c >= FLAGS.threshold:  # 0.5 is kept as threshold for known face.
-                #persons[i] = "_unknown"
-                dbHandler.updateCriminalStatus(persons[i],pi_location)
+            #threshold for known face.
+            if c >= FLAGS.threshold:
+                #Notify the govermnt's portal that the criminal has been found
+                #change the criminal's status and send the location were
+                #the criminal has been detected
+                DB.updateCriminalStatus(persons[i],pi_location)
                 
 #==================================================================================
 
