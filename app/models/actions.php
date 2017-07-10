@@ -85,6 +85,16 @@
       return $result;
     }
 
+
+    public function getCriminalLocation($id)
+    {
+      $stmt = $this->conn->prepare("SELECT `Location` FROM `Criminals` WHERE `Crim_id` = ?");
+      $stmt->bind_param("i", $id);
+      $stmt->execute();
+      $result = $this->getResult($stmt);
+      return $result;
+    }
+
     public function getAllCriminals()
     {
       $stmt = $this->conn->prepare("SELECT * FROM `Criminals`");
