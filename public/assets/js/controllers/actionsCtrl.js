@@ -37,6 +37,7 @@
         $scope.data = data[0];
         alert($scope.data);
       });
+    };
   });
   app.controller('billingCtrl', function($scope, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);
