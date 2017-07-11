@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 09, 2017 at 08:18 PM
+-- Generation Time: Jul 11, 2017 at 11:03 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -91,7 +91,9 @@ INSERT INTO `Admin_Log` (`Admin_id`, `Action`, `Action_time`) VALUES
 (1, 'Closed Raspberry pi b8:27:eb:d8:71:d5 ', '2017-07-05 20:26:18'),
 (1, 'Closed Raspberry pi b8:27:eb:d8:71:d5 ', '2017-07-05 20:28:22'),
 (1, 'Closed Raspberry pi b8:27:eb:d8:71:d5 ', '2017-07-07 16:37:55'),
-(1, 'Closed Raspberry pi b8:27:eb:d8:71:d5 ', '2017-07-07 20:26:11');
+(1, 'Closed Raspberry pi b8:27:eb:d8:71:d5 ', '2017-07-07 20:26:11'),
+(1, 'Killed Process at Raspberry pi b8:27:eb:d8:71:d5 with container ID 78a93fc02cba', '2017-07-10 21:13:07'),
+(1, 'Closed Raspberry pi b8:27:eb:f5:d6:1c ', '2017-07-10 23:37:51');
 
 -- --------------------------------------------------------
 
@@ -159,7 +161,8 @@ CREATE TABLE `Criminals` (
 INSERT INTO `Criminals` (`Crim_id`, `Mname`, `Fname`, `Lname`, `Dir_path`, `priority`, `expiry_date`, `image`, `State`, `Location`) VALUES
 (40, 'mahmoud', 'farida', 'menisy', '', 77777, '2017-07-10', '1499284664.png', 70707, NULL),
 (41, 'sameh', 'sherine', 'aly', '', 77777, '2017-07-10', '1499285222.png', 70707, NULL),
-(43, 'gamal', 'hany', 'elsayed', '', 77777, '2017-07-10', '1499287840.png', 70707, NULL);
+(43, 'gamal', 'hany', 'elsayed', '', 77777, '2017-07-10', '1499287840.png', 70707, NULL),
+(50, 'sherif', 'mohamed', 'hosny', 'sherif', 99999, '2017-07-21', '1499724237.png', 76767, 'Shatby ');
 
 -- --------------------------------------------------------
 
@@ -182,8 +185,8 @@ CREATE TABLE `Current_Specs` (
 --
 
 INSERT INTO `Current_Specs` (`Mac`, `PrivateIP`, `FreeStorage`, `CpuUsage`, `RamUsage`, `Temperature`, `State`) VALUES
-('b8:27:eb:d8:71:d5', '192.168.43.249 172.17.0.1 ', 79.5, 0.5, 15, 46.2, 22894),
-('b8:27:eb:f5:d6:1c', '172.20.10.3 172.17.0.1 ', 37.8, 2.7, 16.1, 47.2, 22198);
+('b8:27:eb:d8:71:d5', '192.168.43.249 172.17.0.1 ', 81.9, 11.3, 37.7, 53.7, 22894),
+('b8:27:eb:f5:d6:1c', '192.168.43.75 172.17.0.1 ', 82.4, 0.2, 15.3, 41.3, 22198);
 
 -- --------------------------------------------------------
 
@@ -241,7 +244,14 @@ INSERT INTO `Gov_Log` (`Gov_id`, `Gov_username`, `Action`, `Start_time`) VALUES
 (2, 'yamen94', 'Deleted Criminal mohamed sherif hosny', '2017-07-08 17:18:46'),
 (2, 'yamen94', 'Added Criminal Fname sherif hosy', '2017-07-08 17:19:46'),
 (2, 'yamen94', 'Deleted Criminal mohamed sherif hosy', '2017-07-08 17:24:51'),
-(2, 'yamen94', 'Deleted Criminal yamen emad gebril', '2017-07-08 17:24:53');
+(2, 'yamen94', 'Deleted Criminal yamen emad gebril', '2017-07-08 17:24:53'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-09 20:23:57'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-09 20:29:51'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-10 23:41:45'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-10 23:48:06'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-10 23:50:40'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-10 23:57:51'),
+(2, 'yamen94', 'Added Criminal Fname sherif hosny', '2017-07-11 00:03:57');
 
 -- --------------------------------------------------------
 
@@ -279,7 +289,7 @@ CREATE TABLE `Process` (
 --
 
 INSERT INTO `Process` (`Img_id`, `Process_name`, `Cont_id`, `Cont_IP`, `Mac`, `User_id`, `Start_time`, `Process_State`, `result`, `port`) VALUES
-('131be14646fb', 'Farida', '78a93fc02cba', '\n', 'b8:27:eb:d8:71:d5', 1, '2017-07-07 19:49:43', 22198, 'Hello World!\n', '\n'),
+('131be14646fb', 'final test', '4a3d06145d06', '', 'b8:27:eb:d8:71:d5', 1, '2017-07-10 23:33:42', 22894, '\"overall \":  \"223 \",\"cpu \":  \"150 \", \"ram \":  \"298 \", \"real \":  \"222 \", \"subPerf \": { \"floatingPoint_whetstone \":  \"126 \", \"integerPerf_dhrystone \":  \"116 \", \"linearAlgebraSinglePoint_linpack \":  \"182 \", \"linearAlgebraDoublePoint_linpack \":  \"185 \", \"kernelDoublePrecision_liverloops \":  \"142 \", \"L1CacheMFLOPS_l1flops \":  \"130 \" ', ''),
 ('131be14646fb', 'Hello', '170901f98e22', '\n', 'b8:27:eb:d8:71:d5', 1, '2017-07-07 19:52:58', 22198, 'Hello World!\n', '\n'),
 ('131be14646fb', 'sherine', 'a1dff03a9db7', '\n', 'b8:27:eb:d8:71:d5', 1, '2017-07-08 17:12:09', 22894, 'Hello World!\n', '\n'),
 ('131be14646fb', 'test', 'ffd4f4ccb9a9', '\n', 'b8:27:eb:d8:71:d5', 1, '2017-07-08 16:19:07', 22894, 'Hello World!\n', '\n'),
@@ -332,8 +342,8 @@ CREATE TABLE `Rp_Specs` (
 --
 
 INSERT INTO `Rp_Specs` (`Mac`, `Ram`, `Storage`, `HasCamera`, `Generation`, `OS`, `Username`, `Password`, `PublicIP`, `LocationLat`, `LocationLng`, `LocationName`) VALUES
-('b8:27:eb:d8:71:d5', 859, 13, 0, '3', 'Raspbian GNU/Linux 8 (jessie)', 'pi', 'pi', '196.153.104.93', 0, 0, '0'),
-('b8:27:eb:f5:d6:1c', 2048, 16384, 0, '3', '', 'pi', 'pi123123', '192.168.8.100', 31.2099, 29.952, 'Semouha');
+('b8:27:eb:d8:71:d5', 859, 13, 1, '3', 'Raspbian GNU/Linux 8 (jessie)', 'pi', 'pi', '196.153.104.93', 0, 0, 'Shatby'),
+('b8:27:eb:f5:d6:1c', 859, 13, 0, '3', 'Raspbian GNU/Linux 8 (jessie)', 'pi', 'pi123123', '192.168.8.100', 31.2099, 29.952, 'Shatby');
 
 -- --------------------------------------------------------
 
@@ -387,7 +397,8 @@ INSERT INTO `User_Log` (`User_id`, `Img_id`, `Process_name`, `Action`, `Time`) V
 (1, '131be14646fb', 'yamen', 19195, '2017-07-07 18:24:06'),
 (1, '131be14646fb', 'test', 19195, '2017-07-08 14:19:01'),
 (1, '131be14646fb', 'test2', 19195, '2017-07-08 14:21:27'),
-(1, '131be14646fb', 'sherine', 19195, '2017-07-08 15:11:56');
+(1, '131be14646fb', 'sherine', 19195, '2017-07-08 15:11:56'),
+(1, '131be14646fb', 'final test', 19195, '2017-07-10 21:33:17');
 
 --
 -- Indexes for dumped tables
@@ -497,7 +508,7 @@ ALTER TABLE `Admin`
 -- AUTO_INCREMENT for table `Criminals`
 --
 ALTER TABLE `Criminals`
-  MODIFY `Crim_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `Crim_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 --
 -- AUTO_INCREMENT for table `Government`
 --
