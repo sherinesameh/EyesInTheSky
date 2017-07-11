@@ -5,8 +5,8 @@ import os
 import subprocess
 import datetime
 
-def createPiDir():
-    directory = '/home/pi/Desktop/' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+def createDir(processName):
+    directory = '/home/pi/Desktop/'+processName+"_"+datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     return directory
 
 def changeDir(newDir):
@@ -122,4 +122,4 @@ def sendFileCamera(connection, path , filename):
         filesize -= chunksize
         print(str(filesize))
     file_to_send.close()
-    print 'Done Sending'    
+    print 'Done Sending'
