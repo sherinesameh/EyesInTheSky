@@ -1,3 +1,30 @@
+# Developed By 2017 Computer and Communication Department-Alexandria University graduation project team
+#
+# Email: EITS@gmail.com
+#
+# Authors: MOHAMED SHERIF,YAMEN EMAD, SHERINE SAMEH
+#
+# Copyright (c) EITS TEAM 2017 
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#=================================================================================
+
 from pexpect import pxssh
 import getpass
 import sys
@@ -5,8 +32,8 @@ import os
 import subprocess
 import datetime
 
-def createDir(processName):
-    directory = '/home/pi/Desktop/'+processName+"_"+datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+def createPiDir():
+    directory = '/home/pi/Desktop/' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     return directory
 
 def changeDir(newDir):
@@ -122,4 +149,4 @@ def sendFileCamera(connection, path , filename):
         filesize -= chunksize
         print(str(filesize))
     file_to_send.close()
-    print 'Done Sending'
+    print 'Done Sending'    

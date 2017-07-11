@@ -1,3 +1,30 @@
+# Developed By 2017 Computer and Communication Department-Alexandria University graduation project team
+#
+# Email: EITS@gmail.com
+#
+# Authors: MOHAMED SHERIF,YAMEN EMAD, SHERINE SAMEH
+#
+# Copyright (c) EITS TEAM 2017 
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#=================================================================================
+
 import datetime
 import os
 import socket
@@ -5,9 +32,8 @@ import subprocess
 import sys
 import threading
 
-from EITS import config
-from EITS import utilities
 from EITS.dbHandler import dbHandler
+from EITS import utilities
 
 HOST = ''
 PORT = config.PORT
@@ -46,8 +72,7 @@ def acceptConnections():
         thread.start()
         print('====================================================================================\n')
         print('Connections has been established | IP: ' + address[0] + ' | Port: ' + str(address[1]) + '\n')
-        print('====================================================================================\n')
-
+        print('====================================================================================\n')        
 
 def connectRP(connection):
     handshakePck = str(connection.recv(90))
@@ -59,10 +84,10 @@ def connectRP(connection):
     CONNECTIONS[mac] = connection
 
 def adminCommands(connection):
-    AdminID = str(connection.recv(5)).decode('utf-8')
-    cmd = str(connection.recv(2048)).decode('utf-8')
-    cmd = cmd.split(':_:')
-    if cmd[0] == '15151':
+    AdminID = str(connection.recv(5)).decode("utf-8")
+    cmd = str(connection.recv(2048)).decode("utf-8")
+    cmd = cmd.split(":_:")
+    if cmd[0] == "15151":
         mac = cmd[1]
         connectionRP = CONNECTIONS[mac]
         connection.send('killer')
@@ -71,30 +96,32 @@ def adminCommands(connection):
         processNameSize = bin(processNameSize)[2:].zfill(32)
         connection.send(processNameSize)
         connection.send(container)
-    if cmd[0] == '27351':
+    if cmd[0] == "27351":
        mac = cmd[1]
        connectionRP = CONNECTIONS[mac]
-       print('el mac eli ray7lo '+mac)
        connectionRP.send('shutdw')
        DB.shutPi(AdminID, mac )
-    if cmd[0] == '87452':
+    if cmd[0] == "87452":
        mac = cmd[1]
        connectionRP = CONNECTIONS[mac]
        connectionRP.send('restrt')
-       DB.restartPi(AdminID, mac )
+       DB.restartPi(AdminID, mac )           
 
 def userCommands(connection):
+
     print('A user upload a new Dokerfile\n')
-    print('====================================================================================\n')
+    print('====================================================================================\n')    
     mac = DB.getBestPi()
     data = str(connection.recv(1024))
-    path , processName , userID = data.split(':_:')
-    print('Submitted Process Name: '+ processName + '\nPath of the submitted Process: '+ path)
+    print("data is "+data)
+    path , processName , userID = data.split(":_:")
+    print("path "+path + " ,processName "+processName)
     connectionRP = CONNECTIONS[mac]
     connectionRP.send('docker')
     utilities.sendFile(connectionRP, path, processName, userID , 'Dockerfile')
     response = str(connectionRP.recv(11)).decode('utf-8')
     print('\nResponse: ' + response)
+
     if response == 'filecreated':
         connectionRP.send('rundocker')
     results = str(connectionRP.recv(1024)).decode('utf-8')
@@ -108,34 +135,33 @@ def govCommands(connection):
     print('An employee upload a new criminal\n')
     print('====================================================================================\n')
     type = str(connection.recv(1)).strip()
-    os.system('cd' + config.DIRECTORY + '; python train.py')
-    if type == '1':
-        print('\nClassifier.pkl is send to all the RPs connected with a camera')
+    #train the set producing the 2 files
+    os.system('cd ~/Desktop/TF_FILES; python train.py')
+
+    if type == "1":
+    # general --> send to all pi-s with camera
+        print('\nClassifier.pkl is send to all the RPs connected with a camera') 
         macs = DB.getCameraPis()
         for x in macs:
-            print('el mac '+x)
+            print("el mac "+x)
             connectionRP = CONNECTIONS[x]
             sendToCamera(connectionRP)
-
-    if type == '2':
-        locations = str(connection.recv(1024)).strip().split(':_:')
+        
+    if type == "2":
+    #specific to pi-s in specific locations    
+        locations = str(connection.recv(1024)).strip().split(":_:")
         print('\nClassifier.pkl is send to the RPs connected with a camera at those locations only: \n' + locations)
         macs = DB.getLocatedPis(locations)
         for x in macs:
             connectionRP = CONNECTIONS[x]
             sendToCamera(connectionRP)
 
-
+    
 def sendToCamera(connection):
-    def sendToCamera(macs):
-        for index, mac in enumerate(macs):
-            print('\nRP['+ index +']: ' + mac)
-            connectionRP = CONNECTIONS[mac]
-            connectionRP.send('upload')
-            directory =  config.DIRECTORY +'/generated-embeddings'
-            utilities.sendFileCamera(connectionRP,directory, 'classifier.pkl')
-            response = connectionRP.recv(4)
-            print('\nRP['+ index +'] response: ' + response)
+    directory = "/home/yamen/Desktop/TF_FILES/generated-embeddings"
+    connection.send("upload")
+    utilities.sendFileCamera(connection , directory , 'classifier.pkl' )
+    response = connection.recv(4)
 
 def main():
     setupConnection()
