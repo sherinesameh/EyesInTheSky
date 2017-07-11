@@ -58,8 +58,8 @@
                     </a>
                   </div>
                   <div ng-switch-when="76767">
-                    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Found">
-                      <i class="small material-icons green-text">done_all</i>
+                    <a data-target="showDetails" class="btn-large btn-floating processBtn waves-effect waves-light btn-flat" ng-click="showDetails(criminal.Crim_id)">
+                      <i class="large material-icons green-text">done_all</i>
                     </a>
                   </div>
                   <div ng-switch-when="20202">
@@ -78,7 +78,14 @@
           </tbody>
         </table>
     </div>
-   </div>
+
+<div id="showDetails" class="modal">
+  <div class="modal-footer">
+    <a href="#home" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click=""><i class="material-icons black-text">close</i>
+    </a>
+  </div>
+  <div class="modal-content">
+    <span>Criminal Found at: {{data}}</span>
   </div>
 </div>
 <script>

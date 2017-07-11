@@ -31,6 +31,12 @@
         $scope.logs = data;
       });
     }, 1000);
+    $scope.showDetails = function(criminalID){
+      params = {request: 'getCriminalLocation', processName: criminalID};
+      sendRequest($http, params).success(function(data) {
+        $scope.data = data[0];
+        alert($scope.data);
+      });
   });
   app.controller('billingCtrl', function($scope, $http, $stateParams, $state) {
     checkSession($http, $stateParams, $state);

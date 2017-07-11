@@ -44,24 +44,24 @@ switch ($request) {
           echo json_encode($result);
           break;
     case "deleteCriminal":
-      $criminalID = $params->criminalID;
-      $filename = $params->filename;
-      $Fname = $params->fname;
-      $Mname = $params->mname;
-      $Lname = $params->lname;
-      $govID= $_SESSION['id'];
-      $username = $_SESSION['username'];
-      // system("rm -rf ".escapeshellarg($filename));
-      $result= $actions->deleteCriminal($criminalID, $govID,$username, $Fname , $Mname , $Lname);
-       if ($result) {
-          $socket = new Socket;
-          $socket->send('general',null);
-        }
-      echo json_encode($result);
-      break;
+          $criminalID = $params->criminalID;
+          $filename = $params->filename;
+          $Fname = $params->fname;
+          $Mname = $params->mname;
+          $Lname = $params->lname;
+          $govID= $_SESSION['id'];
+          $username = $_SESSION['username'];
+          // system("rm -rf ".escapeshellarg($filename));
+          $result= $actions->deleteCriminal($criminalID, $govID,$username, $Fname , $Mname , $Lname);
+           if ($result) {
+              $socket = new Socket;
+              $socket->send('general',null);
+            }
+          echo json_encode($result);
+          break;
     default:
-      echo "unkown action";
-      break;
+          echo "unkown action";
+          break;
   }
 
 
