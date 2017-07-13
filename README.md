@@ -124,18 +124,13 @@ You can either clone the public repository or download it as a zip file.
     $ sudo chmod 755 /etc/init.d/clientautoconnect
     $ sudo update-rc.d clientautoconnect defaults
     ```
-  - **Server Side**
-    ```bash  
-    $ cd /etc/init.d
-    $ sudo wget https://github.com/SherineSameh/EyesInTheSky/blob/master/serverautoconnect
-    $ sudo chmod 755 /etc/init.d/serverautoconnect
-    $ sudo update-rc.d serverautoconnect defaults
-    ```
-  *If you wish to remove the script from the startup sequence in the future run:*
+     *If you wish to remove the script from the startup sequence in the future run:*
 
     ```bash
-    $ /etc/rc2.d# update-rc.d -f [bashFileName] remove
+    $ /etc/rc2.d# update-rc.d -f clientautoconnect remove
     ```
+  - [**Server Side**](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-screen-on-an-ubuntu-cloud-server)
+ 
 
 ## Support:
 >If you are having issues, please let us know.
@@ -143,5 +138,5 @@ You can either clone the public repository or download it as a zip file.
 > - **Mailbox:** eits@gmail.com
 
 ## License:
->Copyright 2017 EITS Team
->Licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+> Copyright 2017 EITS Team
+> Licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
