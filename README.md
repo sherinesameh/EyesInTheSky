@@ -138,5 +138,5 @@ You can either clone the public repository or download it as a zip file.
 > - **Mailbox:** eits@gmail.com
 
 ## License:
->Copyright 2017 EITS Team.
->Licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+> All Rights Reserved © 2017 EITS TEAM. 
+> Licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
