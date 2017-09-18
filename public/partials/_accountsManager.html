@@ -3,10 +3,15 @@
     <div class="card">
       <div class="card-content">
         <div class="row">
-          <h5 class="card-title col s6">Accounts Manager</h5>
-          <div class="col offset-s4">
+          <h5 class="card-title col m6">Accounts Manager</h5>
+          <div class="col m2 offset-m4 hide-on-small-only">
             <button data-target="addAccount" class="btn-floating btn-large waves-effect waves-light green" ng-click="addAccount()">
               <i class="material-icons">add</i>
+            </button>
+          </div>
+          <div class="col s10 offset-s1 show-on-small hide-on-med-and-up">
+            <button data-target="addAccount" class="btn btn-large waves-effect waves-light green" ng-click="addAccount()">
+              <i class="material-icons">add</i> Add
             </button>
           </div>
         </div>
