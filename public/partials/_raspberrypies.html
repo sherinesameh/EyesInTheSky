@@ -9,7 +9,7 @@
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
               </div>
           </div>
-          <table class="striped">
+          <table class="striped responsive-table">
             <thead>
               <tr>
                 <th></th>
@@ -24,7 +24,7 @@
             <tbody>
               <tr ng-repeat="spec in specs | filter:search">
                     <td>
-                      <button data-target="showDetails" class="btn-large processBtn waves-effect waves-light btn-flat" ng-click="showDetails(spec.Mac, spec.LocationLat, spec.LocationLng, spec.LocationName, spec.PublicIP, spec.Username, spec.Password, spec.HasCamera, spec.Generation, spec.OS, spec.Ram, spec.Storage)">
+                      <button data-target="showDetails" class="btn processBtn waves-effect waves-light btn-flat" ng-click="showDetails(spec.Mac, spec.LocationLat, spec.LocationLng, spec.LocationName, spec.PublicIP, spec.Username, spec.Password, spec.HasCamera, spec.Generation, spec.OS, spec.Ram, spec.Storage)">
                         <!-- <i class="material-icons large">list</i> -->
                         <i class="material-icons">more_vert</i>
                       </button>
@@ -37,35 +37,44 @@
                       </button>
                     </td>
                     <td>
-                      <div id="circle" class="c100 p{{spec.CpuUsage | number:0}} small">
+                      <div id="circle" class="c100 p{{spec.CpuUsage | number:0}} small hide-on-small-only	">
                         <span id="value">{{spec.CpuUsage}}%</span>
                         <div class="slice">
                           <div class="bar"></div>
                           <div class="fill"></div>
                         </div>
                       </div>
+                      <div class="show-on-small-only">
+                        <span id="value">{{spec.CpuUsage}}%</span>
+                      </div>
                     </td>
                     <td>
-                      <div id="circle" class="c100 p{{spec.FreeStorage | number:0}} small">
+                      <div id="circle" class="c100 p{{spec.FreeStorage | number:0}} small hide-on-small-only">
                         <span id="value">{{spec.FreeStorage}}%</span>
                         <div class="slice">
                           <div class="bar"></div>
                           <div class="fill"></div>
                         </div>
                       </div>
+                      <div class="show-on-small-only">
+                        <span id="value">{{spec.FreeStorage}}%</span>
+                      </div>
                     </td>
                     <td>
-                      <div id="circle" class="c100 p{{spec.FreeStorage | number:0}} small">
+                      <div id="circle" class="c100 p{{spec.FreeStorage | number:0}} small hide-on-small-only">
                         <span id="value">{{spec.RamUsage}}%</span>
                         <div class="slice">
                           <div class="bar"></div>
                           <div class="fill"></div>
                         </div>
                       </div>
+                      <div class="show-on-small-only">
+                        <span id="value">{{spec.RamUsage}}%</span>
+                      </div>
                     </td>
                     <td>
                       <div class="row">
-                        <img class="temp" src="public/assets/img/temperature.png"/>
+                        <img class="temp hide-on-small-only" src="public/assets/img/temperature.png"/>
                       </div>
                       <div class="row">
                         <span class="tempValue">{{spec.Temperature}}&deg;C</span>
@@ -86,7 +95,7 @@
   </div>
    <div class="modal-content">
      <h6>MAC Address: {{currentMac}}</h6><hr />
-     <table class="striped">
+     <table class="striped responsive-table">
        <thead>
          <tr>
            <th>Process Name</th>
@@ -113,7 +122,7 @@
    </div>
 </div>
 
-<div id="showDetails" class="modal">
+<div id="showDetails" class="modal" style="overflow-y:hidden;">
   <div class="modal-footer">
     <a href="#dashboard" class="modal-action modal-close btn-floating waves-effect waves-light btn-flat" ng-click=""><i class="material-icons black-text">close</i>
     </a>
@@ -140,7 +149,7 @@
        </div>
      </div>
       <div class ="row">
-      <div class="col s5">
+      <div class="col m5 s12">
          <h6><i class="material-icons">settings</i> Specifications:</h6> <hr />
          <span style="text-align:left">
            PublicIP: {{PublicIP}} <br />
@@ -153,38 +162,15 @@
            Storage: {{storage}}
          </span>
        </div>
-      <div class="col s7">
+      <div class="col m7 s12">
          <h6> <i class="material-icons">room</i> Location: {{LocationName}}</h6><hr />
          <span>
            Show Location at:<br />
            LocationLat: {{LocationLat}} , LocationLng: {{LocationLng}}
          </span>
-         <div id="map"></div>
+         <div class="card-panel">
+           <div id="map" class="map" style="position: relative;overflow: hidden;height: 20vh;"></div>
+         </div>
        </div>
     </div>
   </div>
-<script>
-  $(document).ready(function(){
-    $('.collapsible').collapsible({horizontal: true});
-    $('.modal').modal();
-    $('.carousel.carousel-slider').carousel({fullWidth: true});
-  });
-
-  function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 20
-    });
-    var infoWindow = new google.maps.InfoWindow({map: map});
-    var pos = { lat:31.209872299999994, lng: 29.9521207 };
-    var marker = new google.maps.Marker({
-       position: pos,
-       map: map
-     });
-    map.setCenter(pos);
-    }
-</script>
-
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3Y0-Eg1rT2vbWoIckip2MwxHb7EV6btI&callback=initMap">
-</script>

@@ -17,7 +17,7 @@
                 <label class="label-icon" for="accountsSearch"><i class="material-icons">search</i></label>
               </div>
           </div>
-          <table class="striped">
+          <table class="striped responsive-table">
             <thead>
               <tr>
                 <th></th>
@@ -61,15 +61,15 @@
              <h6 class="grey-text text-darken-2">Add new government account:</h6>
              <hr />
            </div>
-           <div class="input-field col s5 offset-s1">
+           <div class="input-field col s12 col m5 offset-m1">
              <input ng-model="form.email" id="email" type="text" ng-required="true">
              <label for="email">Email</label>
            </div>
-           <div class="input-field col s5">
+           <div class="input-field col s12 col m5">
              <input ng-model="form.password" id="password" type="password" ng-required="true">
              <label for="password">password</label>
            </div>
-           <div class="col s5 offset-s1">
+           <div class="col s12 col m5 offset-m1">
             <div class="input-field">
                <input ng-model="form.username" id="username" type="text" ng-required="true">
                <label for="username">Username</label>
@@ -83,7 +83,7 @@
                <label for="lname">Last Name</label>
             </div>
           </div>
-          <div class="col s5">
+          <div class="col s12 col m5">
              <div class="file-field input-field">
                <div class="btn grey darken-2">
                  <input ng-model="form.image" type="file" class=" col s12 form-control input-lg" accept="image/*" onchange="angular.element(this).scope().uploadedFile(this)" >
@@ -95,7 +95,7 @@
         </div>
         <div>
           <span class="error red-text">{{ form.error }}</span>
-          <div class="col s5 offset-s6">
+          <div class="col s12 col m5 offset-m6">
             <div class="waves-effect waves-light btn">
               <span><i class="material-icons">send</i></span>
               <input type="submit" ng-disabled="form.$invalid"/>
@@ -117,27 +117,22 @@
         <h6 class="blue-text text-darken-2">Update Password:</h6>
         <hr />
       </div>
-      <div class="col s10 offset-s2 grey-text text-darken-2">
+      <div class="col s10 offset-s1 grey-text text-darken-2">
           <i class="material-icons">person</i> Username:
           <div class="input-field inline">
             <input disabled value="{{currentUsername}}" id="disabled" type="text">
           </div>
        </div>
-       <div class="col s10 offset-s2 grey-text text-darken-2">
+       <div class="col s10 offset-s1 grey-text text-darken-2">
           <i class="material-icons">vpn_key</i> Password:
           <div class="input-field inline">
             <input id="password" type="password" ng-model="form.password" ng-required = "true">
           </div>
        </div>
       <br /><br /><br />
-      <div class="col s4 offset-s7">
+      <div class="col s10 offset-s1 col m4 offset-m7">
         <input class="waves-effect waves-light btn" type="submit" id="submit" value="Submit"/>
       </div>
     </form>
    </div>
 </div>
-<script>
-  $(document).ready(function(){
-    $('.modal').modal();
-  });
-</script>

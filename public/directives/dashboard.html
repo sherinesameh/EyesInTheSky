@@ -1,12 +1,33 @@
 <div class="row">
     <div ui-view="navbar"></div>
     <br />
-    <div class="col s4">
+    <div class="col m4 s12">
       <div class="mainPage" ui-view="user"></div>
       <div class="mainPage" ui-view="log"></div>
     </div>
-    <div class="col s8">
+    <div class="col m8 s12">
       <div class="mainPage" ui-view="raspberrypies"></div>
       <div class="mainPage" ui-view="accountsManager"></div>
     </div>
 </div>
+<script>
+  $(document).ready(function() {
+    $(".scroll").niceScroll();
+    $('.modal').modal();
+    $('.collapsible').collapsible({horizontal: true});
+    $('.carousel.carousel-slider').carousel({fullWidth: true});
+  });
+  function initMap() {
+      var address = {lat: 31.248284, lng: 29.970969};
+      var map = new google.maps.Map(document.getElementById(map), {
+          zoom: 17,
+          center: address
+      });
+      var marker = new google.maps.Marker({
+        position: address,
+        map: map,
+        title: 'RP location'
+      });
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3Y0-Eg1rT2vbWoIckip2MwxHb7EV6btI&callback=initMap"></script>
