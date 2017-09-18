@@ -54,6 +54,7 @@
 >EITS is actively developed on **GitHub**, where the code is always available.
 You can either clone the public repository or download it as a zip file.
 > - Source Code: https://github.com/SherineSameh/EyesInTheSky.git
+> - Logo: https://www.behance.net/gallery/52558675/Eyes-In-The-Sky-Logo
 
 ## Configurations and Running:
 ### 1. Server Side:
